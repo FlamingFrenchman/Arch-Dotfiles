@@ -1,4 +1,5 @@
 " All system-wide defaults are set in $VIMRUNTIME/archlinux.vim (usually just
+
 " /usr/share/vim/vimfiles/archlinux.vim) and sourced by the call to :runtime
 " you can find below.  If you wish to change any of those settings, you should
 " do it in this file (/etc/vimrc), since archlinux.vim will be overwritten
@@ -17,13 +18,17 @@ runtime! archlinux.vim
 " do not load defaults if ~/.vimrc is missing
 "let skip_defaults_vim=1
 
-" enable powerlines in xterm
-"if (&term == "xterm")
-   let g:powerline_pycmd='py3'
-   "let g:powerline_config_overrides='ext.vim.top_theme=powerline_terminus'
-"endif
-"if (&term == "linux")
-"   let g:powerline_config_overrides='
+if has('nvim')
+    " Neovim specific commands
+else
+    " Standard vim specific commands
+endif
+
+call plug#begin('~/.vim/plugged')
+Plug 'mcchrish/nnn.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+call plug#end()
+
 " enable line numbers
 set number
 " allow backspacing over everything in insert mode
@@ -34,9 +39,19 @@ set ruler
 syntax on
 " highlight matches when searching
 set hlsearch
+" make it easier to unhighlight things
+nmap <space> :nohls<CR>
 " enable statusline even for single files
 set laststatus=2
 " pretty colors
 colorscheme zellner
 " easier? way to exit insert mode
 inoremap <C-]> <esc>
+
+filetype plugin indent on
+" show existing tab with 4 spaces width
+set tabstop=4
+" when indenting with '>', use 4 spaces width
+set shiftwidth=4
+" On pressing tab, insert 4 spaces
+set expandtab
