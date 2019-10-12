@@ -2,7 +2,7 @@
 
 cp ./vimrc ~/.vimrc
 cp ./bashrc ~/.bashrc
-cp -r ./polybar ~/.config/polybar
+cp -r ./polybar/* ~/.config/polybar
 
 if [[ $(uname -n) == "overkill" ]]; then
     cp ./desktop-i3config ~/.config/i3/config
