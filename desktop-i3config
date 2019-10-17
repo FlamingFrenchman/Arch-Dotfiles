@@ -11,7 +11,8 @@
 # Startup programs
 exec xset r rate 200 50
 exec xrandr --output DP-4 --mode 1920x1080 --rate 144
-exec feh --bg-scale ~/Downloads/edgy_wallpaper
+exec pulseaudio --start && ~/.config/polybar/launch.sh
+exec feh --bg-scale ~/Desktop/edgy_wallpaper.jpg
 exec compton
 exec redshift -P -b 0.9 -O 5500
 exec kitty
