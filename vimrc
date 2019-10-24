@@ -45,8 +45,6 @@ nmap <space> :nohls<CR>
 set laststatus=2
 " pretty colors
 colorscheme zellner
-" easier? way to exit insert mode
-inoremap <C-]> <esc>
 
 filetype plugin indent on
 " show existing tab with 4 spaces width

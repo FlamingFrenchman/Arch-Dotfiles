@@ -5,7 +5,11 @@ cd "${BASH_SOURCE%/*}/" || { echo "Unable to cd into bundle directory; exiting";
 
 cp ./vimrc ~/.vimrc
 cp ./bashrc ~/.bashrc
-cp -r ./polybar/* ~/.config/polybar
+cp ./bash_profile ~/.bash_profile
+cp ./bash_logout ~/.bash_logout
+cp ./bash_aliases ~/.bash_aliases
+cp ~/.inputrc ./inputrc
+cp -r ./polybar ~/.config
 
 if [[ $(uname -n) == "overkill" ]]; then
     cp ./desktop-i3config ~/.config/i3/config

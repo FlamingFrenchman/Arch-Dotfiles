@@ -2,30 +2,30 @@
 # ~/.bashrc
 #
 
+#/bin/bash
+#       The bash executable
+#/etc/profile
+#       The systemwide initialization file, executed for login shells
+#~/.bash_profile
+#       The personal initialization file, executed for login shells
+#~/.bashrc
+#       The individual per-interactive-shell startup file
+#~/.bash_logout
+#       The individual login shell cleanup file, executed when a login shell exits
+#~/.inputrc
+#       Individual readline initialization file (for anything readline-based)
+
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+# Source aliases
+[[ -f ~/.bash_aliases ]] && . ~/.bash_aliases
+
+# Source readline settings
+[[ -f ~/.inputrc ]] && bind -f ~/.inputrc
+
 # Resize window after command, if necessary
 shopt -s checkwinsize
-
-# Define a few Colors
-BLACK='\[\e[0;30m\]'
-BLUE='\[\e[0;34m\]'
-GREEN='\[\e[0;32m\]'
-CYAN='\[\e[0;36m\]'
-RED='\[\e[0;31m\]'
-PURPLE='\[\e[0;35m\]'
-BROWN='\[\e[0;33m\]'
-LIGHTGRAY='\[\e[0;37m\]'
-DARKGRAY='\[\e[1;30m\]'
-LIGHTBLUE='\[\e[1;34m\]'
-LIGHTGREEN='\[\e[1;32m\]'
-LIGHTCYAN='\[\e[1;36m\]'
-LIGHTRED='\[\e[1;31m\]'
-LIGHTPURPLE='\[\e[1;35m\]'
-YELLOW='\[\e[1;33m\]'
-WHITE='\[\e[1;37m\]'
-NC='\[\e[0m\]'
 
 # Editor
 export VISUAL=vim
@@ -34,26 +34,6 @@ export SUDO_EDITOR=vim
 
 # flame dog
 export BROWSER="firejail firefox '%s' &"
-
-# virgin mode
-set -o vi
-
-# These may be in /etc/inputrc but just in case
-bind "Control-]:vi-movement-mode"
-bind "Space:magic-space"
-
-# Useful things
-alias ls='ls -h --color=auto'
-alias grep='grep --color=auto'
-alias diff='diff --color=auto'
-alias df='df -h'
-alias dmesg='dmesg -H --color=always'
-alias admin='sudo -i -u admin'
-alias devel='sudo -i -u devel'
-
-# Force myself to use the good shit
-alias kim='nvim'
-alias vi='nvim'
 
 # Colorful less
 # Reminder that raw escape sequences are not portable between shells
@@ -79,60 +59,14 @@ export LESSOPEN="|lesspipe.sh %s"
 #  eval "$(<"$XDG_RUNTIME_DIR/ssh-agent.env")"
 #fi
 
-# stolen from stackoverflow and changed to my liking
-setprompt () {
-  local SSH_IP=`echo $SSH_CLIENT | awk '{ print $1 }'`
-  local SSH2_IP=`echo $SSH2_CLIENT | awk '{ print $1 }'`
-  if [ $SSH2_IP ] || [ $SSH_IP ] ; then
-    local SSH_FLAG="@\h"
-  fi
-  PS1="$BLACK[$RED\u$WHITE$SSH_FLAG:$LIGHTRED\w$BLACK]$WHITE\\$ $NC"
-  PS2="$RED>$NC "
-  PS4='$RED+$NC '
-}
-
-setprompt_long () {
-  local SSH_IP=`echo $SSH_CLIENT | awk '{ print $1 }'`
-  local SSH2_IP=`echo $SSH2_CLIENT | awk '{ print $1 }'`
-  if [ $SSH2_IP ] || [ $SSH_IP ] ; then
-    local SSH_FLAG="@\h"
-  fi
-  PS1="$DARKGRAY[$LIGHTRED\$(date +%H:%M)$DARKGRAY]\
-[$RED\u$WHITE$SSH_FLAG:$LIGHTRED\w$DARKGRAY]$WHITE\\$ $NC"
-  PS2="$RED>$NC "
-  PS4='$RED+$NC '
-}
-
-# Extract things. Thanks to urukrama, Ubuntuforums.org	
-# I use unrar instead of rar
-extract () {
-     if [ -f $1 ] ; then
-         case $1 in
-             *.tar.bz2)   tar xjf $1        ;;
-             *.tar.gz)    tar xzf $1     ;;
-             *.bz2)       bunzip2 $1       ;;
-             *.rar)       unrar x $1     ;;
-             *.gz)        gunzip $1     ;;
-             *.tar)       tar xf $1        ;;
-             *.tbz2)      tar xjf $1      ;;
-             *.tgz)       tar xzf $1       ;;
-             *.zip)       unzip $1     ;;
-             *.Z)         uncompress $1  ;;
-             *.7z)        7z x $1    ;;
-             *)           echo "'$1' cannot be extracted via extract()" ;;
-         esac
-     else
-         echo "'$1' is not a valid file"
-     fi
-}
-
 # Terminal emulator specific stuff
-if [[ $TERM == xterm-kitty ]]; then
+if [[ $TERM == xterm-kitty ]] || [[ $TERM == xterm ]]; then
    # Fix ssh behavior caused by xterm-kitty
    export TERM=xterm
 
    # Quickly change keyboard
    # Currently breaks anything set with "bind" so avoid using if you like those
+   # Or maybe it doesn't? I have no clue.
    alias pgkb='setxkbmap -layout us -variant dvp -option \
        ctrl:swapcaps -option ctrl:nocaps'
    alias dvkb='setxkbmap -layout us -variant dvorak -option \
