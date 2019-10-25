@@ -5,8 +5,8 @@ I do not like the way it currently looks. (and I probably never will)
 ## Dependencies (approximate)
 1.  polybar
 2.  neovim (I symlinked init.vim to .vimrc)
- - nnn.vim
- - coc.vim
+    - nnn.vim
+    - coc.vim
 3.  bash
 4.  i3-gaps
 5.  ttf-hack
