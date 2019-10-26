@@ -13,8 +13,6 @@ cp -r ~/.config/polybar .
 
 if [[ $(uname -n) == "overkill" ]]; then
     cp ~/.config/i3/config ./desktop-i3config
-    cp ~/.config/kitty/kitty.conf ./desktop-kitty.conf
 else
     cp ~/.config/i3/config ./laptop-i3config
-    cp ~/.config/kitty/kitty.conf ./laptop-kitty.conf
 fi

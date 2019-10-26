@@ -15,7 +15,7 @@ exec pulseaudio --start && ~/.config/polybar/launch.sh
 exec feh --bg-scale ~/Desktop/edgy_wallpaper.jpg
 exec compton
 exec redshift -P -b 0.9 -O 5500
-exec kitty
+exec st
 exec_always ~/.config/polybar/launch.sh
 
 # Mod1 is alt, Mod4 is super/Windows key
@@ -55,7 +55,7 @@ font pango:Hack 12
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec kitty
+bindsym $mod+Return exec st
 
 # adjust volume
 bindsym $mod+v exec pactl set-sink-volume 1 +5%

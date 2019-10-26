@@ -31,7 +31,7 @@ alias admin='sudo -i -u admin'
 alias devel='sudo -i -u devel'
 
 # Force myself to use the good shit
-alias kim='nvim'
+alias vim='nvim'
 alias vi='nvim'
 
 # stolen from stackoverflow and changed to my liking
