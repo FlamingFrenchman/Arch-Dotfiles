@@ -60,9 +60,8 @@ export LESSOPEN="|lesspipe.sh %s"
 #fi
 
 # Terminal emulator specific stuff
-if [[ $TERM == xterm-kitty ]] || [[ $TERM == xterm ]]; then
+if [[ $TERM == "st-256color" ]] || [[ $TERM == "screen" ]]; then
    # Fix ssh behavior caused by xterm-kitty
-   export TERM=xterm
 
    # Quickly change keyboard
    # Currently breaks anything set with "bind" so avoid using if you like those

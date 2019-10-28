@@ -9,4 +9,8 @@ killall -q polybar
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
 # Launch Polybar
-polybar -c ~/.config/polybar/desktop.ini main &
+if [[ `uname -n` == "overkill" ]]; then
+    polybar -c ~/.config/polybar/desktop.ini main &
+else
+    polybar -c ~/.config/polybar/laptop.ini main &
+fi

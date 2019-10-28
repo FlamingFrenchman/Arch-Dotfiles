@@ -8,7 +8,7 @@ cp ./bashrc ~/.bashrc
 cp ./bash_profile ~/.bash_profile
 cp ./bash_logout ~/.bash_logout
 cp ./bash_aliases ~/.bash_aliases
-cp ~/.inputrc ./inputrc
+cp ./inputrc ~/.inputrc
 cp -r ./polybar ~/.config
 
 if [[ $(uname -n) == "overkill" ]]; then

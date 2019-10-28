@@ -5,5 +5,8 @@
 # virgin mode
 set editing-mode vi
 
+# m a g i c
+space: magic-space
+
 # bindings are set in if statements so mode needs to be set before sourcing?
 $include /etc/inputrc
