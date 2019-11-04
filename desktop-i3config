@@ -9,14 +9,14 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 # Startup programs
+exec pulseaudio --start
 exec xset r rate 200 50
 exec xrandr --output DP-4 --mode 1920x1080 --rate 144
-exec pulseaudio --start && ~/.config/polybar/launch.sh
 exec feh --bg-scale ~/Desktop/edgy_wallpaper.jpg
 exec compton
 exec redshift -P -b 0.9 -O 5500
 exec st
-exec_always ~/.config/polybar/launch.sh
+exec ~/.config/polybar/launch.sh
 
 # Mod1 is alt, Mod4 is super/Windows key
 #set $mod Mod1
@@ -57,6 +57,9 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec st
 
+# start browser
+bindsym $mod+b exec firejail --quiet --apparmor firefox
+
 # adjust volume
 bindsym $mod+v exec pactl set-sink-volume 1 +5%
 bindsym $mod+d exec pactl set-sink-volume 1 -5%
@@ -65,7 +68,7 @@ bindsym $mod+m exec pactl set-sink-mute 1 toggle
 # adjust brightness
 bindsym $mod+x exec redshift -P -b 0.5 -O 5500
 bindsym $mod+n exec redshift -P -b 0.5 -O 2700
-bindsym $mod+b exec redshift -P -b 0.9 -O 5500
+bindsym $mod+w exec redshift -P -b 0.9 -O 5500
 
 # kill focused window
 bindsym $mod+q kill
@@ -79,23 +82,11 @@ bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
-# alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
-
 # move focused window
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
 bindsym $mod+i split h
@@ -164,6 +155,8 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
+# restart polybar
+bindsym $mod+Shift+g exec ~/.config/polybar/launch.sh
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 # really exit i3

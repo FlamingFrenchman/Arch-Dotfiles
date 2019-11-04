@@ -44,7 +44,7 @@ nmap <space> :nohls<CR>
 " enable statusline even for single files
 set laststatus=2
 " pretty colors
-colorscheme zellner
+colorscheme slate
 
 filetype plugin indent on
 " show existing tab with 4 spaces width

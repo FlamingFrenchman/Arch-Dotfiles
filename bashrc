@@ -60,7 +60,7 @@ export LESSOPEN="|lesspipe.sh %s"
 #fi
 
 # Terminal emulator specific stuff
-if [[ $TERM == "st-256color" ]] || [[ $TERM == "screen" ]]; then
+if [[ $TERM == "st-256color" ]] || [[ $TERM == "tmux-256color" ]]; then
    # Fix ssh behavior caused by xterm-kitty
 
    # Quickly change keyboard

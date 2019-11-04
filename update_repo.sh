@@ -10,6 +10,7 @@ cp ~/.bash_logout ./bash_logout
 cp ~/.bash_aliases ./bash_aliases
 cp ~/.inputrc ./inputrc
 cp -r ~/.config/polybar .
+cp ~/.tmux.conf ./tmux.conf
 
 if [[ $(uname -n) == "overkill" ]]; then
     cp ~/.config/i3/config ./desktop-i3config
