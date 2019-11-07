@@ -81,6 +81,7 @@ extract () {
      fi
 }
 
+# A PATH environment variable editor
 # From apmcd47 on ubuntuforums, and the guy that actually
 # wrote it and gave it to him
 vipath () { 
