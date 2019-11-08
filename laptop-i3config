@@ -15,7 +15,7 @@ exec feh --bg-scale ~/Downloads/dxmd_wallpaper.jpg
 exec compton
 exec redshift -P -b 0.8 -O 5500
 exec setxkbmap -layout us -variant dvorak -option ctrl:swapcaps
-exec st
+exec st -e tmux
 exec_always ~/.config/polybar/launch.sh
 
 # Mod1 is alt, Mod4 is super/Windows key
@@ -55,7 +55,7 @@ font pango:Hack 15
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec st
+bindsym $mod+Return exec st -e tmux
 
 # start browser
 bindsym $mod+b exec firejail --quiet --apparmor firefox
