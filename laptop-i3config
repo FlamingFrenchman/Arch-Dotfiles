@@ -4,31 +4,60 @@
 # Should you change your keyboard layout some time, delete
 # this file and re-run i3-config-wizard(1).
 #
-
 # i3 config file (v4)
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
-# Startup programs
-exec xset r rate 200 50
-exec xrandr --output eDP-1-1 --mode 1920x1080 --rate 144
-exec feh --bg-scale ~/Downloads/dxmd_wallpaper.jpg
-exec compton
-exec redshift -P -b 0.8 -O 5500
-exec setxkbmap -layout us -variant dvorak -option ctrl:swapcaps
-exec st -e tmux
-exec_always ~/.config/polybar/launch.sh
+# Currently used keybinds:
+# sup+h,j,k,l
+# sup+shift+h,j,k,l
+# sup+a,o,e,u,i
+# sup+m
+# sup+d
+# sup+v
+# sup+z
+# sup+p
+# sup+y
+# sup+q
+# sup+r
+# sup+b
+# sup+x
+# sup+n
+# sup+w
+# sup+t
+# sup+Return
+#
+# As a rule of thumb I should try to use mnemonics (v for volume, b for
+# browser, m for mute, etc.) when mapping keys so that they make sense
+# regardless of layout. Currently it's about half and half, although
+# the worst offenders (the vowels) aren't mapped to things I use frequently
+# so I'm not sure it matters much.
 
-# Mod1 is alt, Mod4 is super/Windows key
-#set $mod Mod1
-set $mod Mod4
+# Startup programs
+exec "xset r rate 200 50"
+exec "xrandr --output eDP-1-1 --mode 1920x1080 --rate 144"
+exec "feh --bg-scale ~/Downloads/dxmd_wallpaper.jpg"
+exec "compton"
+exec "redshift -P -b 0.8 -O 5500"
+exec "setxkbmap -layout us -variant dvorak -option ctrl:swapcaps"
+exec "st -e tmux"
+exec "dunst"
+exec "killall -q network_check.sh battery_check.sh"
+exec "~/.config/polybar/battery_check.sh"
+exec "~/.config/polybar/network_check.sh"
+
+# Windows/Command/Super
 set $sup Mod4
+# Alt, currently not used
+set $mod Mod1
 
 # Creates the gaps between windows
 gaps inner 15
-#gaps top 30
 
 # Creates gaps along the outer edges of the screen
 #gaps outer 10
+
+# Creates a gap along the top of the screen
+#gaps top 30
 
 # Set the border type. Default is normal. Pixel eliminates the tile bars; none
 # does... something. Normal and pixel types support an option "pixel" to
@@ -51,68 +80,70 @@ font pango:Hack 15
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn't scale on retina/hidpi displays.
 
-# Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
+# Use Mouse+$sup to drag floating windows to their wanted position
+floating_modifier $sup
 
 # start a terminal
-bindsym $mod+Return exec st -e tmux
+bindsym $sup+Return exec "st"
 
 # start browser
-bindsym $mod+b exec firejail --quiet --apparmor firefox
+bindsym $sup+b exec "firejail --quiet --apparmor firefox"
 
 # adjust volume
-bindsym $mod+v exec pactl set-sink-volume 0 +5%
-bindsym $mod+d exec pactl set-sink-volume 0 -5%
-bindsym $mod+m exec pactl set-sink-mute 0 toggle
+bindsym $sup+v exec "~/.config/polybar/volume_change.sh up"
+bindsym $sup+d exec "~/.config/polybar/volume_change.sh down"
+bindsym $sup+m exec "~/.config/polybar/volume_change.sh toggle"
+bindsym $sup+z exec "~/.config/polybar/volume_change.sh cycle"
 
 # adjust brightness
-bindsym $mod+x exec redshift -P -b 0.5 -O 5500
-bindsym $mod+n exec redshift -P -b 0.5 -O 2700
-bindsym $mod+w exec redshift -P -b 0.8 -O 5500
+bindsym $sup+x exec "redshift -P -b 0.5 -O 5500"
+bindsym $sup+n exec "redshift -P -b 0.5 -O 2700"
+bindsym $sup+w exec "redshift -P -b 0.8 -O 5500"
 
 # kill focused window
-bindsym $mod+q kill
+bindsym $sup+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+s exec rofi -show run
+bindsym $sup+r exec "rofi -show run"
 
 # change focus
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
+bindsym $sup+h focus left
+bindsym $sup+j focus down
+bindsym $sup+k focus up
+bindsym $sup+l focus right
 
 # move focused window
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
+bindsym $sup+Shift+h move left
+bindsym $sup+Shift+j move down
+bindsym $sup+Shift+k move up
+bindsym $sup+Shift+l move right
 
 # split in horizontal orientation
-bindsym $mod+i split h
+bindsym $sup+i split h
 
 # split in vertical orientation
-bindsym $mod+u split v
+bindsym $sup+u split v
 
 # enter fullscreen mode for the focused container
-bindsym $mod+t exec "polybar-msg cmd toggle && i3-msg fullscreen toggle"
+# not necessary? or move to F11 if your brain is wrinkly enough
+bindsym $sup+t exec "i3-msg fullscreen toggle"
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+a layout stacking
-bindsym $mod+o layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $sup+a layout stacking
+bindsym $sup+o layout tabbed
+bindsym $sup+e layout toggle split
 
 # toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+bindsym $sup+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+bindsym $sup+space focus mode_toggle
 
 # focus the parent container
-bindsym $mod+p focus parent
+bindsym $sup+p focus parent
 
 # focus the child container
-bindsym $mod+y focus child
+bindsym $sup+c focus child
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -128,45 +159,43 @@ set $ws9 "9"
 set $ws10 "10"
 
 # switch to workspace
-bindsym $mod+1 workspace $ws1
-bindsym $mod+2 workspace $ws2
-bindsym $mod+3 workspace $ws3
-bindsym $mod+4 workspace $ws4
-bindsym $mod+5 workspace $ws5
-bindsym $mod+6 workspace $ws6
-bindsym $mod+7 workspace $ws7
-bindsym $mod+8 workspace $ws8
-bindsym $mod+9 workspace $ws9
-bindsym $mod+0 workspace $ws10
+bindsym $sup+1 workspace $ws1
+bindsym $sup+2 workspace $ws2
+bindsym $sup+3 workspace $ws3
+bindsym $sup+4 workspace $ws4
+bindsym $sup+5 workspace $ws5
+bindsym $sup+6 workspace $ws6
+bindsym $sup+7 workspace $ws7
+bindsym $sup+8 workspace $ws8
+bindsym $sup+9 workspace $ws9
+bindsym $sup+0 workspace $ws10
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace $ws1
-bindsym $mod+Shift+2 move container to workspace $ws2
-bindsym $mod+Shift+3 move container to workspace $ws3
-bindsym $mod+Shift+4 move container to workspace $ws4
-bindsym $mod+Shift+5 move container to workspace $ws5
-bindsym $mod+Shift+6 move container to workspace $ws6
-bindsym $mod+Shift+7 move container to workspace $ws7
-bindsym $mod+Shift+8 move container to workspace $ws8
-bindsym $mod+Shift+9 move container to workspace $ws9
-bindsym $mod+Shift+0 move container to workspace $ws10
+bindsym $sup+Shift+1 move container to workspace $ws1
+bindsym $sup+Shift+2 move container to workspace $ws2
+bindsym $sup+Shift+3 move container to workspace $ws3
+bindsym $sup+Shift+4 move container to workspace $ws4
+bindsym $sup+Shift+5 move container to workspace $ws5
+bindsym $sup+Shift+6 move container to workspace $ws6
+bindsym $sup+Shift+7 move container to workspace $ws7
+bindsym $sup+Shift+8 move container to workspace $ws8
+bindsym $sup+Shift+9 move container to workspace $ws9
+bindsym $sup+Shift+0 move container to workspace $ws10
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
+bindsym $sup+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
-# restart polybar
-bindsym $mod+Shift+g exec ~/.config/polybar/launch.sh
+bindsym $sup+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+bindsym $sup+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 # really exit i3
-bindsym $mod+Shift+z exec i3-msg exit
+bindsym $sup+Shift+z exec "i3-msg exit"
 
 # class        border  backgr. text    indic   child_border
 client.focused #ffc9fa #ffc9fa #000000 #2e9ef4 #ffc9fa
 
 # resize window (you can also use the mouse for that)
-bindsym $mod+f resize shrink width 10 px or 10 ppt
-bindsym $mod+g resize grow height 10 px or 10 ppt
-bindsym $mod+c resize shrink height 10 px or 10 ppt
-bindsym $mod+r resize grow width 10 px or 10 ppt
+#bindsym $sup+f resize shrink width 10 px or 10 ppt
+#bindsym $sup+g resize grow height 10 px or 10 ppt
+#bindsym $sup+c resize shrink height 10 px or 10 ppt
+#bindsym $sup+r resize grow width 10 px or 10 ppt

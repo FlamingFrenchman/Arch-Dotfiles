@@ -9,4 +9,6 @@ set editing-mode vi
 space: magic-space
 
 # bindings are set in if statements so mode needs to be set before sourcing?
+# also at least arch's global inputrc doesn't have any vi mode readline
+#   settings so this doesn't do anything
 $include /etc/inputrc

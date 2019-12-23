@@ -61,8 +61,6 @@ export LESSOPEN="|lesspipe.sh %s"
 
 # Terminal emulator specific stuff
 if [[ $TERM == "st-256color" ]] || [[ $TERM == "tmux-256color" ]]; then
-   # Fix ssh behavior caused by xterm-kitty
-
    # Quickly change keyboard
    # Currently breaks anything set with "bind" so avoid using if you like those
    # Or maybe it doesn't? I have no clue.
@@ -73,13 +71,17 @@ if [[ $TERM == "st-256color" ]] || [[ $TERM == "tmux-256color" ]]; then
    alias enkb='setxkbmap -layout us -option ctrl:swapcaps \
        -option ctrl:nocaps'
    alias dfkb='setxkbmap -layout us'
-
-   setprompt
 fi
 
 # bash specific stuff
 if [[ $TERM == linux ]]; then
-   setprompt_long
+   # set prompt once, manually
+   prompt_long;
+   PROMPT_COMMAND=""
+else
+   # function to call to generate command
+   PS1="";
+   PROMPT_COMMAND=prompt_short
 fi
 
 # Clear screen after login

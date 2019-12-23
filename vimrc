@@ -26,7 +26,6 @@ endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'mcchrish/nnn.vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 " enable line numbers

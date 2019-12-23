@@ -35,7 +35,7 @@ alias vim='nvim'
 alias vi='nvim'
 
 # stolen from stackoverflow and changed to my liking
-setprompt () {
+prompt () {
   local SSH_IP=`echo $SSH_CLIENT | awk '{ print $1 }'`
   local SSH2_IP=`echo $SSH2_CLIENT | awk '{ print $1 }'`
   if [ $SSH2_IP ] || [ $SSH_IP ] ; then
@@ -46,7 +46,7 @@ setprompt () {
   PS4='$RED+$NC '
 }
 
-setprompt_long () {
+prompt_long () {
   local SSH_IP=`echo $SSH_CLIENT | awk '{ print $1 }'`
   local SSH2_IP=`echo $SSH2_CLIENT | awk '{ print $1 }'`
   if [ $SSH2_IP ] || [ $SSH_IP ] ; then
@@ -56,6 +56,18 @@ setprompt_long () {
 [$RED\u$WHITE$SSH_FLAG:$LIGHTRED\w$DARKGRAY]$WHITE\\$ $NC"
   PS2="$RED>$NC "
   PS4='$RED+$NC '
+}
+
+prompt_short () {
+    PS1="`if [[ $? -gt 0 ]]; \
+          then echo -e $RED; \
+          else echo -e $CYAN; \
+          fi`>$WHITE`if [[ $TERM == "screen-256color" ]];
+                     then tmux display-message -p '#I'
+                     else echo "_"
+                     fi`\\$ $NC"
+    PS2="$WHITE-->$NC "
+    PS4="$WHITE>$NC "
 }
 
 # Extract things. Thanks to urukrama, ubuntuforums.org	
