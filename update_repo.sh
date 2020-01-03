@@ -18,10 +18,12 @@ cp ~/.xprofile ./xprofile
 
 cp ~/.config/wal/templates/colors-rofi-dark.rasi ./wal/templates/colors-rofi-dark.rasi
 cp ~/.config/dunst/dunstrc ./dunstrc
+cp ~/.config/dunst/dunstrc.in ./dunstrc.in
 #cp -r ~/.config/polybar .
 
 if [[ "$1" == "desktop" ]]; then
     cp ~/.config/i3/config ./desktop-i3config;
 elif [[ "$1" == "laptop" ]]; then
     cp ~/.config/i3/config ./laptop-i3config;
+    cp -r ~/.config/i3/scripts ./
 fi

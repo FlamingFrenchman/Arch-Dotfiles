@@ -52,15 +52,13 @@
 #   thing by putting conky in a workspace somewhere.
 
 # Startup programs
+exec "wal -i ~/Downloads/bork_referendum.jpg"
 exec "xrandr --output eDP-1-1 --mode 1920x1080 --rate 144"
-exec "feh --bg-scale ~/Downloads/dxmd_wallpaper.jpg"
-exec "compton"
+exec "picom --daemon --use-damage --detect-client-leader --detect-transient"
+exec_always "~/.config/i3/scripts/dunst_setup.sh"
+exec_always "~/.config/i3/scripts/cleanup.sh"
 exec "redshift -P -b 0.8 -O 5500"
 exec "st -e tmux"
-exec "dunst"
-exec "killall -q network_check.sh battery_check.sh"
-exec "~/.config/polybar/battery_check.sh"
-exec "~/.config/polybar/network_check.sh"
 
 # Windows/Command/Super
 set $sup Mod4
@@ -71,7 +69,7 @@ set $mod Mod1
 set $goto_workspace ~/.config/i3/scripts/workspace_change.sh
 
 # Creates the gaps between windows
-gaps inner 15
+gaps inner 25
 
 # Creates gaps along the outer edges of the screen
 #gaps outer 10
@@ -85,9 +83,7 @@ gaps inner 15
 default_border none
 default_floating_border none
 
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-font pango:Hack 15
+# Font for window titles. Will also be used by the bar unless a different font is used in the bar {} block below.  font pango:Hack 15
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -107,13 +103,13 @@ floating_modifier $sup
 bindsym $sup+Return exec "st"
 
 # start browser
-bindsym $sup+b exec "firejail --quiet --apparmor firefox"
+bindsym $sup+b exec "firejail --quiet --apparmor chromium"
 
 # adjust volume
-bindsym $sup+v exec "~/.config/polybar/volume_change.sh up"
-bindsym $sup+d exec "~/.config/polybar/volume_change.sh down"
-bindsym $sup+m exec "~/.config/polybar/volume_change.sh toggle"
-bindsym $sup+z exec "~/.config/polybar/volume_change.sh cycle"
+bindsym $sup+v exec "~/.config/i3/scripts/volume_change.sh up"
+bindsym $sup+d exec "~/.config/i3/scripts/volume_change.sh down"
+bindsym $sup+m exec "~/.config/i3/scripts/volume_change.sh toggle"
+bindsym $sup+z exec "~/.config/i3/scripts/volume_change.sh cycle"
 
 # adjust brightness
 bindsym $sup+x exec "redshift -P -b 0.5 -O 5500"
@@ -231,7 +227,7 @@ bindsym $sup+Shift+asterisk     move container to workspace $ws10
 # reload the configuration file
 bindsym $sup+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $sup+Shift+r restart
+bindsym $sup+Shift+r exec "~/.config/i3/scripts/refresh_workspaces.sh; st -e tmux attach"
 # exit i3 (logs you out of your X session)
 bindsym $sup+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 # really exit i3

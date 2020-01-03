@@ -26,9 +26,10 @@ ln -s ~/.vim ~/.local/share/nvim/site
 
 # other stuff
 cp ./wal/templates/colors-rofi-dark.rasi ~/.config/wal/templates/colors-rofi-dark.rasi
-cp ./bork_referendum ~/Documents/
+cp ./bork_referendum.jpg ~/Documents/
 [[ -f ~/.config/dunst ]] || mkdir -p ~/.config/dunst
 cp ./dunstrc ~/.config/dunst/dunstrc
+cp ./dunstrc.in ~/.config/dunst/dunstrc.in
 #cp -r ./polybar ~/.config
 
 [[ -f ~/.config/i3 ]] || mkdir -p ~/.config/i3
@@ -36,4 +37,5 @@ if [[ "$1" == "desktop" ]]; then
     cp ./desktop-i3config ~/.config/i3/config
 elif [[ "$1" == "laptop" ]]; then
     cp ./laptop-i3config ~/.config/i3/config
+    cp -r ./scripts ~/.config/i3/
 fi
