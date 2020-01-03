@@ -1,0 +1,7 @@
+!#/bin/bash
+
+[[ -f ~/.bashrc ]] && source ~/.bashrc
+
+setxkbmap -layout us -model pc104 -variant dvp -option \
+    ctrl:swapcaps -option terminate:ctrl-alt-backspace
+xset r rate 200 50

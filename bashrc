@@ -59,20 +59,6 @@ export LESSOPEN="|lesspipe.sh %s"
 #  eval "$(<"$XDG_RUNTIME_DIR/ssh-agent.env")"
 #fi
 
-# Terminal emulator specific stuff
-if [[ $TERM == "st-256color" ]] || [[ $TERM == "tmux-256color" ]]; then
-   # Quickly change keyboard
-   # Currently breaks anything set with "bind" so avoid using if you like those
-   # Or maybe it doesn't? I have no clue.
-   alias pgkb='setxkbmap -layout us -variant dvp -option \
-       ctrl:swapcaps -option ctrl:nocaps'
-   alias dvkb='setxkbmap -layout us -variant dvorak -option \
-       ctrl:swapcaps -option ctrl:nocaps'
-   alias enkb='setxkbmap -layout us -option ctrl:swapcaps \
-       -option ctrl:nocaps'
-   alias dfkb='setxkbmap -layout us'
-fi
-
 # bash specific stuff
 if [[ $TERM == linux ]]; then
    # set prompt once, manually

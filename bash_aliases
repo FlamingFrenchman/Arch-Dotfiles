@@ -34,6 +34,18 @@ alias devel='sudo -i -u devel'
 alias vim='nvim'
 alias vi='nvim'
 
+# Terminal emulator specific stuff
+if [[ $TERM == "st-256color" ]] || [[ $TERM == "screen-256color" ]]; then
+   # Quickly change keyboard
+   # Currently breaks anything set with "bind" so avoid using if you like those
+   # Or maybe it doesn't? I have no clue.
+   alias pgkb='setxkbmap -layout us -model pc104 -variant dvp -option \
+       ctrl:swapcaps -option terminate:ctrl-alt-backspace'
+   alias dvkb='setxkbmap -layout us -model pc104 -variant dvorak -option \
+       ctrl:swapcaps -option terminate:ctrl-alt-backspace'
+   alias enkb='setxkbmap -layout us -model pc104'
+fi
+
 # stolen from stackoverflow and changed to my liking
 prompt () {
   local SSH_IP=`echo $SSH_CLIENT | awk '{ print $1 }'`

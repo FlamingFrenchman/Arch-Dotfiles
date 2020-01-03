@@ -5,81 +5,77 @@
 
 pkgname=st
 pkgver=0.8.2
-pkgrel=7
+pkgrel=10
 pkgdesc='A simple virtual terminal emulator for X.'
 arch=('i686' 'x86_64' 'armv7h')
 license=('MIT')
 depends=(libxft)
-makedepends=(libxext ncurses)
 url=https://st.suckless.org
 source=("https://dl.suckless.org/$pkgname/$pkgname-$pkgver.tar.gz"
-        "https://st.suckless.org/patches/scrollback/st-scrollback-$pkgver.diff"
-        "https://st.suckless.org/patches/boxdraw/st-boxdraw_v2-$pkgver.diff"
+        "terminfo.patch"
+        "README.terminfo.rst"
         "https://st.suckless.org/patches/alpha/st-alpha-$pkgver.diff"
+        "https://st.suckless.org/patches/anysize/st-anysize-0.8.1.diff"
         "https://st.suckless.org/patches/bold-is-not-bright/\
 st-bold-is-not-bright-20190127-3be4cf1.diff"
-        "https://st.suckless.org/patches/anysize/st-anysize-0.8.1.diff")
+)
 sha256sums=('aeb74e10aa11ed364e1bcc635a81a523119093e63befd2f231f8b0705b15bf35'
-            '9c5aedce2ff191437bdb78aa70894c3c91a47e1be48465286f42d046677fd166'
-            'c1b7ab7672815b73e8328ecc55300c12fddce9ecae4ab04ff4377bd9132089f6'
+            'bf6c8b73a606a8e513c7919d91f93ed7aeb5f44e80269bb244cc01659145a5ea'
+            '0ebcbba881832adf9c98ce9fe7667c851d3cc3345077cb8ebe32702698665be2'
             '9c5b4b4f23de80de78ca5ec3739dc6ce5e7f72666186cf4a9c6b614ac90fb285'
-            '329169acac7ceaf901995d6e0897913089b799d8cd150c7f04c902f4a5b8eab2'
-            '8118dbc50d2fe07ae10958c65366476d5992684a87a431f7ee772e27d5dee50f')
-_makedir=$pkgname-$pkgver
-_makeopts="--directory=$_makedir"
+            '8118dbc50d2fe07ae10958c65366476d5992684a87a431f7ee772e27d5dee50f'
+            '329169acac7ceaf901995d6e0897913089b799d8cd150c7f04c902f4a5b8eab2')
+_sourcedir=$pkgname-$pkgver
+_makeopts="--directory=$_sourcedir"
+
+# I had to edit the patch file because alpha and boxdraw's patches don't play
+# nicely. If it needs to be downloaded at some point, do it with this.
+# "https://st.suckless.org/patches/boxdraw/st-boxdraw_v2-$pkgver.diff"
+# 'c1b7ab7672815b73e8328ecc55300c12fddce9ecae4ab04ff4377bd9132089f6'
 
 prepare() {
-  # Do not install terminfo files, as they conflict with ncurses.
-  sed -r \
-    -e '/^[[:space:]]+tic\>/d' \
-    -e '/^[[:space:]]+@echo .* terminfo/d' \
-    -i $_makedir/Makefile
-
-  # install patches
-  patch -N -p1 -d "$srcdir/st-$pkgver" -i "../st-alpha-$pkgver.diff"
-  patch -N -p1 -d "$srcdir/st-$pkgver" -i "../st-scrollback-$pkgver.diff"
+  ls
+  ls "$_sourcedir"
+  patch -f --directory="$_sourcedir" --strip=0 < terminfo.patch
   echo "fuck"
-  #patch -N -p1 -d "$srcdir/st-$pkgver" -i "../st-boxdraw_v2-$pkgver.diff"
+  patch -f --directory="$_sourcedir" --strip=1 < "../st-alpha-$pkgver.diff"
   echo "shit"
-  patch -N -p1 -d "$srcdir/st-$pkgver" -i "../st-bold-is-not-bright-20190127-3be4cf1.diff"
+  rm -f "$_sourcedir/boxdraw*"
+  patch -f --directory="$_sourcedir" --strip=1 < "../st-boxdraw_v2-$pkgver.diff"
   echo "bitch"
-  patch -N -p1 -d "$srcdir/st-$pkgver" -i "../st-anysize-0.8.1.diff"
+  patch -f --directory="$_sourcedir" --strip=1 < "../st-anysize-0.8.1.diff"
+  patch -f --directory="$_sourcedir" --strip=1 < "../st-bold-is-not-bright-20190127-3be4cf1.diff"
 
   # This package provides a mechanism to provide a custom config.h. Multiple
   # configuration states are determined by the presence of two files in
   # $BUILDDIR:
   #
-  # * config.h: The user has supplied his or her configuration. The file will
-  #   be copied to $srcdir and used during build.
-  # * config.def.h only: The user was previously made aware of the
-  #   configuration options and has opted not to make any configuration
-  #   changes. The package is built using default values.
-  # * neither file: Initial state. The user receives a message on how to
-  #   configure this package. The build process is aborted after the copy
-  #   operation below.
+  # config.h  config.def.h  state
+  # ========  ============  =====
+  # absent    absent        Initial state. The user receives a message on how
+  #                         to configure this package.
+  # absent    present       The user was previously made aware of the
+  #                         configuration options and has not made any
+  #                         configuration changes. The package is built using
+  #                         default values.
+  # present                 The user has supplied his or her configuration. The
+  #                         file will be copied to $srcdir and used during
+  #                         build.
   #
-  # After this test, config.def.h is copied from $srcdir to provide an up to
-  # date template for the user. If neither file was present initially, further
-  # build steps are aborted at this point. Even if no config.h is provided,
-  # future runs will proceed with default values due to the presence of
-  # config.def.h.
-  abort=
+  # After this test, config.def.h is copied from $srcdir to $BUILDDIR to
+  # provide an up to date template for the user.
   if [ -e "$BUILDDIR/config.h" ]
   then
-    cp "$BUILDDIR/config.h" "$_makedir"
+    cp "$BUILDDIR/config.h" "$_sourcedir"
   elif [ ! -e "$BUILDDIR/config.def.h" ]
   then
-    abort=1
-    msg='This package can be configured in config.h. Copy config.def.h just '
-    msg+='placed into the package directory to config.h and modify it to '
-    msg+='change the configuration. Or just leave it alone to use default '
-    msg+='values. Then restart the build process.'
-    error "$msg"
+    msg='This package can be configured in config.h. Copy the config.def.h '
+    msg+='that was just placed into the package directory to config.h and '
+    msg+='modify it to change the configuration. Or just leave it alone to '
+    msg+='continue to use default values.'
+    warning "$msg"
   fi
-  cp "$_makedir/config.def.h" "$BUILDDIR"
-  echo "please don't abort"
-  test -z "$abort"
-  echo "it didn't abort?"
+  cp "$_sourcedir/config.def.h" "$BUILDDIR"
 }
 
 build() {
@@ -92,6 +88,8 @@ package() {
   local licdir="$shrdir/licenses/$pkgname"
   local docdir="$shrdir/doc/$pkgname"
   make $_makeopts PREFIX=/usr DESTDIR="$pkgdir" install
-  install $installopts "$licdir" "$_makedir/LICENSE"
-  install $installopts "$docdir" "$_makedir/README"
+  install $installopts "$licdir" "$_sourcedir/LICENSE"
+  install $installopts "$docdir" "$_sourcedir/README"
+  install $installopts "$docdir" README.terminfo.rst
+  install $installopts "$shrdir/$pkgname" "$_sourcedir/st.info"
 }

@@ -26,19 +26,36 @@
 # sup+t
 # sup+Return
 #
-# As a rule of thumb I should try to use mnemonics (v for volume, b for
+# As a rule of thumb I should try to use shorthands (v for volume, b for
 # browser, m for mute, etc.) when mapping keys so that they make sense
 # regardless of layout. Currently it's about half and half, although
 # the worst offenders (the vowels) aren't mapped to things I use frequently
 # so I'm not sure it matters much.
+#
+# A lot of the keys are starting to get used so it may actually be useful
+# to go back to a modal setup, kinda like the resize mode in the default
+# config. rofi, window movement, terminal, changing workspace, and other common
+# actions will still be in the default mode. All modes can be exited with at
+# least one of $mod+q, $mod+Q q, Q
+#
+# Possible modes are:
+# - Application ($sup+a): for launching things I commonly use, like firefox,
+#   Thunar, VirtualBox, the terminal, etc. This mode should be exited after
+#   launching a command, so it'll work kinda like a prefix.
+# - Resize/Move (tbd): for changing up the window layout.
+# - Volume/Sound/Brightness ($sup+v): muting, volume up/down, change output,
+#   etc. Some commands, like mute and sink change, will have this mode work
+#   as a prefix.
+# - Status/Ping (tbd): checking the status of certain things, like internet
+#   connectivity, battery, audio stuff, time? This might be something I should
+#   put in the default mode but we'll see. I could also accomplish the same
+#   thing by putting conky in a workspace somewhere.
 
 # Startup programs
-exec "xset r rate 200 50"
 exec "xrandr --output eDP-1-1 --mode 1920x1080 --rate 144"
 exec "feh --bg-scale ~/Downloads/dxmd_wallpaper.jpg"
 exec "compton"
 exec "redshift -P -b 0.8 -O 5500"
-exec "setxkbmap -layout us -variant dvorak -option ctrl:swapcaps"
 exec "st -e tmux"
 exec "dunst"
 exec "killall -q network_check.sh battery_check.sh"
@@ -49,6 +66,9 @@ exec "~/.config/polybar/network_check.sh"
 set $sup Mod4
 # Alt, currently not used
 set $mod Mod1
+
+# scripts
+set $goto_workspace ~/.config/i3/scripts/workspace_change.sh
 
 # Creates the gaps between windows
 gaps inner 15
@@ -134,10 +154,10 @@ bindsym $sup+o layout tabbed
 bindsym $sup+e layout toggle split
 
 # toggle tiling / floating
-bindsym $sup+Shift+space floating toggle
+#bindsym $sup+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym $sup+space focus mode_toggle
+#bindsym $sup+space focus mode_toggle
 
 # focus the parent container
 bindsym $sup+p focus parent
@@ -159,17 +179,30 @@ set $ws9 "9"
 set $ws10 "10"
 
 # switch to workspace
-bindsym $sup+1 workspace $ws1
-bindsym $sup+2 workspace $ws2
-bindsym $sup+3 workspace $ws3
-bindsym $sup+4 workspace $ws4
-bindsym $sup+5 workspace $ws5
-bindsym $sup+6 workspace $ws6
-bindsym $sup+7 workspace $ws7
-bindsym $sup+8 workspace $ws8
-bindsym $sup+9 workspace $ws9
-bindsym $sup+0 workspace $ws10
+bindsym $sup+1 exec $goto_workspace $ws1
+bindsym $sup+2 exec $goto_workspace $ws2
+bindsym $sup+3 exec $goto_workspace $ws3
+bindsym $sup+4 exec $goto_workspace $ws4
+bindsym $sup+5 exec $goto_workspace $ws5
+bindsym $sup+6 exec $goto_workspace $ws6
+bindsym $sup+7 exec $goto_workspace $ws7
+bindsym $sup+8 exec $goto_workspace $ws8
+bindsym $sup+9 exec $goto_workspace $ws9
+bindsym $sup+0 exec $goto_workspace $ws10
 
+# make switching workspaces less awful on programmer dvorak
+# order from 0 to 9 is: *()}+{][!=
+bindsym $sup+parenleft      exec $goto_workspace $ws1
+bindsym $sup+parenright     exec $goto_workspace $ws2
+bindsym $sup+braceright     exec $goto_workspace $ws3
+bindsym $sup+plus           exec $goto_workspace $ws4
+bindsym $sup+braceleft      exec $goto_workspace $ws5
+bindsym $sup+bracketright   exec $goto_workspace $ws6
+bindsym $sup+bracketleft    exec $goto_workspace $ws7
+bindsym $sup+exclam         exec $goto_workspace $ws8
+bindsym $sup+equal          exec $goto_workspace $ws9
+bindsym $sup+asterisk       exec $goto_workspace $ws10
+                            
 # move focused container to workspace
 bindsym $sup+Shift+1 move container to workspace $ws1
 bindsym $sup+Shift+2 move container to workspace $ws2
@@ -181,6 +214,19 @@ bindsym $sup+Shift+7 move container to workspace $ws7
 bindsym $sup+Shift+8 move container to workspace $ws8
 bindsym $sup+Shift+9 move container to workspace $ws9
 bindsym $sup+Shift+0 move container to workspace $ws10
+
+# make moving workspaces less awful on programmer dvorak
+# order from 0 to 9 is: *()}+{][!=
+bindsym $sup+Shift+parenleft    move container to workspace $ws1
+bindsym $sup+Shift+parenright   move container to workspace $ws2
+bindsym $sup+Shift+braceright   move container to workspace $ws3
+bindsym $sup+Shift+plus         move container to workspace $ws4
+bindsym $sup+Shift+braceleft    move container to workspace $ws5
+bindsym $sup+Shift+bracketright move container to workspace $ws6
+bindsym $sup+Shift+bracketleft  move container to workspace $ws7
+bindsym $sup+Shift+exclam       move container to workspace $ws8
+bindsym $sup+Shift+equal        move container to workspace $ws9
+bindsym $sup+Shift+asterisk     move container to workspace $ws10
 
 # reload the configuration file
 bindsym $sup+Shift+c reload

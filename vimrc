@@ -26,6 +26,7 @@ endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'mcchrish/nnn.vim'
+Plug 'dylanaraps/wal.vim'
 call plug#end()
 
 " enable line numbers
