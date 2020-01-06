@@ -52,13 +52,12 @@
 #   thing by putting conky in a workspace somewhere.
 
 # Startup programs
-exec "wal -i ~/Downloads/bork_referendum.jpg"
+exec "wal -i ~/Downloads/bork_referendum.jpg && st -e tmux"
 exec "xrandr --output eDP-1-1 --mode 1920x1080 --rate 144"
 exec "picom --daemon --use-damage --detect-client-leader --detect-transient"
 exec_always "~/.config/i3/scripts/dunst_setup.sh"
 exec_always "~/.config/i3/scripts/cleanup.sh"
 exec "redshift -P -b 0.8 -O 5500"
-exec "st -e tmux"
 
 # Windows/Command/Super
 set $sup Mod4
@@ -227,7 +226,7 @@ bindsym $sup+Shift+asterisk     move container to workspace $ws10
 # reload the configuration file
 bindsym $sup+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $sup+Shift+r exec "~/.config/i3/scripts/refresh_workspaces.sh; st -e tmux attach"
+bindsym $sup+Shift+r exec "~/.config/i3/scripts/refresh_workspaces.sh"
 # exit i3 (logs you out of your X session)
 bindsym $sup+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 # really exit i3

@@ -46,6 +46,10 @@ if [[ $TERM == "st-256color" ]] || [[ $TERM == "screen-256color" ]]; then
    alias enkb='setxkbmap -layout us -model pc104'
 fi
 
+# make things pretty
+prettify () {
+    wal -i $1 && nohup ~/.config/i3/scripts/refresh_workspaces.sh >/dev/null &
+}
 # stolen from stackoverflow and changed to my liking
 prompt () {
   local SSH_IP=`echo $SSH_CLIENT | awk '{ print $1 }'`
