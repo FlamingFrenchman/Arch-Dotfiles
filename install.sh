@@ -18,21 +18,21 @@ cp ./tmux.conf ~/.tmux.conf
 cp ./xprofile ~/.xprofile
 
 # set up symlinks for neovim
-[[ -f ~/.config/nvim ]] || mkdir -p ~/.config/nvim
-[[ -f ~/.config/nvim/init.vim ]] || ln -s ~/.vimrc ~/.config/nvim/init.vim
-[[ -f ~/.vim ]] || mkdir ~/.vim
-[[ -f ~/.local/share/nvim/site ]] && rm -rf ~/.local/share/nvim/site
-ln -s ~/.vim ~/.local/share/nvim/site
+[[ -d ~/.config/nvim ]] || mkdir -p ~/.config/nvim
+[[ -h ~/.config/nvim/init.vim ]] || ln -s ~/.vimrc ~/.config/nvim/init.vim
+[[ -d ~/.vim ]] || mkdir ~/.vim
+[[ -h ~/.local/share/nvim/site ]] || ln -s ~/.vim ~/.local/share/nvim/site
 
 # other stuff
+[[ -d ~/.config/wal/templates ]] || mkdir -p ~/.config/wal/templates
 cp ./wal/templates/colors-rofi-dark.rasi ~/.config/wal/templates/colors-rofi-dark.rasi
 cp ./bork_referendum.jpg ~/Documents/
-[[ -f ~/.config/dunst ]] || mkdir -p ~/.config/dunst
+[[ -d ~/.config/dunst ]] || mkdir ~/.config/dunst
 cp ./dunstrc ~/.config/dunst/dunstrc
 cp ./dunstrc.in ~/.config/dunst/dunstrc.in
 #cp -r ./polybar ~/.config
 
-[[ -f ~/.config/i3 ]] || mkdir -p ~/.config/i3
+[[ -e ~/.config/i3 ]] || mkdir -p ~/.config/i3
 if [[ "$1" == "desktop" ]]; then
     cp ./desktop-i3config ~/.config/i3/config
 elif [[ "$1" == "laptop" ]]; then
