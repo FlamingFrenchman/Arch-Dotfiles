@@ -31,8 +31,6 @@
 
 # Startup programs
 exec "wal -i ~/Downloads/bork_referendum.jpg && st -e tmux"
-exec "xrandr --output eDP-1-1 --mode 1920x1080 --rate 144"
-exec "picom --daemon --use-damage --detect-client-leader --detect-transient"
 exec_always "~/.config/i3/scripts/dunst_setup.sh"
 exec_always "~/.config/i3/scripts/cleanup.sh"
 

@@ -5,4 +5,6 @@
 setxkbmap -layout us -model pc104 -variant dvp -option \
     ctrl:swapcaps -option terminate:ctrl-alt-backspace
 xset r rate 200 50
-exec "redshift -P -b 0.8 -O 5500"
+redshift -P -b 0.8 -O 5500
+xrandr --output eDP-1-1 --mode 1920x1080 --rate 144
+picom --daemon --use-damage --detect-client-leader --detect-transient
