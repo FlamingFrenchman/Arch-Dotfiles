@@ -4,6 +4,7 @@ file="/home/robert/.config/dunst/dunstrc"
 
 killall -q dunst
 while pgrep -u $UID -x dunst >/dev/null; do sleep 1; done
+pkill -f "/bin/bash /home/robert/.config/i3/scripts/dunst_setup.sh"
 cp "$file.in" "$file.tmp"
 
 xrdb ~/.cache/wal/colors.Xresources
@@ -22,3 +23,4 @@ rm "$file"
 mv "$file.tmp" "$file"
 dunst &
 notify-send -t 3000 -u low "Dunst restarted"
+exit 0

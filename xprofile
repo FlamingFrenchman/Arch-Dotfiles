@@ -5,3 +5,4 @@
 setxkbmap -layout us -model pc104 -variant dvp -option \
     ctrl:swapcaps -option terminate:ctrl-alt-backspace
 xset r rate 200 50
+exec "redshift -P -b 0.8 -O 5500"

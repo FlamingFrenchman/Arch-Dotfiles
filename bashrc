@@ -28,9 +28,9 @@
 shopt -s checkwinsize
 
 # Editor
-export VISUAL=vim
-export EDITOR=$VISUAL
-export SUDO_EDITOR=vim
+export EDITOR=nvim
+export VISUAL=$EDITOR
+export SUDO_EDITOR=$EDITOR
 
 # flame dog
 export BROWSER="firejail firefox '%s' &"

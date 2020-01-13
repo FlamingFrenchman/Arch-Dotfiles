@@ -35,17 +35,20 @@ set number
 set bs=indent,eol,start
 " always show cursor coordinates
 set ruler
-" enable default lexical/syntax highlighting
-syntax on
 " highlight matches when searching
 set hlsearch
 " make it easier to unhighlight things
 nmap <space> :nohls<CR>
 " enable statusline even for single files
 set laststatus=2
+" enable tabline even if there's only one tab
+set showtabline=2
+" no wrapping
+set nowrap
 " pretty colors
 colorscheme slate
 
+" indent something something?
 filetype plugin indent on
 " show existing tab with 4 spaces width
 set tabstop=4
@@ -53,3 +56,15 @@ set tabstop=4
 set shiftwidth=4
 " On pressing tab, insert 4 spaces
 set expandtab
+
+" enable default lexical/syntax highlighting
+syntax on
+" turn on folding and let syntax files handle it
+set foldmethod=syntax
+" C syntax options
+let c_minlines = 100
+let c_space_errors = 1
+let c_curly_error = 1 " can be slow on large files
+
+" open all folds to start
+au Syntax * normal zR
