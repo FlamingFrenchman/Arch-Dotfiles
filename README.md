@@ -1,5 +1,7 @@
-# Arch-Dotfiles
-Dotfiles for my Archlinux desktop/laptop. Very WIP. May not work.
+# dotfiles
+Dotfiles. I mostly use them on Archlinux but ideally they'll work on any distribution,
+or at least systemd based ones. At the very least the literal dotfiles should be
+mostly portable, although they may not work with older versions of programs.
 I do not like the way it currently looks. (and I probably never will)
 
 ## Dependencies (approximate)
@@ -7,17 +9,14 @@ I do not like the way it currently looks. (and I probably never will)
 2. st
     - alpha
     - anysize
-    - scrollback
     - bold-is-not-bright
-    - boxdraw (doesn't work currently)
-3. tmux (in the future)
+    - boxdraw (the patch needs to be messed with to get it to work with alpha)
+3. tmux
 4. i3-gaps
-5. polybar (will be replaced by lemonbar or gotten rid of entirely)
+5. dunst
 6. neovim (symlink init.vim to .vimrc)
-   - nnn.vim
-   - coc.vim
 7. nnn
-8. thunar
+8. Thunar
 9. firejail
 10. alsa (amixer)
 11. pulseaudio
@@ -25,4 +24,3 @@ I do not like the way it currently looks. (and I probably never will)
 13. redshift
 14. lesspipe
 15. ttf-hack
-16. ttf-ionicons
