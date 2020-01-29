@@ -26,6 +26,8 @@
 
 # Resize window after command, if necessary
 shopt -s checkwinsize
+# append history to $HISTFILE on exit instead of overwriting it
+shopt -s histappend
 
 # Editor
 export EDITOR=nvim

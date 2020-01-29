@@ -50,6 +50,7 @@ fi
 prettify () {
     wal -i $1 && nohup ~/.config/i3/scripts/refresh_workspaces.sh >/dev/null &
 }
+
 # stolen from stackoverflow and changed to my liking
 prompt () {
   local SSH_IP=`echo $SSH_CLIENT | awk '{ print $1 }'`
@@ -82,8 +83,8 @@ prompt_short () {
                      then tmux display-message -p '#I'
                      else echo "_"
                      fi`\\$ $NC"
-    PS2="$WHITE-->$NC "
-    PS4="$WHITE>$NC "
+    PS2="$WHITE  >$NC "
+    PS4="$WHITE >>$NC "
 }
 
 # Extract things. Thanks to urukrama, ubuntuforums.org	

@@ -248,7 +248,7 @@ mode "edit" {
     bindsym u resize grow height 10 px or 10 ppt
     bindsym i resize shrink height 10 px or 10 ppt
     bindsym o resize grow width 10 px or 10 ppt
-    bindsym t workspace_layout tabbed
+    bindsym z workspace_layout tabbed
     bindsym s workspace_layout stacking
     bindsym d workspace_layout default
     bindsym p focus parent
