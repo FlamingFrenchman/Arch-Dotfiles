@@ -4,8 +4,8 @@
 cd "${BASH_SOURCE%/*}/" || { echo "Unable to cd into bundle directory; exiting"; exit; }
 
 # user must indicate whether they want the laptop configs or desktop configs
-[[ -z "$1" ]] && { echo "Please indicate whether you are updating the laptop or \
-desktop version of the config files."; exit; }
+[[ -z "$1" ]] && echo "If you would like to update laptop/desktop configs, \
+please indicate which one."
 
 cp ~/.vimrc ./vimrc
 cp ~/.bashrc ./bashrc
@@ -14,6 +14,9 @@ cp ~/.bash_logout ./bash_logout
 cp ~/.bash_aliases ./bash_aliases
 cp ~/.inputrc ./inputrc
 cp ~/.tmux.conf ./tmux.conf
+
+# assume no xprofile on a minimal update
+[ -z "$1" ] && exit 0
 cp ~/.xprofile ./xprofile
 
 cp ~/.config/wal/templates/colors-rofi-dark.rasi ./wal/templates/colors-rofi-dark.rasi

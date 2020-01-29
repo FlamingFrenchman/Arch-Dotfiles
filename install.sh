@@ -4,8 +4,7 @@
 cd "${BASH_SOURCE%/*}/" || { echo "Unable to cd into bundle directory; exiting"; exit; }
 
 # user must indicate whether they want the laptop configs or desktop configs
-[ -z "$1" ] && { echo "Please indicate whether you wish to install the laptop or \
-desktop version of the config files."; exit; }
+[ -z "$1" ] && echo "No type (laptop/desktop) specified; performing minimal install"
 
 # literal dotfiles
 cp ./vimrc ~/.vimrc
@@ -15,6 +14,9 @@ cp ./bash_logout ~/.bash_logout
 cp ./bash_aliases ~/.bash_aliases
 cp ./inputrc ~/.inputrc
 cp ./tmux.conf ~/.tmux.conf
+
+# im going to assume that a minimal install wont require X configuration
+[ -z "$1" ] && exit 0
 cp ./xprofile ~/.xprofile
 
 # set up symlinks for neovim
