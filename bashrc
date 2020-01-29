@@ -1,6 +1,7 @@
 #
 # ~/.bashrc
 #
+# I like my .bashrc file
 
 #/bin/bash
 #       The bash executable
@@ -30,12 +31,14 @@ shopt -s checkwinsize
 shopt -s histappend
 
 # Editor
-export EDITOR=nvim
+export EDITOR=vim
 export VISUAL=$EDITOR
 export SUDO_EDITOR=$EDITOR
-
-# flame dog
-export BROWSER="firejail firefox '%s' &"
+which --skip-alias nvim &>/dev/null && { \
+    export EDITOR=nvim; \
+    export VISUAL=$EDITOR; \
+    export SUDO_EDITOR=$EDITOR; \
+}
 
 # Colorful less
 # Reminder that raw escape sequences are not portable between shells
@@ -71,6 +74,3 @@ else
    PS1="";
    PROMPT_COMMAND=prompt_short
 fi
-
-# Clear screen after login
-clear

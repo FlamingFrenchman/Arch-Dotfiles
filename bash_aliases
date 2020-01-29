@@ -31,8 +31,10 @@ alias admin='sudo -i -u admin'
 alias devel='sudo -i -u devel'
 
 # Force myself to use the good shit
-alias vim='nvim'
-alias vi='nvim'
+which --skip-alias nvim &>/dev/null && { \
+    alias vim='nvim'; \
+    alias vi='nvim'; \
+}
 
 # Terminal emulator specific stuff
 if [[ $TERM == "st-256color" ]] || [[ $TERM == "screen-256color" ]]; then
