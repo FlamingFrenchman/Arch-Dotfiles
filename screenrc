@@ -1,0 +1,35 @@
+#
+# .screenrc
+# 
+
+# options
+startup_message off
+defscrollback 10000
+altscreen on
+
+# binds
+# prefix
+# j is interpreted as a carriage return (Enter); there is a conflict in Emacs
+# but it seems like it wouldn't be a frequent problem
+escape ^jJ
+
+# vi-keys
+bind h focus left
+bind j focus down
+bind k focus up
+bind l focus right
+bind ^h focus left
+bind ^j focus down
+bind ^k focus up
+bind ^l focus right
+
+# other stuff
+bind x
+bind ^x
+bind ^| split -v
+bind \\ split -v
+bind o focus
+bind ^i other
+bind - split
+bind K kill
+bind Q quit

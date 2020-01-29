@@ -3,17 +3,17 @@
 #
 # I like my .bashrc file
 
-#/bin/bash
+# /bin/bash
 #       The bash executable
-#/etc/profile
+# /etc/profile
 #       The systemwide initialization file, executed for login shells
-#~/.bash_profile
+# ~/.bash_profile and ~/.profile
 #       The personal initialization file, executed for login shells
-#~/.bashrc
-#       The individual per-interactive-shell startup file
-#~/.bash_logout
+# ~/.bashrc
+#       The individual per-interactive-shell bash startup file
+# ~/.bash_logout
 #       The individual login shell cleanup file, executed when a login shell exits
-#~/.inputrc
+# ~/.inputrc
 #       Individual readline initialization file (for anything readline-based)
 
 # If not running interactively, don't do anything
@@ -34,14 +34,14 @@ shopt -s histappend
 export EDITOR=vim
 export VISUAL=$EDITOR
 export SUDO_EDITOR=$EDITOR
-which --skip-alias nvim &>/dev/null && { \
+which nvim &>/dev/null && { \
     export EDITOR=nvim; \
     export VISUAL=$EDITOR; \
     export SUDO_EDITOR=$EDITOR; \
 }
 
-# Colorful less
-# Reminder that raw escape sequences are not portable between shells
+# colorful less
+# raw escape sequences are not portable between shells
 export LESS=-R
 export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
 export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
@@ -52,8 +52,10 @@ export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 
 # make less more friendly for non-text input files, see lesspipe(1)
-export LESSOPEN="|lesspipe.sh %s"
-[ -x /usr/bin/lesspipe ] && eval "$(lesspipe)"
+[[ -x /usr/bin/lesspipe.sh ]] && { \
+    export LESSOPEN="|lesspipe.sh %s"; \
+    eval "$(lesspipe.sh)"; \
+}
 
 # prep for ssh
 # on arch I am using systemd/user to start instead

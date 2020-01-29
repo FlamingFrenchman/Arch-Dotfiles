@@ -1,10 +1,9 @@
-!#/bin/bash
+#!/bin/sh
 
-[[ -f ~/.bashrc ]] && source ~/.bashrc
-
-xrandr --output eDP-1-1 --mode 1920x1080 --rate 144
+xrandr --auto
 xset r rate 200 50
 setxkbmap -layout us -model pc104 -variant dvp -option \
     ctrl:swapcaps -option terminate:ctrl-alt-backspace
-picom --daemon --use-damage --detect-client-leader --detect-transient
-redshift -P -b 0.8 -O 5500
+# no complaints from systems I don't control
+which picom && picom --daemon --use-damage --detect-client-leader --detect-transient
+which redshift && redshift -P -b 0.8 -O 5500
