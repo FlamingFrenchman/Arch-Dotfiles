@@ -4,8 +4,7 @@
 cd "${BASH_SOURCE%/*}/" || { echo "Unable to cd into bundle directory; exiting"; exit; }
 
 # user must indicate whether they want the laptop configs or desktop configs
-[[ -z "$1" ]] && echo "If you would like to update laptop/desktop configs, \
-please indicate which one."
+[[ -z "$1" ]] && echo "Platform (laptop/desktop) not specified; performing minimal update."
 
 cp ~/.vimrc ./vimrc
 cp ~/.bashrc ./bashrc

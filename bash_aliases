@@ -39,8 +39,6 @@ which --skip-alias nvim &>/dev/null && { \
 # Terminal emulator specific stuff
 if [[ $TERM == "st-256color" ]] || [[ $TERM == "screen-256color" ]]; then
    # Quickly change keyboard
-   # Currently breaks anything set with "bind" so avoid using if you like those
-   # Or maybe it doesn't? I have no clue.
    alias pgkb='setxkbmap -layout us -model pc104 -variant dvp -option \
        ctrl:swapcaps -option terminate:ctrl-alt-backspace'
    alias dvkb='setxkbmap -layout us -model pc104 -variant dvorak -option \
