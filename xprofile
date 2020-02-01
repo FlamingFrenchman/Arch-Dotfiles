@@ -2,8 +2,11 @@
 
 xrandr --auto
 xset r rate 200 50
-setxkbmap -layout us -model pc104 -variant dvp -option \
+setxkbmap -model pc104 -layout us -variant dvp -option \
     ctrl:swapcaps -option terminate:ctrl-alt-backspace
-# no complaints from systems I don't control
-which picom && picom --daemon --use-damage --detect-client-leader --detect-transient
+if which picom &>/dev/null; then
+    picom --daemon --use-damage --detect-client-leader --detect-transient
+elif which compton &>/dev/null; then
+    compton --daemon
+fi
 which redshift && redshift -P -b 0.8 -O 5500

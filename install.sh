@@ -36,10 +36,11 @@ cp ./bork_referendum.jpg ~/Documents/
 cp ./dunstrc ~/.config/dunst/dunstrc
 cp ./dunstrc.in ~/.config/dunst/dunstrc.in
 
-[ -e ~/.config/i3 ] || mkdir -p ~/.config/i3
+# i3
+[ -d ~/.config/i3 ] || mkdir -p ~/.config/i3
 if [ "$1" == "desktop" ]; then
     cp ./desktop-i3config ~/.config/i3/config
 elif [ "$1" == "laptop" ]; then
     cp ./laptop-i3config ~/.config/i3/config
-    cp -r ./scripts ~/.config/i3/
 fi
+cp -r ./scripts ~/.config/i3/
