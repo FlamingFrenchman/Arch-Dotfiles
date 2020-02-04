@@ -16,6 +16,9 @@ cp ~/.inputrc ./inputrc
 cp ~/.tmux.conf ./tmux.conf
 cp ~/.screenrc ./screenrc
 
+# useful scripts
+cp ~/.bin/* ./scripts
+
 # assume no X settings on a minimal update
 [ -z "$1" ] && exit 0
 cp ~/.xprofile ./xprofile
@@ -30,5 +33,4 @@ if [ "$1" == "desktop" ]; then
     cp ~/.config/i3/config ./desktop-i3config;
 elif [ "$1" == "laptop" ]; then
     cp ~/.config/i3/config ./laptop-i3config;
-    cp -r ~/.config/i3/scripts ./
 fi

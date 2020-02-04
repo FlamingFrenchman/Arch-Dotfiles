@@ -16,6 +16,10 @@ cp ./inputrc ~/.inputrc
 cp ./tmux.conf ~/.tmux.conf
 cp ./screenrc ~/.screenrc
 
+# useful scripts
+[-d ~/.bin ] || mkdir ~/.bin
+cp ./scripts/* ~/.bin
+
 # assume no X settings on a minimal install
 [ -z "$1" ] && exit 0
 cp ./xprofile ~/.xprofile

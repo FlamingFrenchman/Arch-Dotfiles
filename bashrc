@@ -30,6 +30,9 @@ shopt -s checkwinsize
 # append history to $HISTFILE on exit instead of overwriting it
 shopt -s histappend
 
+# PATH
+export PATH="$PATH:$HOME/.local/bin:$HOME/.bin"
+
 # Editor
 export EDITOR=vim
 export VISUAL=$EDITOR
