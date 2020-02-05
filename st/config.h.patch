@@ -1,5 +1,5 @@
---- config.def.h	2020-02-04 20:41:16.111051852 -0800
-+++ config.h	2020-02-04 20:00:55.864338259 -0800
+--- config.def.h	2020-02-04 22:15:41.310357419 -0800
++++ config.h	2020-02-04 22:17:16.591140566 -0800
 @@ -5,8 +5,8 @@
   *
   * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
@@ -26,6 +26,15 @@
  
  /*
   * bell volume. It must be a value between -100 and 100. Use 0 for disabling
+@@ -144,7 +144,7 @@ static unsigned int defaultrcs = 257;
+  * 6: Bar ("|")
+  * 7: Snowman ("☃")
+  */
+-static unsigned int cursorshape = 2;
++static unsigned int cursorshape = 1;
+ 
+ /*
+  * Default columns and rows numbers
 @@ -187,9 +187,9 @@ ResourcePref resources[] = {
  		{ "color13",      STRING,  &colorname[13] },
  		{ "color14",      STRING,  &colorname[14] },
