@@ -65,7 +65,15 @@ prepare() {
   msg+="is run makepkg with the -e flag. Your config.h will be copied\n"
   msg+="into the source directory automatically, if it exists."
   warning "$msg"
+
   cp "$_sourcedir/config.def.h" "$BUILDDIR"
+  if [ -e "$BUILDDIR/config.h" ]; then
+      cp "BUILDDIR/config.h" "$_sourcedir"
+  elif [ -e "$BUILDDIR/config.h.patch" ]; then
+      cp "$_sourcedir/config.def.h" "$BUILDDIR/config.h"
+      patch "$BUILDDIR/config.h" < "$BUILDDIR/config.h.patch"
+      cp "$BUILDDIR/config.h" "$_sourcedir"
+  fi
   exit 1
 }
 
