@@ -32,8 +32,8 @@
 
 # Startup programs
 exec "wal -i ~/Downloads/bork_referendum.jpg && st -e tmux"
-exec_always "~/.config/i3/scripts/dunst_setup.sh"
-exec_always "~/.config/i3/scripts/cleanup.sh"
+exec_always "~/.bin/dunst_setup.sh"
+exec_always "~/.bin/cleanup.sh"
 
 # Windows/Command/Super
 set $sup Mod4
@@ -41,9 +41,9 @@ set $sup Mod4
 set $mod Mod1
 
 # scripts and programs
-set $workspace_change ~/.config/i3/scripts/workspace_change.sh
-set $volume_change ~/.config/i3/scripts/volume_change.sh
-set $brightness_change ~/.config/i3/scripts/brightness_change.sh
+set $workspace_change ~/.bin/workspace_change.sh
+set $volume_change ~/.bin/volume_change.sh
+set $brightness_change ~/.bin/brightness_change.sh
 set $terminal st
 set $browser chromium
 set $filemanager Thunar
@@ -207,7 +207,7 @@ bindsym $sup+Shift+asterisk     move container to workspace $ws10
 # reload the configuration file
 bindsym $sup+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $sup+Shift+r exec "~/.config/i3/scripts/refresh_workspaces.sh"
+bindsym $sup+Shift+r exec "~/.bin/refresh_workspaces.sh"
 # exit i3 (logs you out of your X session)
 bindsym $sup+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 # really exit i3

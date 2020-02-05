@@ -17,7 +17,7 @@ cp ./tmux.conf ~/.tmux.conf
 cp ./screenrc ~/.screenrc
 
 # useful scripts
-[-d ~/.bin ] || mkdir ~/.bin
+[ -d ~/.bin ] || mkdir ~/.bin
 cp ./scripts/* ~/.bin
 
 # assume no X settings on a minimal install
@@ -47,4 +47,3 @@ if [ "$1" == "desktop" ]; then
 elif [ "$1" == "laptop" ]; then
     cp ./laptop-i3config ~/.config/i3/config
 fi
-cp -r ./scripts ~/.config/i3/
