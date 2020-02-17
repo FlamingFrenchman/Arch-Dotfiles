@@ -50,6 +50,15 @@ prepare() {
   patch --merge --directory="$_sourcedir" --strip=1 < st-xresources-20180309-c5ba9c0.diff || true
   echo "Applying alpha patch"
   patch --merge --directory="$_sourcedir" --strip=1 < st-alpha-$pkgver.diff || true
+ 
+  cp "$_sourcedir/config.def.h" "$BUILDDIR"
+  if [ -e "$BUILDDIR/config.h" ]; then
+      cp "BUILDDIR/config.h" "$_sourcedir"
+  elif [ -e "$BUILDDIR/config.h.patch" ]; then
+      cp "$_sourcedir/config.def.h" "$BUILDDIR/config.h"
+      patch "$BUILDDIR/config.h" < "$BUILDDIR/config.h.patch"
+      cp "$BUILDDIR/config.h" "$_sourcedir"
+  fi
   
   msg=""
   msg+="This package can be configured in config.h.\n"
@@ -65,15 +74,6 @@ prepare() {
   msg+="is run makepkg with the -e flag. Your config.h will be copied\n"
   msg+="into the source directory automatically, if it exists."
   warning "$msg"
-
-  cp "$_sourcedir/config.def.h" "$BUILDDIR"
-  if [ -e "$BUILDDIR/config.h" ]; then
-      cp "BUILDDIR/config.h" "$_sourcedir"
-  elif [ -e "$BUILDDIR/config.h.patch" ]; then
-      cp "$_sourcedir/config.def.h" "$BUILDDIR/config.h"
-      patch "$BUILDDIR/config.h" < "$BUILDDIR/config.h.patch"
-      cp "$BUILDDIR/config.h" "$_sourcedir"
-  fi
   exit 1
 }
 

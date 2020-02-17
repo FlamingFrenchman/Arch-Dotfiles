@@ -15,19 +15,17 @@ cp ~/.bash_aliases ./bash_aliases
 cp ~/.inputrc ./inputrc
 cp ~/.tmux.conf ./tmux.conf
 cp ~/.screenrc ./screenrc
+cp ~/.xprofile ./xprofile
 
 # useful scripts
 cp ~/.bin/* ./scripts
 
-# assume no X settings on a minimal update
 [ -z "$1" ] && exit 0
-cp ~/.xprofile ./xprofile
 cp ~/.xsession ./xsession
 cp ~/.xinitrc  ./xinitrc
 
-cp ~/.config/wal/templates/colors-rofi-dark.rasi ./wal/templates/colors-rofi-dark.rasi
-cp ~/.config/dunst/dunstrc ./dunstrc
-cp ~/.config/dunst/dunstrc.in ./dunstrc.in
+cp -r ~/.config/wal ./
+cp -r ~/.config/dunst ./
 
 if [ "$1" == "desktop" ]; then
     cp ~/.config/i3/config ./desktop-i3config;

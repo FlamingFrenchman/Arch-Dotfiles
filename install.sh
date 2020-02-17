@@ -16,13 +16,15 @@ cp ./inputrc ~/.inputrc
 cp ./tmux.conf ~/.tmux.conf
 cp ./screenrc ~/.screenrc
 
+# want keyboard and faster repeat
+cp ./xprofile ~/.xprofile
+
 # useful scripts
 [ -d ~/.bin ] || mkdir ~/.bin
 cp ./scripts/* ~/.bin
 
-# assume no X settings on a minimal install
+# no custom X sessions on minimal install
 [ -z "$1" ] && exit 0
-cp ./xprofile ~/.xprofile
 cp ./xsession ~/.xsession
 cp ./xinitrc  ~/.xinitrc
 
@@ -33,12 +35,9 @@ cp ./xinitrc  ~/.xinitrc
 [ -h ~/.local/share/nvim/site ] || ln -s ~/.vim ~/.local/share/nvim/site
 
 # other stuff
-[ -d ~/.config/wal/templates ] || mkdir -p ~/.config/wal/templates
-cp ./wal/templates/colors-rofi-dark.rasi ~/.config/wal/templates/colors-rofi-dark.rasi
+cp -r ./wal ~/.config/
+cp -r ./dunst ~/.config/
 cp ./bork_referendum.jpg ~/Documents/
-[ -d ~/.config/dunst ] || mkdir ~/.config/dunst
-cp ./dunstrc ~/.config/dunst/dunstrc
-cp ./dunstrc.in ~/.config/dunst/dunstrc.in
 
 # i3
 [ -d ~/.config/i3 ] || mkdir -p ~/.config/i3

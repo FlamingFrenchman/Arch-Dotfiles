@@ -1,16 +1,5 @@
---- config.def.h	2020-02-04 22:15:41.310357419 -0800
-+++ config.h	2020-02-04 22:17:16.591140566 -0800
-@@ -5,8 +5,8 @@
-  *
-  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
-  */
--static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
--static int borderpx = 2;
-+static char *font = "Hack:pixelsize=15:antialias=true:autohint=true";
-+static int borderpx = 0;
- 
- /*
-  * What program is execed by st depends of these precedence rules:
+--- config.def.h	2020-02-17 11:07:23.191319088 -0800
++++ config.h	2020-02-17 11:07:22.217981810 -0800
 @@ -62,11 +62,11 @@ static unsigned int cursorthickness = 2;
   *    Bold affects lines thickness if boxdraw_bold is not 0. Italic is ignored.
   * 0: disable (render all U25XX glyphs normally from the font).

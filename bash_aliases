@@ -82,7 +82,7 @@ prompt_short () {
           else echo -e $CYAN; \
           fi`>$WHITE`if [[ $TERM == "screen-256color" ]];
                      then tmux display-message -p '#I'
-                     else echo "_"
+                     else echo "X"
                      fi`\\$ $NC"
     PS2="$WHITE  >$NC "
     PS4="$WHITE >>$NC "
