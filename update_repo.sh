@@ -18,7 +18,7 @@ cp ~/.screenrc ./screenrc
 cp ~/.xprofile ./xprofile
 
 # useful scripts
-cp ~/.bin/* ./scripts
+cp -r ~/.bin/* ./bin
 
 [ -z "$1" ] && exit 0
 cp ~/.xsession ./xsession

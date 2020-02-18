@@ -31,7 +31,7 @@ shopt -s checkwinsize
 shopt -s histappend
 
 # PATH
-export PATH="$PATH:$HOME/.local/bin:$HOME/.bin"
+export PATH="$PATH:$HOME/.local/bin:$HOME/.bin:$HOME/.gem/ruby/2.7.0/bin"
 
 # Editor
 export EDITOR=vim

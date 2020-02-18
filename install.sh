@@ -21,7 +21,7 @@ cp ./xprofile ~/.xprofile
 
 # useful scripts
 [ -d ~/.bin ] || mkdir ~/.bin
-cp ./scripts/* ~/.bin
+cp -r ./bin/* ~/.bin
 
 # no custom X sessions on minimal install
 [ -z "$1" ] && exit 0

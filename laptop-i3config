@@ -31,9 +31,10 @@
 #   redshift, etc.)
 
 # Startup programs
-exec "wal -i ~/Downloads/bork_referendum.jpg && st -e tmux"
-exec_always "~/.bin/dunst_setup.sh"
+exec "st -e tmux"
+exec_always "~/.bin/dunst_restart.sh"
 exec_always "~/.bin/cleanup.sh"
+exec_always "xrdb ~/.cache/wal/colors.Xresources"
 
 # Windows/Command/Super
 set $sup Mod4
@@ -45,7 +46,7 @@ set $workspace_change ~/.bin/workspace_change.sh
 set $volume_change ~/.bin/volume_change.sh
 set $brightness_change ~/.bin/brightness_change.sh
 set $terminal st
-set $browser chromium
+set $browser firefox
 set $filemanager Thunar
 set $monitor conky
 
@@ -99,6 +100,10 @@ bindsym XF86AudioLowerVolume exec $volume_change down
 # function key brightness control
 bindsym XF86MonBrightnessUp exec $brightness_change lighten 5
 bindsym XF86MonBrightnessDown exec $brightness_change darken 5
+
+# function key audio player control
+bindsym XF86AudioPause exec playerctl pause
+bindsym XF86AudioPlay exec playerctl play
 
 # Use Mouse+$sup to drag floating windows to their wanted position
 floating_modifier $sup
@@ -207,7 +212,7 @@ bindsym $sup+Shift+asterisk     move container to workspace $ws10
 # reload the configuration file
 bindsym $sup+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $sup+Shift+r exec "~/.bin/refresh_workspaces.sh"
+bindsym $sup+Shift+r exec restart
 # exit i3 (logs you out of your X session)
 bindsym $sup+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 # really exit i3
