@@ -29,7 +29,8 @@
 
 #window {{
     background-color: @background;
-    border: 0;
+    border: 3px;
+    border-color: @foreground;
     padding: 2.5ch;
 }}
 

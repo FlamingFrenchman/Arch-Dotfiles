@@ -15,6 +15,7 @@ cp ~/.bash_aliases ./bash_aliases
 cp ~/.inputrc ./inputrc
 cp ~/.tmux.conf ./tmux.conf
 cp ~/.screenrc ./screenrc
+cp ~/.profile ./profile
 cp ~/.xprofile ./xprofile
 
 # useful scripts

@@ -10,7 +10,7 @@ case $1 in
             if($1 == "Name:") { sink=$2 } \
             if($1 == "Mute:" && sink == "'"$default_sink"'") { print $2 } \
         }')
-        notify-send -t 3000 -u normal "Mute: $default_vol"
+        notify-send -t 500 -u normal "Mute: $default_vol"
         ;;
     up)
         # default sink volume up
@@ -21,7 +21,7 @@ case $1 in
             if($1 == "Name:") { sink=$2 } \
             if($1 == "Volume:" && sink == "'"$default_sink"'") { print $5 } \
         }')
-        notify-send -t 3000 -u normal "Volume: $default_vol"
+        notify-send -t 500 -u normal "Volume: $default_vol"
         ;;
     down)
         # default sink volume down
@@ -32,7 +32,7 @@ case $1 in
             if($1 == "Name:") { sink=$2 } \
             if($1 == "Volume:" && sink == "'"$default_sink"'") { print $5 } \
         }')
-        notify-send -t 3000 -u normal "Volume: $default_vol"
+        notify-send -t 500 -u normal "Volume: $default_vol"
         ;;
     cycle)
         # figure out and increment default sink index
@@ -49,6 +49,6 @@ case $1 in
             { print $2 } }')
         pactl set-default-sink $default_index
         # notify
-        notify-send -t 3000 -u normal "Set default sink to $default_sink"
+        notify-send -t 500 -u normal "Set default sink to $default_sink"
         ;;
 esac

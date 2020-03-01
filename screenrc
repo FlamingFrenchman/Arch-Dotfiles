@@ -9,9 +9,8 @@ altscreen on
 
 # binds
 # prefix
-# ctrl-j is interpreted as a line feed (\n, 0x0a, Enter); emacs uses this
-# specific method of inupt as a sort of literal line feed that will not be
-# caught by the interface, but it doesn't seem like it comes up very frequently
+# ctrl-j is interpreted as a carriage return (\r, 0x0d); emacs uses this
+# for something but it seemed very specific and unimportant
 escape ^jJ
 
 # vi-keys

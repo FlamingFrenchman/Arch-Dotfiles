@@ -17,33 +17,36 @@ case $1 in
         newtemp=$(expr "$(cat $temperature_file)" + "$2")
         if [[ $newtemp -gt 6500 ]]; then newtemp=6500; fi
         echo "$newtemp" > "$temperature_file"
-        redshift -P -O "$(cat $temperature_file)" -b "0.$(cat $brightness_file)"
-        notify-send -t 1000 -u low 'Color Temp: '"$newtemp"'K'
+        brightness="$(cat $brightness_file)"
+        if [[ $brightness -lt 100 ]]; then brightness="0.$brightness"; fi
+        redshift -P -O "$(cat $temperature_file)" -b "$brightness"
+        notify-send -t 500 -u low 'Color Temp: '"$newtemp"'K'
         ;;
     redden)
         newtemp=$(expr "$(cat $temperature_file)" - "$2")
         if [[ $newtemp -lt 1000 ]]; then newtemp=1000; fi
         echo "$newtemp" > "$temperature_file"
-        redshift -P -O "$(cat $temperature_file)" -b "0.$(cat $brightness_file)"
-        notify-send -t 1000 -u low 'Color Temp: '"$newtemp"'K'
+        brightness="$(cat $brightness_file)"
+        if [[ $brightness -lt 100 ]]; then brightness="0.$brightness"; fi
+        redshift -P -O "$(cat $temperature_file)" -b "$brightness"
+        notify-send -t 500 -u low 'Color Temp: '"$newtemp"'K'
         ;;
     lighten)
         newbright=$(expr "$(cat $brightness_file)" + "$2")
         if [[ $newbright -gt 100 ]]; then newbright=100; fi
         echo "$newbright" > "$brightness_file"
-        if [[ $newbright -eq 100 ]]; then
-            redshift -P -O "$(cat $temperature_file)" -b "$(cat $brightness_file)"
-            notify-send -t 1000 -u low 'Brightness: '"$newbright"
-        else
-            redshift -P -O "$(cat $temperature_file)" -b "0.$(cat $brightness_file)"
-            notify-send -t 1000 -u low 'Brightness: 0.'"$newbright"
-        fi
+        brightness="$(cat $brightness_file)"
+        if [[ $brightness -lt 100 ]]; then brightness="0.$brightness"; fi
+        redshift -P -O "$(cat $temperature_file)" -b "$brightness"
+        notify-send -t 500 -u low 'Brightness: '"$newbright"
         ;;
     darken)
         newbright=$(expr "$(cat $brightness_file)" - "$2")
         if [[ $newbright -lt 10 ]]; then newbright=10; fi
         echo "$newbright" > "$brightness_file"
-        redshift -P -O "$(cat $temperature_file)" -b "0.$(cat $brightness_file)"
-        notify-send -t 1000 -u low 'Brightness: 0.'"$newbright"
+        brightness="$(cat $brightness_file)"
+        if [[ $brightness -lt 100 ]]; then brightness="0.$brightness"; fi
+        redshift -P -O "$(cat $temperature_file)" -b "$brightness"
+        notify-send -t 500 -u low "Brightness: $brightness"
         ;;
 esac
