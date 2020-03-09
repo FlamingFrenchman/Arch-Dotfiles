@@ -48,13 +48,6 @@ shopt -s histappend
 #  eval "$(<"$XDG_RUNTIME_DIR/ssh-agent.env")"
 #fi
 
-# bash specific stuff
-if [[ $TERM == linux ]]; then
-   # set prompt once, manually
-   prompt_long;
-   PROMPT_COMMAND=""
-else
-   # function to call to generate command
-   PS1="";
-   PROMPT_COMMAND=prompt_short
-fi
+# function to call to generate command
+PS1="";
+PROMPT_COMMAND=prompt

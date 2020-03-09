@@ -6,12 +6,21 @@
 startup_message off
 defscrollback 10000
 altscreen on
+hardstatus on
+hardstatus alwayslastline "%{b kw}%H %{r}%1` %{w}| %{g}%c %{w}| %{y}%d.%m.%Y %{w}| %{g}%l %{w}| %{-b kw}%u %-Lw%{= rW}%50> %n%f %t %{-}%+Lw%<"
 
 # binds
 # prefix
 # ctrl-j is interpreted as a carriage return (\r, 0x0d); emacs uses this
 # for something but it seemed very specific and unimportant
 escape ^jJ
+
+# remove something dangerous
+bind k
+bind ^k
+bind q
+bind ^q
+bind \\
 
 # vi-keys
 bind h focus left
@@ -24,12 +33,13 @@ bind ^k focus up
 bind ^l focus right
 
 # other stuff
+bind X
 bind x
-bind ^x
+bind x remove
+bind e quit
+bind q kill
 bind ^| split -v
 bind \\ split -v
+bind - split
 bind o focus
 bind ^i other
-bind - split
-bind K kill
-bind Q quit

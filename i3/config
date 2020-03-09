@@ -45,7 +45,6 @@
 # Startup programs
 exec "wal -i ~/.config/wal/images/unit_02_v1.png && xrdb ~/.cache/wal/colors.Xresources && st -e tmux"
 exec_always "~/.bin/dunst_restart.sh -conf ~/.cache/wal/colors-dunstrc"
-exec_always "~/.bin/cleanup.sh"
 
 # Windows/Command/Super
 set $sup Mod4

@@ -28,8 +28,6 @@ alias diff='diff --color=auto'
 alias df='df -h'
 alias du='du -h'
 alias dmesg='dmesg -H --color=always'
-alias admin='sudo -i -u admin'
-alias devel='sudo -i -u devel'
 
 # Force myself to use the good shit
 which --skip-alias nvim &>/dev/null && { \
@@ -47,45 +45,45 @@ if [[ $TERM == "st-256color" ]] || [[ $TERM == "screen-256color" ]]; then
    alias enkb='setxkbmap -layout us -model pc104'
 fi
 
+steam () {
+    nohup flatpak run com.valvesoftware.Steam &>/dev/null &
+}
+
+spotify () {
+    nohup flatpak run com.spotify.Client &>/dev/null &
+}
+
+discord () {
+    nohup flatpak run com.discordapp.Discord &>/dev/null &
+}
+
+gparted () {
+    sudo -b gparted $* &>/dev/null
+}
+
+firefox () {
+    nohup firefox $* &>/dev/null &
+}
+
 # make things pretty
 prettify () {
     wal -i $1 && nohup ~/.config/i3/scripts/refresh_workspaces.sh >/dev/null &
 }
 
-# stolen from stackoverflow and changed to my liking
+# set the prompt
 prompt () {
-  local SSH_IP=`echo $SSH_CLIENT | awk '{ print $1 }'`
-  local SSH2_IP=`echo $SSH2_CLIENT | awk '{ print $1 }'`
-  if [ $SSH2_IP ] || [ $SSH_IP ] ; then
-    local SSH_FLAG="@\h"
-  fi
-  PS1="$BLACK[$RED\u$WHITE$SSH_FLAG:$LIGHTRED\w$BLACK]$WHITE\\$ $NC"
-  PS2="$RED>$NC "
-  PS4='$RED+$NC '
-}
-
-prompt_long () {
-  local SSH_IP=`echo $SSH_CLIENT | awk '{ print $1 }'`
-  local SSH2_IP=`echo $SSH2_CLIENT | awk '{ print $1 }'`
-  if [ $SSH2_IP ] || [ $SSH_IP ] ; then
-    local SSH_FLAG="@\h"
-  fi
-  PS1="$DARKGRAY[$LIGHTRED\$(date +%H:%M)$DARKGRAY]\
-[$RED\u$WHITE$SSH_FLAG:$LIGHTRED\w$DARKGRAY]$WHITE\\$ $NC"
-  PS2="$RED>$NC "
-  PS4='$RED+$NC '
-}
-
-prompt_short () {
-    PS1="`if [[ $? -gt 0 ]]; \
-          then echo -e $RED; \
-          else echo -e $CYAN; \
-          fi`>$WHITE`if [[ $TERM == "screen-256color" ]];
-                     then tmux display-message -p '#I'
-                     else echo "X"
-                     fi`\\$ $NC"
-    PS2="$WHITE  >$NC "
-    PS4="$WHITE >>$NC "
+    local STATUS=`if [[ $? -gt 0 ]]; \
+                  then echo -e "$RED"; \
+                  else echo -e "$WHITE"; \
+                  fi`
+    local SSH_IP=`echo $SSH_CLIENT | awk '{ print $1 }'`
+    local SSH2_IP=`echo $SSH2_CLIENT | awk '{ print $1 }'`
+    if [ $SSH2_IP ] || [ $SSH_IP ] ; then
+        local USER_AND_HOST="$NC\u$WHITE@$NC\h "
+    fi
+    PS1="$USER_AND_HOST$STATUS\\$ $NC"
+    PS2="$WHITE>$NC "
+    PS4=" $NC "
 }
 
 # Extract things. Thanks to urukrama, ubuntuforums.org	

@@ -38,12 +38,13 @@ cp ./xinitrc  ~/.xinitrc
 # other stuff
 cp -r ./wal ~/.config/
 cp -r ./dunst ~/.config/
-cp ./bork_referendum.jpg ~/Documents/
 
 # i3
 [ -d ~/.config/i3 ] || mkdir -p ~/.config/i3
-if [ "$1" == "desktop" ]; then
-    cp ./desktop-i3config ~/.config/i3/config
-elif [ "$1" == "laptop" ]; then
-    cp ./laptop-i3config ~/.config/i3/config
+if [ "$1" = "desktop" ]; then
+    #cp ./desktop-i3config ~/.config/i3/config
+    :
+elif [ "$1" = "laptop" ]; then
+    cp -r ./i3 ~/.config/
+    cp -r ./sway ~/.config/
 fi

@@ -72,7 +72,9 @@ prepare() {
   msg+="amiss. If there is, just manually resolve the merge conflicts in\n"
   msg+="the source directory. Once you have done this, all you need to do\n"
   msg+="is run makepkg with the -e flag. Your config.h will be copied\n"
-  msg+="into the source directory automatically, if it exists."
+  esg+="into the source directory automatically, if it exists. If you've\n"
+  msg+="got a patch for your config.h instead, the PKGBUILD can handle\n"
+  msg+="that too. To generate a patch for your config, use 'diff -up'.\n"
   warning "$msg"
   exit 1
 }

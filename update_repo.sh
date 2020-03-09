@@ -28,8 +28,10 @@ cp ~/.xinitrc  ./xinitrc
 cp -r ~/.config/wal ./
 cp -r ~/.config/dunst ./
 
-if [ "$1" == "desktop" ]; then
-    cp ~/.config/i3/config ./desktop-i3config;
-elif [ "$1" == "laptop" ]; then
-    cp ~/.config/i3/config ./laptop-i3config;
+if [ "$1" = "desktop" ]; then
+    #cp ~/.config/i3/config ./desktop-i3config;
+    :
+elif [ "$1" = "laptop" ]; then
+    cp -r ~/.config/i3 ./
+    cp -r ~/.config/sway ./
 fi

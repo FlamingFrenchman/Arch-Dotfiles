@@ -19,6 +19,13 @@ if has('plugs')
     call plug#end()
 endif
 
+" cursor settings
+let &t_SI = "\e[5 q"
+let &t_SR = "\e[1 q"
+let &t_EI = "\e[3 q"
+set guicursor=n-v-c-ve-o:block,i-ci:hor20,r-cr:ver25
+    \,a:blinkwait700-blinkoff200-blinkon200-Cursor/lCursor
+
 " enable line numbers
 set number
 " allow backspacing over everything in insert mode
@@ -73,4 +80,5 @@ let c_curly_error = 1 " can be slow on large files
 " open all folds to start
 if has('autocmd')
     au Syntax * normal zR
+    autocmd VimLeave * silent !echo -ne "\e[3 q"
 endif

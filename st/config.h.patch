@@ -1,5 +1,14 @@
---- config.def.h	2020-02-17 11:07:23.191319088 -0800
-+++ config.h	2020-02-17 11:07:22.217981810 -0800
+--- config.def.h	2020-03-09 12:27:23.059224193 -0700
++++ config.h	2020-03-09 13:15:50.233338228 -0700
+@@ -49,7 +49,7 @@ static unsigned int actionfps = 30;
+  * blinking timeout (set to 0 to disable blinking) for the terminal blinking
+  * attribute.
+  */
+-static unsigned int blinktimeout = 800;
++static unsigned int blinktimeout = 200;
+ 
+ /*
+  * thickness of underline and bar cursors
 @@ -62,11 +62,11 @@ static unsigned int cursorthickness = 2;
   *    Bold affects lines thickness if boxdraw_bold is not 0. Italic is ignored.
   * 0: disable (render all U25XX glyphs normally from the font).
@@ -20,7 +29,7 @@
   * 7: Snowman ("☃")
   */
 -static unsigned int cursorshape = 2;
-+static unsigned int cursorshape = 1;
++static unsigned int cursorshape = 3;
  
  /*
   * Default columns and rows numbers

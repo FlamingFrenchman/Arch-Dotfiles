@@ -5,7 +5,13 @@
 # virgin mode
 set editing-mode vi
 
-# m a g i c
 $if Bash
+# m a g i c
 space: magic-space
+# use the mode prompt to indicate whether or not you're in vi insert mode. the
+# \1 and \2 characters are required by readline to insert non-printable escape
+# chars
+set show-mode-in-prompt on
+set vi-ins-mode-string "\1\e[3 q\2"
+set vi-cmd-mode-string "\1\e[1 q\2"
 $endif
