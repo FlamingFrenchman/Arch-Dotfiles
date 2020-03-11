@@ -42,14 +42,13 @@
 # - Tweak ($sup+t): for changing basic settings (volume, brightness,
 #   redshift, etc.)
 
-# Startup programs
-exec "wal -i ~/.config/wal/images/unit_02_v1.png && xrdb ~/.cache/wal/colors.Xresources && st -e tmux"
-exec_always "~/.bin/dunst_restart.sh -conf ~/.cache/wal/colors-dunstrc"
-
 # Windows/Command/Super
 set $sup Mod4
 # Alt/Meta, currently not used
 set $mod Mod1
+
+# Startup programs
+exec --no-startup-id wal -i ~/.config/wal/images/bork_referendum.jpg -o ~/.bin/theme_update.sh
 
 # scripts and programs
 set $workspace_change ~/.bin/workspace_change.sh
@@ -175,10 +174,10 @@ bindsym $sup+Shift+equal        move container to workspace $ws9
 bindsym $sup+Shift+asterisk     move container to workspace $ws10
 
 # (s)plit in horizontal orientation
-bindsym $sup+s split v
+bindsym $sup+s "exec i3-msg split v && notify-send -t 500 -u normal 'Horizontal Split'"
 
 # split in (v)ertical orientation
-bindsym $sup+v split h
+bindsym $sup+v "exec i3-msg split h && notify-send -t 500 -u normal 'Vertical Split'"
 
 # enter (f)ullscreen mode for the focused container
 bindsym $sup+f fullscreen toggle
@@ -200,6 +199,9 @@ bindsym $sup+q kill
 
 # start rofi (a program launcher/(r)unner)
 bindsym $sup+r exec "rofi -show run"
+
+# toggle the visibility of guake, a drop-down terminal
+bindsym $sup+g exec "guake-toggle"
 
 # print (b)attery charge
 bindsym $sup+b exec $batterycheck

@@ -2,15 +2,22 @@
 
 xrandr --auto
 # intel graphics likes to pair displays on my laptop
-xrandr | grep eDP-1 && xrandr --output eDP-1 --mode 1920x1080 --output HDMI-1 --mode 1920x1080 --same-as eDP-1
+xrandr | grep eDP-1 &>/dev/null && xrandr --output eDP-1 --mode 1920x1080 --output HDMI-1 --mode 1920x1080 --same-as eDP-1
 # better refresh on displayport
-xrandr | grep DP-2 && xrandr --output DP-2 --mode 1920x1080 --rate 144
+xrandr | grep DP-2 &>/dev/null && xrandr --output DP-2 --mode 1920x1080 --rate 144
 xset r rate 200 50
 setxkbmap -model pc104 -layout us -variant dvp -option \
     ctrl:swapcaps -option terminate:ctrl-alt-backspace
-if which picom &>/dev/null && ! pgrep picom; then
+if which picom &>/dev/null && ! pgrep picom &>/dev/null; then
     nohup picom --daemon --use-damage --detect-client-leader --detect-transient &>/dev/null
-elif which compton &>/dev/null && ! pgrep compton; then
+elif which compton &>/dev/null && ! pgrep compton &>/dev/null; then
     nohup compton --daemon &>/dev/null
 fi
-which redshift &>/dev/null && redshift -P -b 0.8 -O 5500
+if which redshift &>/dev/null && [ -f /tmp/redshift_brightness ]; then
+    temperature=`cat /tmp/redshift_temperature`
+    brightness=`cat /tmp/redshift_brightness`
+    [ $brightness -lt 100 ] && brightness="0.$brightness"
+    redshift -P -b $brightness -O $temperature
+else
+    which redshift &>/dev/null && redshift -P -b 0.8 -O 5500
+fi

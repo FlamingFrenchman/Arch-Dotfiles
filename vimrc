@@ -20,10 +20,22 @@ if has('plugs')
 endif
 
 " cursor settings
-let &t_SI = "\e[5 q"
-let &t_SR = "\e[1 q"
-let &t_EI = "\e[3 q"
-set guicursor=n-v-c-ve-o:block,i-ci:hor20,r-cr:ver25
+" if vi mode prefixes are not being set by readline, they will need to be set
+" manually on vim exit using autocmds
+if exists('$TMUX')
+    let &t_SI = "\ePtmux;\e\e[3 q\e\\"
+    let &t_SR = "\ePtmux;\e\e[5 q\e\\"
+    let &t_EI = "\ePtmux;\e\e[1 q\e\\"
+else
+    " insert
+    let &t_SI = "\e[3 q"
+    " replace
+    let &t_SR = "\e[5 q"
+    " normal (and anything else)
+    let &t_EI = "\e[1 q"
+endif
+" used in gVim and by neovim
+set guicursor=n-v-ve-o:block,i-c-ci:hor20,r-cr:ver25
     \,a:blinkwait700-blinkoff200-blinkon200-Cursor/lCursor
 
 " enable line numbers
@@ -80,5 +92,4 @@ let c_curly_error = 1 " can be slow on large files
 " open all folds to start
 if has('autocmd')
     au Syntax * normal zR
-    autocmd VimLeave * silent !echo -ne "\e[3 q"
 endif

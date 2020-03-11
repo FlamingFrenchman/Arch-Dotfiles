@@ -7,27 +7,25 @@ st*font:               Hack:pixelsize=15:antialias=true:autohint=true
 !st*font:               Inconsolata:pixelsize=18:antialias=true:autohint=true
 
 urxvt*foreground:      {foreground}
-urxvt*background:      {background}
 urxvt*cursorColor:     {cursor}
-urxvt*borderColor:     {background}
+urxvt*borderColor:     {background.alpha}
 urxvt*font:            xft:Hack:pixelsize=15:antialias=true:autohint=true
 !urxvt*font:            xft:Inconsolata:pixelsize=18:antialias=true:autohint=true
-urxvt*transparent:     true
-urxvt*tintColor:       #333333
 urxvt*scrollBar:       false
-urvxt*saveLines:       0
 urxvt*cursorBlink:     true
 urxvt*cursorUnderline: true
+urxvt*background:      {background}
 ! Set depth to make transparency work.
 urxvt*depth: 32
 
 xterm*foreground:      {foreground}
 xterm*background:      {background}
-xterm*cursorOnTime:    200
-xterm*cursorOffTime:   200
 xterm*cursorColor:     {cursor}
 xterm*borderColor:     {background}
-xterm*font:            xft:Hack:pixelsize=15:antialias=true:autohint=true
+xterm*cursorBlink:     true
+xterm*cursorUnderline: true
+xterm*font:            xft:Hack:pixelsize=16:antialias=true:autohint=true
+!xterm*font:            xft:Inconsolata:pixelsize=18:antialias=true:autohint=true
 
 emacs*foreground:      {foreground}
 emacs*background:      {background}

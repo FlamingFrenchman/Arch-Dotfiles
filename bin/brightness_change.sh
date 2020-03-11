@@ -38,7 +38,7 @@ case $1 in
         brightness="$(cat $brightness_file)"
         if [[ $brightness -lt 100 ]]; then brightness="0.$brightness"; fi
         redshift -P -O "$(cat $temperature_file)" -b "$brightness"
-        notify-send -t 500 -u low 'Brightness: '"$newbright"
+        notify-send -t 500 -u low 'Brightness: '"$newbright%"
         ;;
     darken)
         newbright=$(expr "$(cat $brightness_file)" - "$2")
@@ -47,6 +47,6 @@ case $1 in
         brightness="$(cat $brightness_file)"
         if [[ $brightness -lt 100 ]]; then brightness="0.$brightness"; fi
         redshift -P -O "$(cat $temperature_file)" -b "$brightness"
-        notify-send -t 500 -u low "Brightness: $brightness"
+        notify-send -t 500 -u low "Brightness: $newbright%"
         ;;
 esac

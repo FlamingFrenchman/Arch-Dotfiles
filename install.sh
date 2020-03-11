@@ -38,6 +38,7 @@ cp ./xinitrc  ~/.xinitrc
 # other stuff
 cp -r ./wal ~/.config/
 cp -r ./dunst ~/.config/
+cp -r ./rofi ~/.config
 
 # i3
 [ -d ~/.config/i3 ] || mkdir -p ~/.config/i3

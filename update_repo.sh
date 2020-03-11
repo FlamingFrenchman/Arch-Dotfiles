@@ -27,6 +27,7 @@ cp ~/.xinitrc  ./xinitrc
 
 cp -r ~/.config/wal ./
 cp -r ~/.config/dunst ./
+cp -r ~/.config/rofi ./
 
 if [ "$1" = "desktop" ]; then
     #cp ~/.config/i3/config ./desktop-i3config;

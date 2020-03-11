@@ -46,15 +46,15 @@ if [[ $TERM == "st-256color" ]] || [[ $TERM == "screen-256color" ]]; then
 fi
 
 steam () {
-    nohup flatpak run com.valvesoftware.Steam &>/dev/null &
+    { nohup flatpak run com.valvesoftware.Steam &>/dev/null & } &
 }
 
 spotify () {
-    nohup flatpak run com.spotify.Client &>/dev/null &
+    { nohup flatpak run com.spotify.Client &>/dev/null & } &
 }
 
 discord () {
-    nohup flatpak run com.discordapp.Discord &>/dev/null &
+    { nohup flatpak run com.discordapp.Discord &>/dev/null & } &
 }
 
 gparted () {
@@ -67,7 +67,7 @@ firefox () {
 
 # make things pretty
 prettify () {
-    wal -i $1 && nohup ~/.config/i3/scripts/refresh_workspaces.sh >/dev/null &
+    wal --vte -o ~/.bin/theme_update.sh -i $*
 }
 
 # set the prompt

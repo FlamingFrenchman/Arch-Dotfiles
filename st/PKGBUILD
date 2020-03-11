@@ -15,11 +15,11 @@ source=("https://dl.suckless.org/$pkgname/$pkgname-$pkgver.tar.gz"
         "terminfo.patch"
         "README.terminfo.rst"
         "st-blink.diff"
-        "$url/patches/boxdraw/st-boxdraw_v2-0.8.2.diff"
+        "$url/patches/boxdraw/st-boxdraw_v2-$pkgver.diff"
         "$url/patches/alpha/st-alpha-$pkgver.diff"
         "$url/patches/anysize/st-anysize-0.8.1.diff"
-        "$url/patches/bold-is-not-bright/st-bold-is-not-bright-20190127-3be4cf1.diff"
         "$url/patches/xresources/st-xresources-20180309-c5ba9c0.diff"
+        "$url/patches/scrollback/st-scrollback-$pkgver.diff"
 )
 sha256sums=('aeb74e10aa11ed364e1bcc635a81a523119093e63befd2f231f8b0705b15bf35'
             'bf6c8b73a606a8e513c7919d91f93ed7aeb5f44e80269bb244cc01659145a5ea'
@@ -28,8 +28,8 @@ sha256sums=('aeb74e10aa11ed364e1bcc635a81a523119093e63befd2f231f8b0705b15bf35'
             'c1b7ab7672815b73e8328ecc55300c12fddce9ecae4ab04ff4377bd9132089f6'
             '9c5b4b4f23de80de78ca5ec3739dc6ce5e7f72666186cf4a9c6b614ac90fb285'
             '8118dbc50d2fe07ae10958c65366476d5992684a87a431f7ee772e27d5dee50f'
-            '329169acac7ceaf901995d6e0897913089b799d8cd150c7f04c902f4a5b8eab2'
             'cd584a1b0fab0acf0605372e7076de103b39a39c2ad13d593b4413a79199ece1'
+            '9c5aedce2ff191437bdb78aa70894c3c91a47e1be48465286f42d046677fd166'
 )
 _sourcedir=$pkgname-$pkgver
 _makeopts="--directory=$_sourcedir"
@@ -44,12 +44,12 @@ prepare() {
   patch --merge --directory="$_sourcedir" --strip=1 < st-boxdraw_v2-$pkgver.diff
   echo "Applying anysize patch"
   patch --merge --directory="$_sourcedir" --strip=1 < st-anysize-0.8.1.diff
-  echo "Applying bold-is-not-bright patch"
-  patch --merge --directory="$_sourcedir" --strip=1 < st-bold-is-not-bright-20190127-3be4cf1.diff
   echo "Applying xresources patch"
   patch --merge --directory="$_sourcedir" --strip=1 < st-xresources-20180309-c5ba9c0.diff || true
   echo "Applying alpha patch"
   patch --merge --directory="$_sourcedir" --strip=1 < st-alpha-$pkgver.diff || true
+  echo "Applying scrollback patch"
+  patch --merge --directory="$_sourcedir" --strip=1 < st-scrollback-$pkgver.diff || true
  
   cp "$_sourcedir/config.def.h" "$BUILDDIR"
   if [ -e "$BUILDDIR/config.h" ]; then
