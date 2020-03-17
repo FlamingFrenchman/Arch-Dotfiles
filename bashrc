@@ -27,11 +27,6 @@
 
 # Source readline settings
 [[ -f ~/.inputrc ]] && bind -f ~/.inputrc
-# fix cursor escape chars in tmux
-#if [[ -n "$TMUX" ]]; then
-#    bind "set vi-ins-mode-string \ePtmux;\e\e[3 q\e\\"
-#    bind "set vi-cmd-mode-string \ePtmux;\e\e[1 q\e\\"
-#fi
 
 # Resize window after command, if necessary
 shopt -s checkwinsize

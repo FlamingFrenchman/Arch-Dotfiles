@@ -28,6 +28,9 @@ alias diff='diff --color=auto'
 alias df='df -h'
 alias du='du -h'
 alias dmesg='dmesg -H --color=always'
+alias why='what'
+alias how='what'
+alias wtf='what'
 
 # Force myself to use the good shit
 which --skip-alias nvim &>/dev/null && { \
@@ -67,7 +70,11 @@ firefox () {
 
 # make things pretty
 prettify () {
-    wal --vte -o ~/.bin/theme_update.sh -i $*
+    wal ${*:1:$#-1} --vte -o ~/.bin/theme_update.sh -i ${*:$#}
+}
+
+what () {
+    echo "[ $(whoami)@$(hostname) ][ $(date) ][ $(pwd) ]"
 }
 
 # set the prompt

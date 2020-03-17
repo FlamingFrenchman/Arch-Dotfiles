@@ -30,7 +30,7 @@
 # to workspace because 1. I never really need to do that, 2. Vi uses n/N as
 # next/previous search match and, 3. It frees up p for other things
 #
-# As a rule of thumb I try to use shorthands (n for next, b for browser,
+# As a rule of thumb I try to use shorthands (n for next, b for battery,
 # m for mute, etc.) when mapping keys so that they make sense regardless 
 # of layout.
 #
@@ -47,9 +47,6 @@ set $sup Mod4
 # Alt/Meta, currently not used
 set $mod Mod1
 
-# Startup programs
-exec --no-startup-id wal -i ~/.config/wal/images/bork_referendum.jpg -o ~/.bin/theme_update.sh
-
 # scripts and programs
 set $workspace_change ~/.bin/workspace_change.sh
 set $volume_change ~/.bin/volume_change.sh
@@ -59,19 +56,23 @@ set $browser firefox
 set $filemanager Thunar
 set $monitor conky
 set $batterycheck ~/.bin/battery_check.sh
+set $qexec exec --no-startup-id
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1"
-set $ws2 "2"
-set $ws3 "3"
-set $ws4 "4"
-set $ws5 "5"
-set $ws6 "6"
-set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9"
-set $ws10 "10"
+set $ws1 1
+set $ws2 2
+set $ws3 3
+set $ws4 4
+set $ws5 5
+set $ws6 6
+set $ws7 7
+set $ws8 8
+set $ws9 9
+set $ws10 10
+
+# Startup programs
+$qexec "wal --vte -i ~/.config/wal/images/unit_02_v1.png -o ~/.bin/theme_update.sh"
 
 # Creates the gaps between windows
 gaps inner 30
@@ -86,20 +87,20 @@ default_floating_border none
 #font pango:Hack 15
 
 # media key volume control
-bindsym XF86AudioMute exec $volume_change toggle
-bindsym XF86AudioRaiseVolume exec $volume_change up
-bindsym XF86AudioLowerVolume exec $volume_change down
+bindsym XF86AudioMute $qexec "$volume_change toggle"
+bindsym XF86AudioRaiseVolume $qexec "$volume_change up"
+bindsym XF86AudioLowerVolume $qexec "$volume_change down"
 
 # media key brightness control
-bindsym XF86MonBrightnessUp exec $brightness_change lighten 5
-bindsym XF86MonBrightnessDown exec $brightness_change darken 5
+bindsym XF86MonBrightnessUp $qexec "$brightness_change lighten 5"
+bindsym XF86MonBrightnessDown $qexec "$brightness_change darken 5"
 
 # media key audio player control
 # dumb bindings because some hardware may only have one play/pause button
-bindsym XF86AudioPause exec "playerctl play-pause && sleep 0.1 && notify-send -t 3000 -u normal $(playerctl status)"
-bindsym XF86AudioPlay exec "playerctl play-pause && sleep 0.1 && notify-send -t 3000 -u normal $(playerctl status)"
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86AudioPause $qexec "playerctl play-pause && sleep 0.1 && notify-send -t 3000 -u normal $(playerctl status)"
+bindsym XF86AudioPlay $qexec "playerctl play-pause && sleep 0.1 && notify-send -t 3000 -u normal $(playerctl status)"
+bindsym XF86AudioNext $qexec "playerctl next"
+bindsym XF86AudioPrev $qexec "playerctl previous"
 
 # change focus
 bindsym $sup+h focus left
@@ -114,36 +115,36 @@ bindsym $sup+Shift+k move up
 bindsym $sup+Shift+l move right
 
 # switch to (n)ext/prev workspace with content in them
-bindsym $sup+n exec $workspace_change next_on_output
-bindsym $sup+shift+n exec $workspace_change prev_on_output
+bindsym $sup+n $qexec "$workspace_change next_on_output"
+bindsym $sup+shift+n $qexec "$workspace_change prev_on_output"
 
 # switch to last viewed workspace
-bindsym $sup+Tab exec $workspace_change back_and_forth
+bindsym $sup+Tab $qexec "$workspace_change back_and_forth"
 
 # switch to workspace
-bindsym $sup+1 exec $workspace_change $ws1
-bindsym $sup+2 exec $workspace_change $ws2
-bindsym $sup+3 exec $workspace_change $ws3
-bindsym $sup+4 exec $workspace_change $ws4
-bindsym $sup+5 exec $workspace_change $ws5
-bindsym $sup+6 exec $workspace_change $ws6
-bindsym $sup+7 exec $workspace_change $ws7
-bindsym $sup+8 exec $workspace_change $ws8
-bindsym $sup+9 exec $workspace_change $ws9
-bindsym $sup+0 exec $workspace_change $ws10
+bindsym $sup+1 $qexec "$workspace_change $ws1"
+bindsym $sup+2 $qexec "$workspace_change $ws2"
+bindsym $sup+3 $qexec "$workspace_change $ws3"
+bindsym $sup+4 $qexec "$workspace_change $ws4"
+bindsym $sup+5 $qexec "$workspace_change $ws5"
+bindsym $sup+6 $qexec "$workspace_change $ws6"
+bindsym $sup+7 $qexec "$workspace_change $ws7"
+bindsym $sup+8 $qexec "$workspace_change $ws8"
+bindsym $sup+9 $qexec "$workspace_change $ws9"
+bindsym $sup+0 $qexec "$workspace_change $ws10"
 
 # make switching workspaces less awful on programmer dvorak
 # order from 0 to 9 is: *()}+{][!=
-bindsym $sup+parenleft      exec $workspace_change $ws1
-bindsym $sup+parenright     exec $workspace_change $ws2
-bindsym $sup+braceright     exec $workspace_change $ws3
-bindsym $sup+plus           exec $workspace_change $ws4
-bindsym $sup+braceleft      exec $workspace_change $ws5
-bindsym $sup+bracketright   exec $workspace_change $ws6
-bindsym $sup+bracketleft    exec $workspace_change $ws7
-bindsym $sup+exclam         exec $workspace_change $ws8
-bindsym $sup+equal          exec $workspace_change $ws9
-bindsym $sup+asterisk       exec $workspace_change $ws10
+bindsym $sup+parenleft      $qexec "$workspace_change $ws1"
+bindsym $sup+parenright     $qexec "$workspace_change $ws2"
+bindsym $sup+braceright     $qexec "$workspace_change $ws3"
+bindsym $sup+plus           $qexec "$workspace_change $ws4"
+bindsym $sup+braceleft      $qexec "$workspace_change $ws5"
+bindsym $sup+bracketright   $qexec "$workspace_change $ws6"
+bindsym $sup+bracketleft    $qexec "$workspace_change $ws7"
+bindsym $sup+exclam         $qexec "$workspace_change $ws8"
+bindsym $sup+equal          $qexec "$workspace_change $ws9"
+bindsym $sup+asterisk       $qexec "$workspace_change $ws10"
 
 # move focused container to last viewed workspace
 bindsym $sup+Shift+Tab move container to workspace back_and_forth
@@ -174,16 +175,16 @@ bindsym $sup+Shift+equal        move container to workspace $ws9
 bindsym $sup+Shift+asterisk     move container to workspace $ws10
 
 # (s)plit in horizontal orientation
-bindsym $sup+s "exec i3-msg split v && notify-send -t 500 -u normal 'Horizontal Split'"
+bindsym $sup+s $qexec "i3-msg split v && notify-send -t 500 -u normal 'Horizontal Split'"
 
 # split in (v)ertical orientation
-bindsym $sup+v "exec i3-msg split h && notify-send -t 500 -u normal 'Vertical Split'"
+bindsym $sup+v $qexec "i3-msg split h && notify-send -t 500 -u normal 'Vertical Split'"
 
 # enter (f)ullscreen mode for the focused container
 bindsym $sup+f fullscreen toggle
 
 # start a terminal
-bindsym $sup+Return exec $terminal
+bindsym $sup+Return exec "$terminal"
 
 # use mouse+$sup to drag floating windows to their wanted position
 floating_modifier $sup
@@ -201,25 +202,25 @@ bindsym $sup+q kill
 bindsym $sup+r exec "rofi -show run"
 
 # toggle the visibility of guake, a drop-down terminal
-bindsym $sup+g exec "guake-toggle"
+bindsym $sup+g $qexec "guake-toggle"
 
 # print (b)attery charge
-bindsym $sup+b exec $batterycheck
+bindsym $sup+b $qexec "$batterycheck"
 
 # screen (c)apture
-bindsym $sup+c exec "maim -s $(xdg-user-dir PICTURES)Screenshots/Screenshot\ $(date +%s).png"
+bindsym $sup+c $qexec "maim -s $(xdg-user-dir PICTURES)Screenshots/Screenshot\ $(date +%s).png"
 
 # audio controls
 # also playerctl is slow so sleep is needed to ensure correct notification status
 
 # toggle (m)ute
-bindsym $sup+m exec $volume_change toggle
+bindsym $sup+m $qexec "$volume_change toggle"
 # start/stop player
-bindsym $sup+Shift+m exec "playerctl play-pause && sleep 0.1 && notify-send -t 3000 -u normal $(playerctl status)"
+bindsym $sup+Shift+m $qexec "playerctl play-pause && sleep 0.1 && notify-send -t 3000 -u normal $(playerctl status)"
 # (p)layer next song
-bindsym $sup+p exec playerctl next
+bindsym $sup+p $qexec "playerctl next"
 # (p)layer (p)revious song
-bindsym $sup+Shift+p exec playerctl previous
+bindsym $sup+Shift+p $qexec "playerctl previous"
 
 # container/manager controls
 
@@ -228,36 +229,36 @@ bindsym $sup+Shift+c reload
 # (r)estart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $sup+Shift+r restart
 # (q)uit i3 (logs you out of your X session)
-bindsym $sup+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+bindsym $sup+Shift+q $qexec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 # really exit i3
-bindsym $sup+Shift+z exec "i3-msg exit"
+bindsym $sup+Shift+z $qexec "i3-msg exit"
 
 # modes
-bindsym $sup+a exec "i3-msg mode application && notify-send -t 3000 -u normal 'Application mode'"
+bindsym $sup+a $qexec "i3-msg mode application && notify-send -t 3000 -u normal 'Application mode'"
 mode "application" {
-    bindsym b exec $browser
-    bindsym m exec $monitor
-    bindsym f exec $filemanager
-    bindsym Return exec $terminal
-    bindsym Escape exec "i3-msg mode default && notify-send -t 3000 -u normal 'Default mode'"
-    bindsym q exec "i3-msg mode default && notify-send -t 3000 -u normal 'Default mode'"
+    bindsym b exec "$browser"
+    bindsym m exec "$monitor"
+    bindsym f exec "$filemanager"
+    bindsym Return exec "$terminal"
+    bindsym Escape $qexec "i3-msg mode default && notify-send -t 3000 -u normal 'Default mode'"
+    bindsym q $qexec "i3-msg mode default && notify-send -t 3000 -u normal 'Default mode'"
 }
 
-bindsym $sup+t exec "i3-msg mode tweak && notify-send -t 3000 -u normal 'Tweak mode'"
+bindsym $sup+t $qexec "i3-msg mode tweak && notify-send -t 3000 -u normal 'Tweak mode'"
 mode "tweak" {
-    bindsym m exec $volume_change toggle
-    bindsym c exec $volume_change cycle
-    bindsym u exec $volume_change up
-    bindsym d exec $volume_change down
-    bindsym b exec $brightness_change bluen 100
-    bindsym r exec $brightness_change redden 100
-    bindsym n exec $brightness_change darken 5
-    bindsym l exec $brightness_change lighten 5
-    bindsym Escape exec "i3-msg mode default && notify-send -t 3000 -u normal 'Default mode'"
-    bindsym q exec "i3-msg mode default && notify-send -t 3000 -u normal 'Default mode'"
+    bindsym m $qexec "$volume_change toggle"
+    bindsym c $qexec "$volume_change cycle"
+    bindsym u $qexec "$volume_change up"
+    bindsym d $qexec "$volume_change down"
+    bindsym b $qexec "$brightness_change bluen 100"
+    bindsym r $qexec "$brightness_change redden 100"
+    bindsym n $qexec "$brightness_change darken 5"
+    bindsym l $qexec "$brightness_change lighten 5"
+    bindsym Escape $qexec "i3-msg mode default && notify-send -t 3000 -u normal 'Default mode'"
+    bindsym q $qexec "i3-msg mode default && notify-send -t 3000 -u normal 'Default mode'"
 }
 
-bindsym $sup+w exec "i3-msg mode window && notify-send -t 3000 -u normal 'Window mode'"
+bindsym $sup+w $qexec "i3-msg mode window && notify-send -t 3000 -u normal 'Window mode'"
 mode "window" {
     bindsym h focus left
     bindsym j focus down
@@ -282,8 +283,8 @@ mode "window" {
     bindsym c focus child
     bindsym s split h
     bindsym v split v
-    bindsym Escape exec "i3-msg mode default && notify-send -t 3000 -u normal 'Default mode'"
-    bindsym q exec "i3-msg mode default && notify-send -t 3000 -u normal 'Default mode'"
+    bindsym Escape $qexec "i3-msg mode default && notify-send -t 3000 -u normal 'Default mode'"
+    bindsym q $qexec "i3-msg mode default && notify-send -t 3000 -u normal 'Default mode'"
 }
 
 # class        border  backgr. text    indic   child_border
