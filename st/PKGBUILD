@@ -53,7 +53,7 @@ prepare() {
  
   cp "$_sourcedir/config.def.h" "$BUILDDIR"
   if [ -e "$BUILDDIR/config.h" ]; then
-      cp "BUILDDIR/config.h" "$_sourcedir"
+      cp "$BUILDDIR/config.h" "$_sourcedir"
   elif [ -e "$BUILDDIR/config.h.patch" ]; then
       cp "$_sourcedir/config.def.h" "$BUILDDIR/config.h"
       patch "$BUILDDIR/config.h" < "$BUILDDIR/config.h.patch"

@@ -9,6 +9,8 @@ altscreen on
 hardstatus on
 maptimeout 5
 hardstatus alwaysfirstline "%{b kw}%H %{r}%1` %{w}| %{g}%c %{w}| %{y}%d.%m.%Y %{w}| %{g}%l %{w}| %{-b kw}%u %-Lw%{= rW}%50> %n%f %t %{-}%+Lw%<"
+rendition so "="
+caption string "%{= dd}-"
 
 # binds
 # prefix

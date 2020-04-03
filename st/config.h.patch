@@ -1,15 +1,15 @@
---- config.def.h	2020-03-09 20:01:35.358701919 -0700
-+++ config.h	2020-03-09 20:06:01.655554164 -0700
+--- config.def.h	2020-04-02 11:13:59.126950197 -0700
++++ config.h	2020-04-02 21:46:11.966687622 -0700
 @@ -5,7 +5,7 @@
   *
   * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
   */
 -static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
-+static char *font = "DejaVu Sans Mono:pixelsize=12:antialias=true:autohint=true";
++static char *font = "monospace:pixelsize=9";
  static int borderpx = 2;
  
  /*
-@@ -49,12 +49,12 @@ static unsigned int actionfps = 30;
+@@ -49,7 +49,7 @@ static unsigned int actionfps = 30;
   * blinking timeout (set to 0 to disable blinking) for the terminal blinking
   * attribute.
   */
@@ -18,12 +18,6 @@
  
  /*
   * thickness of underline and bar cursors
-  */
--static unsigned int cursorthickness = 2;
-+static unsigned int cursorthickness = 1;
- 
- /*
-  * 1: render most of the lines/blocks characters without using the font for
 @@ -62,11 +62,11 @@ static unsigned int cursorthickness = 2;
   *    Bold affects lines thickness if boxdraw_bold is not 0. Italic is ignored.
   * 0: disable (render all U25XX glyphs normally from the font).
@@ -39,6 +33,34 @@
  
  /*
   * bell volume. It must be a value between -100 and 100. Use 0 for disabling
+@@ -122,9 +122,9 @@ static const char *colorname[] = {
+ 	[255] = 0,
+ 
+ 	/* more colors can be added after 255 to use with DefaultXX */
+-	"#cccccc",
+-	"#555555",
+-	"black",
++	"#555555", /* pywal messes with this one */
++	"black",   /* and this one */
++	"#cccccc"
+ };
+ 
+ 
+@@ -132,10 +132,10 @@ static const char *colorname[] = {
+  * Default colors (colorname index)
+  * foreground, background, cursor, reverse cursor
+  */
+-unsigned int defaultfg = 7;
+-unsigned int defaultbg = 258;
+-static unsigned int defaultcs = 256;
+-static unsigned int defaultrcs = 257;
++unsigned int defaultfg = 256;
++unsigned int defaultbg = 257;
++unsigned int defaultcs = 258;
++unsigned int defaultrcs = 257;
+ 
+ /*
+  * Default shape of cursor
 @@ -144,7 +144,7 @@ static unsigned int defaultrcs = 257;
   * 6: Bar ("|")
   * 7: Snowman ("☃")
@@ -48,25 +70,14 @@
  
  /*
   * Default columns and rows numbers
-@@ -187,9 +187,9 @@ ResourcePref resources[] = {
+@@ -187,8 +187,8 @@ ResourcePref resources[] = {
  		{ "color13",      STRING,  &colorname[13] },
  		{ "color14",      STRING,  &colorname[14] },
  		{ "color15",      STRING,  &colorname[15] },
 -		{ "background",   STRING,  &colorname[256] },
 -		{ "foreground",   STRING,  &colorname[257] },
--		{ "cursorColor",  STRING,  &colorname[258] },
-+		{ "background",   STRING,  &colorname[258] },
 +		{ "foreground",   STRING,  &colorname[256] },
-+		{ "cursorColor",  STRING,  &colorname[257] },
++		{ "background",   STRING,  &colorname[257] },
+ 		{ "cursorColor",  STRING,  &colorname[258] },
  		{ "termname",     STRING,  &termname },
  		{ "shell",        STRING,  &shell },
- 		{ "xfps",         INTEGER, &xfps },
-@@ -227,8 +227,6 @@ static Shortcut shortcuts[] = {
- 	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
- 	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
- 	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
--	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
--	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
- 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
- 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
- };

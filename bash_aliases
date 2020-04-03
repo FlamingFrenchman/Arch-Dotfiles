@@ -60,12 +60,21 @@ discord () {
     { nohup flatpak run com.discordapp.Discord &>/dev/null & } &
 }
 
+zoom () {
+    { nohup flatpak run us.zoom.Zoom &>/dev/null & } &
+}
+
 gparted () {
-    sudo -b gparted $* &>/dev/null
+    sudo -b gparted $@ &>/dev/null
 }
 
 firefox () {
-    nohup firefox $* &>/dev/null &
+    nohup firefox $@ &>/dev/null &
+}
+
+# generic function for orphaning and backgrounding processes
+run () {
+    { nohup $@ &>/dev/null & } &
 }
 
 # make things pretty
@@ -77,15 +86,31 @@ what () {
     echo "[ $(whoami)@$(hostname) ][ $(date) ][ $(pwd) ]"
 }
 
+nnn () {
+    if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then
+        echo "nnn is already running"
+        return
+    fi
+
+    export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+
+    /usr/bin/env nnn "$@"
+
+    if [ -f "$NNN_TMPFILE" ]; then
+        source "$NNN_TMPFILE"
+        rm -f "$NNN_TMPFILE" &>/dev/null
+    fi
+}
+
 # set the prompt
 prompt () {
-    local STATUS=`if [[ $? -gt 0 ]]; \
-                  then echo -e "$RED"; \
-                  else echo -e "$WHITE"; \
-                  fi`
-    local SSH_IP=`echo $SSH_CLIENT | awk '{ print $1 }'`
-    local SSH2_IP=`echo $SSH2_CLIENT | awk '{ print $1 }'`
-    if [ $SSH2_IP ] || [ $SSH_IP ] ; then
+    local STATUS=$(if [[ $? -gt 0 ]]; \
+                   then echo -e "$RED"; \
+                   else echo -e "$WHITE"; \
+                   fi)
+    local SSH_IP=$(echo $SSH_CLIENT | awk '{ print $1 }')
+    local SSH2_IP=$(echo $SSH2_CLIENT | awk '{ print $1 }')
+    if [[ -n $SSH2_IP ]] || [[ -n $SSH_IP ]] ; then
         local USER_AND_HOST="$NC\u$WHITE@$NC\h "
     fi
     PS1="$USER_AND_HOST$STATUS\\$ $NC"
