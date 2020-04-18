@@ -25,6 +25,7 @@
     foreground: #cccbde;
     border-color: @background;
     spacing: 2;
+    font: "hack 12";
 }
 
 #window {

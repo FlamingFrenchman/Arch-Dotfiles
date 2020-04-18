@@ -21,6 +21,7 @@
 # sup+a,w,t                 change mode
 # sup+q                     kill focused container
 # sup+r                     run (rofi/dmenu)
+# sup+g                     guake/scratchpad
 # sup+s                     horizontal split mode
 # sup+v                     vertical split mode
 # sup+f                     toggle container fullscreen
@@ -74,6 +75,19 @@ set $ws10 10
 # Startup programs
 $qexec "wal --vte -i ~/.config/wal/images/unit_02_v1.png -o ~/.bin/theme_update.sh"
 
+# setup the scratchpad/fake guake
+$qexec "sleep 0.2 && tabbed -df -r2 -nscratchpad st -w '' >/tmp/tabbed_winid"
+for_window[instance="scratchpad" class="tabbed"] move to scratchpad
+for_window[instance="scratchpad" class="tabbed"] resize set 1860px 510px
+for_window[instance="scratchpad" class="tabbed"] move position 30px 30px
+for_window[instance="scratchpad" class="st"] move to scratchpad
+for_window[instance="scratchpad" class="st"] resize set 1860px 510px
+for_window[instance="scratchpad" class="st"] move position 30px 30px
+
+# make things float
+for_window[title="atmosia"] floating enable
+for_window[title="Alias | wavefront"] floating enable
+
 # Creates the gaps between windows
 gaps inner 30
 
@@ -101,6 +115,9 @@ bindsym XF86AudioPause $qexec "playerctl play-pause && sleep 0.1 && notify-send 
 bindsym XF86AudioPlay $qexec "playerctl play-pause && sleep 0.1 && notify-send -t 3000 -u normal $(playerctl status)"
 bindsym XF86AudioNext $qexec "playerctl next"
 bindsym XF86AudioPrev $qexec "playerctl previous"
+
+bindsym F11 fullscreen toggle
+bindsym F12 scratchpad show
 
 # change focus
 bindsym $sup+h focus left
@@ -184,7 +201,7 @@ bindsym $sup+v $qexec "i3-msg split h && notify-send -t 500 -u normal 'Vertical 
 bindsym $sup+f fullscreen toggle
 
 # start a terminal
-bindsym $sup+Return exec "$terminal"
+bindsym $sup+Return $qexec "$terminal"
 
 # use mouse+$sup to drag floating windows to their wanted position
 floating_modifier $sup
@@ -201,8 +218,11 @@ bindsym $sup+q kill
 # start rofi (a program launcher/(r)unner)
 bindsym $sup+r exec "rofi -show run"
 
-# toggle the visibility of guake, a drop-down terminal
-bindsym $sup+g $qexec "guake-toggle"
+# toggle the visibility of (g)uake/scratchpad
+bindsym $sup+g scratchpad show
+
+# get things into the scratchpad
+bindsym $sup+Shift+g move to scratchpad
 
 # print (b)attery charge
 bindsym $sup+b $qexec "$batterycheck"

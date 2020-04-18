@@ -86,10 +86,13 @@ what () {
     echo "[ $(whoami)@$(hostname) ][ $(date) ][ $(pwd) ]"
 }
 
-nnn () {
+# navigate with nnn
+n () {
+    # if the alias above doesn't work, don't allow nesting of nnn
     if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then
-        echo "nnn is already running"
-        return
+        #echo "nnn is already running"
+        #return
+        exit
     fi
 
     export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"

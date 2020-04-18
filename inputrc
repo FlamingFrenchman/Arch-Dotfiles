@@ -5,20 +5,24 @@
 # virgin mode
 set editing-mode vi
 
-# clear screen faster
+# clear screen in vi mode
 "\C-l": clear-screen
 
 # use the mode prompt to indicate whether or not you're in vi insert mode. the
 # \1 and \2 characters are required by readline to insert non-printable escape
 # chars
 set show-mode-in-prompt on
+set vi-ins-mode-string "\1\e[3 q\2"
+set vi-cmd-mode-string "\1\e[1 q\2"
 
 $if term=screen
     set vi-ins-mode-string "\1\eP\e[3 q\e\\\2"
     set vi-cmd-mode-string "\1\eP\e[1 q\e\\\2"
-$else
-    set vi-ins-mode-string "\1\e[3 q\2"
-    set vi-cmd-mode-string "\1\e[1 q\2"
+$endif
+
+$if Octave
+    set vi-ins-mode-string "INS"
+    set vi-cmd-mode-string "CMD"
 $endif
 
 $if Bash
