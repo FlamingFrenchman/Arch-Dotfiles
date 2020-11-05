@@ -20,9 +20,9 @@ cp ./profile ~/.profile
 # want keyboard and faster repeat
 cp ./xprofile ~/.xprofile
 
-# useful scripts
-[ -d ~/.bin ] || mkdir ~/.bin
-cp -r ./bin/* ~/.bin
+# useful scripts in xdg-compliant location
+[ -d $HOME/.local/bin ] || mkdir $HOME/.local/bin
+cp -r ./bin/* $HOME/.local/bin
 
 # no custom X sessions on minimal install
 [ -z "$1" ] && exit 0

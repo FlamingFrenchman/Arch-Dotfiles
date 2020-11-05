@@ -25,12 +25,12 @@ set guicursor=n-v-ve-o-c:block,i-ci-r-cr:hor20
 " terminal cursor
 if &term =~ "screen.*"
     " wrap in DECSCRSR when in screen/tmux
-    let &t_SI = "\eP\e[3 q\e\\"
+    let &t_SI = "\eP\e[5 q\e\\"
     let &t_SR = "\eP\e[3 q\e\\"
     let &t_EI = "\eP\e[1 q\e\\"
 else
     " insert
-    let &t_SI = "\e[3 q"
+    let &t_SI = "\e[5 q"
     " replace
     let &t_SR = "\e[3 q"
     " normal (and anything else)
@@ -93,14 +93,14 @@ filetype indent on
 set autoindent
 " use c-style indenting (works for many languages)
 set cindent
-" show actual tabs at 8 spaces width
-set tabstop=8
-" fake tabs are 4 spaces
-set softtabstop=4
 " On pressing tab, insert a bunch of spaces instead
 set expandtab
 " insert tabs smartly
 set smarttab
+" show actual tabs at 8 spaces width
+set tabstop=8
+" fake tabs are 4 spaces
+set softtabstop=4
 " number of characters of whitespaces to insert when indenting with '>'
 set shiftwidth=4
 " when indenting, round to a multiple of tab size

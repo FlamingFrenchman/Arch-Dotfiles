@@ -18,8 +18,8 @@ cp ~/.screenrc ./screenrc
 cp ~/.profile ./profile
 cp ~/.xprofile ./xprofile
 
-# useful scripts
-cp -r ~/.bin/* ./bin
+# useful scripts in xdg-compliant directory
+cp -r ~/.local/bin/* ./bin
 
 [ -z "$1" ] && exit 0
 cp ~/.xsession ./xsession

@@ -25,6 +25,9 @@
 # Source aliases
 [[ -f ~/.bash_aliases ]] && . ~/.bash_aliases
 
+# Environment variables for guix
+[[ -f $GUIX_PROFILE/etc/profile ]] && . $GUIX_PROFILE/etc/profile
+
 # Source readline settings
 [[ -f ~/.inputrc ]] && bind -f ~/.inputrc
 

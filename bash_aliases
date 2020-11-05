@@ -21,6 +21,8 @@ YELLOW='\[\e[1;33m\]'
 WHITE='\[\e[1;37m\]'
 NC='\[\e[0m\]'
 
+GUIX_PROFILE="$HOME/.guix-profile"
+
 # Useful things
 alias ls='ls -h --color=auto'
 alias grep='grep --color=auto'
@@ -31,6 +33,9 @@ alias dmesg='dmesg -H --color=always'
 alias why='what'
 alias how='what'
 alias wtf='what'
+alias xcopy='xclip -selection clipboard'
+alias xpaste='xclip -o -selection clipboard'
+alias info='info --vi-keys'
 
 # Force myself to use the good shit
 which --skip-alias nvim &>/dev/null && { \
@@ -150,7 +155,7 @@ extract () {
 vipath () { 
     declare TFILE=/tmp/path.$LOGNAME.$$;
     echo $PATH | sed 's/^:/.:/;s/:$/:./' | sed 's/::/:.:/g' | tr ':' '\012' > $TFILE;
-    vi $TFILE;
+    vim $TFILE;
     PATH=`awk ' { if (NR>1) printf ":"
       printf "%s",$1 }' $TFILE`;
     rm -f $TFILE;

@@ -12,17 +12,23 @@ set editing-mode vi
 # \1 and \2 characters are required by readline to insert non-printable escape
 # chars
 set show-mode-in-prompt on
-set vi-ins-mode-string "\1\e[3 q\2"
+set vi-ins-mode-string "\1\e[5 q\2"
 set vi-cmd-mode-string "\1\e[1 q\2"
 
 $if term=screen
-    set vi-ins-mode-string "\1\eP\e[3 q\e\\\2"
+    set vi-ins-mode-string "\1\eP\e[5 q\e\\\2"
     set vi-cmd-mode-string "\1\eP\e[1 q\e\\\2"
 $endif
 
 $if Octave
-    set vi-ins-mode-string "INS"
-    set vi-cmd-mode-string "CMD"
+    $if term=xterm
+        set vi-ins-mode-string "INS"
+        set vi-cmd-mode-string "CMD"
+    $endif
+    $if term=xterm-256color
+        set vi-ins-mode-string "\1\e[5 q\2"
+        set vi-cmd-mode-string "\1\e[1 q\2"
+    $endif
 $endif
 
 $if Bash
