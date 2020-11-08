@@ -1,5 +1,6 @@
-# source system profile
-[ -r /etc/profile ] && . /etc/profile
+#
+# ~/.profile
+#
 
 # PATH
 export PATH="$PATH:$HOME/.local/bin:$HOME/.gem/ruby/2.7.0/bin"
@@ -31,7 +32,7 @@ command -v nnn >/dev/null 2>&1  && {
 
 # colorful less
 # Note: raw escape sequences are not portable between shells
-LESS=-R                                  # output color escape sequences in raw form
+LESS=-R                                  # raw color escape sequences
 export LESS
 LESS_TERMCAP_mb=$(printf '\e[1;31m')     # begin blink
 export LESS_TERMCAP_mb

@@ -7,6 +7,8 @@
 #       The bash executable
 # /etc/profile
 #       The systemwide initialization file, executed for login shells
+# /etc/bash.bashrc
+#       The systemwide per-interactive-shell bash startup file
 # ~/.bash_profile and ~/.profile
 #       The personal initialization file, executed for login shells
 # ~/.bashrc
@@ -19,14 +21,8 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# Source profile
-[[ -f ~/.profile ]] && . ~/.profile
-
 # Source aliases
 [[ -f ~/.bash_aliases ]] && . ~/.bash_aliases
-
-# Source tab completion files
-[[ -r /usr/share/bash-completion/bash_completion ]] && . /usr/share/bash-completion/bash_completion
 
 # Environment variables for guix
 [[ -f $GUIX_PROFILE/etc/profile ]] && . "$GUIX_PROFILE/etc/profile"
@@ -36,6 +32,7 @@
 
 # Resize window after command, if necessary
 [[ $DISPLAY ]] && shopt -s checkwinsize
+
 # append history to $HISTFILE on exit instead of overwriting it
 shopt -s histappend
 
