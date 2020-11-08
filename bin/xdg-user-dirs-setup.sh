@@ -15,4 +15,5 @@ for d in "${xdg_dirs[@]}"; do
     uppercase=$(echo $d | tr [:lower:] [:upper:])
     uppercase=${uppercase/%PUBLIC/PUBLICSHARE}
     xdg-user-dirs-update --set $uppercase "$prefix/$d"
+    ln -s "$prefix/$d" "$HOME/$d"
 done
