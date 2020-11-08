@@ -1,0 +1,3 @@
+edit mode "sync"
+PS1 (">> ")
+EDITOR ("vim -f")

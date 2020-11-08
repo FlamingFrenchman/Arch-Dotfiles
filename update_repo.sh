@@ -17,6 +17,7 @@ cp ~/.tmux.conf ./tmux.conf
 cp ~/.screenrc ./screenrc
 cp ~/.profile ./profile
 cp ~/.xprofile ./xprofile
+cp ~/.octaverc ./octaverc
 
 # useful scripts in xdg-compliant directory
 cp -r ~/.local/bin/* ./bin

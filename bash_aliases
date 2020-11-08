@@ -46,10 +46,10 @@ which --skip-alias nvim &>/dev/null && { \
 # Terminal emulator specific stuff
 if [[ $TERM == "st-256color" ]] || [[ $TERM == "screen-256color" ]]; then
    # Quickly change keyboard
-   alias pgkb='setxkbmap -layout us -model pc104 -variant dvp -option \
-       ctrl:swapcaps -option terminate:ctrl-alt-backspace'
-   alias dvkb='setxkbmap -layout us -model pc104 -variant dvorak -option \
-       ctrl:swapcaps -option terminate:ctrl-alt-backspace'
+   alias pgkb='setxkbmap -layout us -model pc104 -variant dvp -option'\
+       'ctrl:swapcaps -option terminate:ctrl-alt-backspace'
+   alias dvkb='setxkbmap -layout us -model pc104 -variant dvorak -option'\
+       'ctrl:swapcaps -option terminate:ctrl-alt-backspace'
    alias enkb='setxkbmap -layout us -model pc104'
 fi
 
@@ -67,10 +67,6 @@ discord () {
 
 zoom () {
     { nohup flatpak run us.zoom.Zoom &>/dev/null & } &
-}
-
-gparted () {
-    sudo -b gparted $@ &>/dev/null
 }
 
 firefox () {
@@ -94,7 +90,7 @@ what () {
 # navigate with nnn
 n () {
     # if the alias above doesn't work, don't allow nesting of nnn
-    if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then
+    if [[ -n $NNNLVL ]] && [ "${NNNLVL:-0}" -ge 1 ]; then
         #echo "nnn is already running"
         #return
         exit
@@ -104,7 +100,7 @@ n () {
 
     /usr/bin/env nnn "$@"
 
-    if [ -f "$NNN_TMPFILE" ]; then
+    if [[ -f "$NNN_TMPFILE" ]]; then
         source "$NNN_TMPFILE"
         rm -f "$NNN_TMPFILE" &>/dev/null
     fi

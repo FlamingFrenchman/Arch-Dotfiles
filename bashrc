@@ -25,14 +25,17 @@
 # Source aliases
 [[ -f ~/.bash_aliases ]] && . ~/.bash_aliases
 
+# Source tab completion files
+[[ -r /usr/share/bash-completion/bash_completion ]] && . /usr/share/bash-completion/bash_completion
+
 # Environment variables for guix
-[[ -f $GUIX_PROFILE/etc/profile ]] && . $GUIX_PROFILE/etc/profile
+[[ -f $GUIX_PROFILE/etc/profile ]] && . "$GUIX_PROFILE/etc/profile"
 
 # Source readline settings
 [[ -f ~/.inputrc ]] && bind -f ~/.inputrc
 
 # Resize window after command, if necessary
-shopt -s checkwinsize
+[[ $DISPLAY ]] && shopt -s checkwinsize
 # append history to $HISTFILE on exit instead of overwriting it
 shopt -s histappend
 

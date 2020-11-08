@@ -1,3 +1,6 @@
+# source system profile
+[ -r /etc/profile ] && . /etc/profile
+
 # PATH
 export PATH="$PATH:$HOME/.local/bin:$HOME/.gem/ruby/2.7.0/bin"
 
@@ -27,15 +30,23 @@ command -v nnn >/dev/null 2>&1  && {
 }
 
 # colorful less
-# raw escape sequences are not portable between shells
-export LESS=-R
-export LESS_TERMCAP_mb=$(printf '\e[1;31m')     # begin blink
-export LESS_TERMCAP_md=$(printf '\e[1;36m')     # begin bold
-export LESS_TERMCAP_me=$(printf '\e[0m')        # reset bold/blink
-export LESS_TERMCAP_so=$(printf '\e[01;44;33m') # begin reverse video
-export LESS_TERMCAP_se=$(printf '\e[0m')        # reset reverse video
-export LESS_TERMCAP_us=$(printf '\e[1;32m')     # begin underline
-export LESS_TERMCAP_ue=$(printf '\e[0m')        # reset underline
+# Note: raw escape sequences are not portable between shells
+LESS=-R                                  # output color escape sequences in raw form
+export LESS
+LESS_TERMCAP_mb=$(printf '\e[1;31m')     # begin blink
+export LESS_TERMCAP_mb
+LESS_TERMCAP_md=$(printf '\e[1;36m')     # begin bold
+export LESS_TERMCAP_md
+LESS_TERMCAP_me=$(printf '\e[0m')        # reset bold/blink
+export LESS_TERMCAP_me
+LESS_TERMCAP_so=$(printf '\e[01;44;33m') # begin reverse video
+export LESS_TERMCAP_so
+LESS_TERMCAP_se=$(printf '\e[0m')        # reset reverse video
+export LESS_TERMCAP_se
+LESS_TERMCAP_us=$(printf '\e[1;32m')     # begin underline
+export LESS_TERMCAP_us
+LESS_TERMCAP_ue=$(printf '\e[0m')        # reset underline
+export LESS_TERMCAP_ue
 
 # rcon
 export MCRCON_PROMPT='> '

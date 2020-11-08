@@ -16,6 +16,7 @@ cp ./inputrc ~/.inputrc
 cp ./tmux.conf ~/.tmux.conf
 cp ./screenrc ~/.screenrc
 cp ./profile ~/.profile
+cp ./octaverc ~/.octaverc
 
 # want keyboard and faster repeat
 cp ./xprofile ~/.xprofile
