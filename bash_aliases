@@ -21,18 +21,15 @@ YELLOW='\[\e[1;33m\]'
 WHITE='\[\e[1;37m\]'
 NC='\[\e[0m\]'
 
-GUIX_PROFILE="$HOME/.guix-profile"
-
 # Useful things
 alias ls='ls -h --color=auto'
 alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
 alias diff='diff --color=auto'
 alias df='df -h'
 alias du='du -h'
-alias dmesg='dmesg -H --color=always'
-alias why='what'
-alias how='what'
-alias wtf='what'
+alias dmesg='dmesg -H --color=auto'
 alias xcopy='xclip -selection clipboard'
 alias xpaste='xclip -o -selection clipboard'
 alias info='info --vi-keys'
@@ -43,35 +40,12 @@ which --skip-alias nvim &>/dev/null && { \
     alias vi='nvim'; \
 }
 
-# Terminal emulator specific stuff
-if [[ $TERM == "st-256color" ]] || [[ $TERM == "screen-256color" ]]; then
-   # Quickly change keyboard
-   alias pgkb='setxkbmap -layout us -model pc104 -variant dvp -option'\
-       'ctrl:swapcaps -option terminate:ctrl-alt-backspace'
-   alias dvkb='setxkbmap -layout us -model pc104 -variant dvorak -option'\
-       'ctrl:swapcaps -option terminate:ctrl-alt-backspace'
+# change keyboard in xorg
+if [[ -n $DISPLAY ]]; then
+   alias pgkb='setxkbmap -layout us -model pc104 -variant dvp'\
+' -option ctrl:nocaps -option terminate:ctrl-alt-backspace'
    alias enkb='setxkbmap -layout us -model pc104'
 fi
-
-steam () {
-    { nohup flatpak run com.valvesoftware.Steam &>/dev/null & } &
-}
-
-spotify () {
-    { nohup flatpak run com.spotify.Client &>/dev/null & } &
-}
-
-discord () {
-    { nohup flatpak run com.discordapp.Discord &>/dev/null & } &
-}
-
-zoom () {
-    { nohup flatpak run us.zoom.Zoom &>/dev/null & } &
-}
-
-firefox () {
-    nohup firefox $@ &>/dev/null &
-}
 
 # generic function for orphaning and backgrounding processes
 run () {

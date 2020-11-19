@@ -14,6 +14,10 @@ fi
 export VISUAL=$EDITOR
 export SUDO_EDITOR=$EDITOR
 
+# guix vars
+GUIX_PROFILE="$HOME/.guix-profile"
+[ -f "$GUIX_PROFILE/etc/profile" ] && . "$GUIX_PROFILE/etc/profile"
+
 # xdg
 command -v xdg_user_dir >/dev/null 2>&1  && {
     XDG_CONFIG_HOME=$(xdg_user_dir)

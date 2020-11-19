@@ -24,17 +24,17 @@
 # Source aliases
 [[ -f ~/.bash_aliases ]] && . ~/.bash_aliases
 
-# Environment variables for guix
-[[ -f $GUIX_PROFILE/etc/profile ]] && . "$GUIX_PROFILE/etc/profile"
-
 # Source readline settings
 [[ -f ~/.inputrc ]] && bind -f ~/.inputrc
 
-# Resize window after command, if necessary
-[[ $DISPLAY ]] && shopt -s checkwinsize
+# resize window after command, if necessary
+shopt -s checkwinsize
 
 # append history to $HISTFILE on exit instead of overwriting it
 shopt -s histappend
+
+# expand directory paths when completing
+shopt -s direxpand
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [[ -x /usr/bin/lesspipe.sh ]] && { \
