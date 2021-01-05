@@ -40,13 +40,6 @@ which --skip-alias nvim &>/dev/null && { \
     alias vi='nvim'; \
 }
 
-# change keyboard in xorg
-if [[ -n $DISPLAY ]]; then
-   alias pgkb='setxkbmap -layout us -model pc104 -variant dvp'\
-' -option ctrl:nocaps -option terminate:ctrl-alt-backspace'
-   alias enkb='setxkbmap -layout us -model pc104'
-fi
-
 # generic function for orphaning and backgrounding processes
 run () {
     { nohup $@ &>/dev/null & } &
@@ -61,25 +54,6 @@ what () {
     echo "[ $(whoami)@$(hostname) ][ $(date) ][ $(pwd) ]"
 }
 
-# navigate with nnn
-n () {
-    # if the alias above doesn't work, don't allow nesting of nnn
-    if [[ -n $NNNLVL ]] && [ "${NNNLVL:-0}" -ge 1 ]; then
-        #echo "nnn is already running"
-        #return
-        exit
-    fi
-
-    export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
-
-    /usr/bin/env nnn "$@"
-
-    if [[ -f "$NNN_TMPFILE" ]]; then
-        source "$NNN_TMPFILE"
-        rm -f "$NNN_TMPFILE" &>/dev/null
-    fi
-}
-
 # set the prompt
 prompt () {
     local STATUS=$(if [[ $? -gt 0 ]]; \
@@ -91,7 +65,7 @@ prompt () {
     if [[ -n $SSH2_IP ]] || [[ -n $SSH_IP ]] ; then
         local USER_AND_HOST="$NC\u$WHITE@$NC\h "
     fi
-    PS1="$USER_AND_HOST$STATUS\\$ $NC"
+    PS1="$USER_AND_HOST$STATUS\$ $NC"
     PS2="$WHITE>$NC "
     PS4=" $NC "
 }

@@ -36,21 +36,5 @@ shopt -s histappend
 # expand directory paths when completing
 shopt -s direxpand
 
-# make less more friendly for non-text input files, see lesspipe(1)
-[[ -x /usr/bin/lesspipe.sh ]] && { \
-    export LESSOPEN="|lesspipe.sh %s"; \
-    eval "$(lesspipe.sh)"; \
-}
-
-# prep for ssh
-# on arch I am using systemd/user to start instead
-#if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-#  ssh-agent > "$XDG_RUNTIME_DIR/ssh-agent.env"
-#fi
-#if [[ ! "$SSH_AUTH_SOCK" ]]; then
-#  eval "$(<"$XDG_RUNTIME_DIR/ssh-agent.env")"
-#fi
-
 # function to call to generate command
-PS1="";
-PROMPT_COMMAND=prompt
+export PROMPT_COMMAND=prompt

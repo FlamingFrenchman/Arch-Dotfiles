@@ -67,6 +67,7 @@ set magic
 set autoread
 " characters to be changed in list mode
 set listchars=tab:<\ >,eol:$,nbsp:+,trail:-
+set mouse=a
 " clearing/refreshing the screen also gets rid of highlights
 nnoremap <silent> <C-L> :nohls<CR>:set nolist<CR><C-L>
 
