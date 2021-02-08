@@ -4,18 +4,16 @@
 cd "$(dirname $0)" || { echo "Unable to cd into bundle directory; exiting."; exit 1; }
 
 # literal dotfiles
-cp ./vimrc ~/.vimrc
 cp ./bashrc ~/.bashrc
 cp ./bash_profile ~/.bash_profile
 cp ./bash_logout ~/.bash_logout
 cp ./bash_aliases ~/.bash_aliases
 cp ./inputrc ~/.inputrc
-cp ./tmux.conf ~/.tmux.conf
-cp ./screenrc ~/.screenrc
-cp ./profile ~/.profile
 cp ./octaverc ~/.octaverc
-
-# keyboard and faster repeat
+cp ./profile ~/.profile
+cp ./screenrc ~/.screenrc
+cp ./tmux.conf ~/.tmux.conf
+cp ./vimrc ~/.vimrc
 cp ./xprofile ~/.xprofile
 
 # useful scripts in xdg compliant location

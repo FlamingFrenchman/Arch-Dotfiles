@@ -2,9 +2,6 @@
 # ~/.profile
 #
 
-# PATH
-export PATH="$PATH:$HOME/.local/bin:$HOME/.gem/ruby/2.7.0/bin"
-
 # editor
 if command -v nvim >/dev/null 2>&1 ; then
     export EDITOR=nvim
@@ -34,7 +31,7 @@ command -v xdg_user_dir >/dev/null 2>&1 && {
 
 # colorful less
 # Note: raw escape sequences are not portable between shells
-LESS=-RFx4                               # raw color escape sequences
+LESS='-FRSX --mouse'                     # raw color escape sequences
 export LESS
 LESS_TERMCAP_mb=$(printf '\e[1;31m')     # begin blink
 export LESS_TERMCAP_mb

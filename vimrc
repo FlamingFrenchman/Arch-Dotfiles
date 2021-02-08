@@ -11,17 +11,21 @@ else
     " Standard vim specific commands
 endif
 
-if has('plugs')
-    " plugins
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $HOME/.vimrc
 endif
+
+" plugins
+call plug#begin('~/.vim/plugged')
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+call plug#end()
 
 " cursor settings
 " if vi mode prefixes are not being set by readline, they will need to be set
 " manually on vim exit using autocmds
 
-" used in gVim and by neovim in some terminals
-set guicursor=n-v-ve-o-c:block,i-ci-r-cr:hor20
-    \,a:blinkwait600-blinkoff600-blinkon600-Cursor/lCursor
 " terminal cursor
 if &term =~ "screen.*"
     " wrap in DECSCRSR when in screen/tmux
