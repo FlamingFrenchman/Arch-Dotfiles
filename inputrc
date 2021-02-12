@@ -11,27 +11,36 @@ set editing-mode vi
 # tab complete slash on symlinked directories
 set mark-symlinked-directories on
 
+# Color files by types
+# Note that this may cause completion text blink in some terminals (e.g. xterm).
+set colored-stats On
+# Append char to indicate type
+set visible-stats On
+# Mark symlinked directories
+set mark-symlinked-directories On
+# Color the common prefix
+set colored-completion-prefix On
+# Color the common prefix in menu-complete
+set menu-complete-display-prefix On
+
+# stop ^C from echoing after Ctrl+C is pressed
+set echo-control-characters off
+
 # use the mode prompt to indicate whether or not you're in vi insert mode. the
 # \1 and \2 characters are required by readline to insert non-printable escape
 # chars
 set show-mode-in-prompt on
-set vi-ins-mode-string "\1\e[5 q\2"
-set vi-cmd-mode-string "\1\e[1 q\2"
-
+$if term=linux
+    set vi-ins-mode-string "\1\e[?0c\2"
+    set vi-cmd-mode-string "\1\e[?8c\2"
+$else
 $if term=screen
     set vi-ins-mode-string "\1\eP\e[5 q\e\\\2"
     set vi-cmd-mode-string "\1\eP\e[1 q\e\\\2"
+$else
+    set vi-ins-mode-string "\1\e[5 q\2"
+    set vi-cmd-mode-string "\1\e[1 q\2"
 $endif
-
-$if Octave
-    $if term=xterm
-        set vi-ins-mode-string "INS"
-        set vi-cmd-mode-string "CMD"
-    $endif
-    $if term=xterm-256color
-        set vi-ins-mode-string "\1\e[5 q\2"
-        set vi-cmd-mode-string "\1\e[1 q\2"
-    $endif
 $endif
 
 $if Bash

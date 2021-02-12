@@ -12,37 +12,5 @@ hardstatus alwaysfirstline "%{b kw}%H %{r}%1` %{w}| %{g}%c %{w}| %{y}%d.%m.%Y %{
 rendition so "="
 caption string "%{= dd}-"
 
-# binds
-# prefix
-# ctrl-j is interpreted as a carriage return (\r, 0x0d); emacs uses this
-# for something but it seemed very specific and unimportant
-escape ^jJ
-
-# remove something dangerous
-bind k
-bind ^k
-bind q
-bind ^q
-bind \\
-
-# vi-keys
-bind h focus left
-bind j focus down
-bind k focus up
-bind l focus right
-bind ^h focus left
-bind ^j focus down
-bind ^k focus up
-bind ^l focus right
-
-# other stuff
-bind X
-bind x
-bind x remove
-bind e quit
-bind q kill
-bind ^| split -v
-bind \\ split -v
-bind - split
-bind o focus
-bind ^i other
+# escape key
+escape ^@a

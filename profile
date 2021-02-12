@@ -19,16 +19,6 @@ command -v guix >/dev/null 2>&1 && {
     [ -f "$GUIX_PROFILE/etc/profile" ] && . "$GUIX_PROFILE/etc/profile"
 }
 
-# xdg
-command -v xdg_user_dir >/dev/null 2>&1 && {
-    XDG_CONFIG_HOME=$(xdg_user_dir)
-    XDG_CONFIG_DOCUMENTS=$(xdg_user_dir DOWNLOADS)
-    XDG_CONFIG_DOWNLOADS=$(xdg_user_dir DOCUMENTS)
-    export XDG_CONFIG_HOME
-    export XDG_CONFIG_DOCUMENTS
-    export XDG_CONFIG_DOWNLOADS
-}
-
 # colorful less
 # Note: raw escape sequences are not portable between shells
 LESS='-FRSX --mouse'                     # raw color escape sequences

@@ -36,24 +36,7 @@ alias xpaste='xclip -o -selection clipboard'
 alias info='info --vi-keys'
 
 # Force myself to use the good shit
-which --skip-alias nvim &>/dev/null && { \
-    alias vim='nvim'; \
-    alias vi='nvim'; \
-}
-
-# generic function for orphaning and backgrounding processes
-run () {
-    { nohup $@ &>/dev/null & } &
-}
-
-# make things pretty
-prettify () {
-    wal ${*:1:$#-1} --vte -o ~/.bin/theme_update.sh -i ${*:$#}
-}
-
-what () {
-    echo "[ $(whoami)@$(hostname) ][ $(date) ][ $(pwd) ]"
-}
+which --skip-alias nvim &>/dev/null && alias vim='nvim'
 
 # set the prompt
 prompt () {
