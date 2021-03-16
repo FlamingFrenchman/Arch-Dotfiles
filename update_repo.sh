@@ -14,7 +14,7 @@ cp ~/.profile ./profile
 cp ~/.screenrc ./screenrc
 cp ~/.tmux.conf ./tmux.conf
 cp ~/.vimrc ./vimrc
-cp ~/.xprofile ./xprofile
+cp -r ~/.vim ./vim
 
 # useful scripts in xdg-compliant directory
 cp -r ~/.local/bin/* ./bin
