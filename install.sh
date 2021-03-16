@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # cd into the bundle and use relative paths
-cd "$(dirname $0)" || { echo "Unable to cd into bundle directory; exiting."; exit 1; }
+cd "$(dirname "$0")" || { echo "Unable to cd into bundle directory; exiting."; exit 1; }
 
 # literal dotfiles
 cp ./bashrc ~/.bashrc
@@ -18,12 +18,11 @@ cp -r ./vim ~/.vim
 
 # useful scripts in xdg compliant location
 [ -d "$HOME/.local/bin" ] || mkdir "$HOME/.local/bin"
-cp -r ./bin/* $HOME/.local/bin
+cp -r ./bin/* ~/.local/bin
 
 # set up symlinks for neovim
 if command -v nvim >/dev/null 2>&1 ; then
-    [ -d ~/.config/nvim ] || mkdir -p ~/.config/nvim
-    [ -h ~/.config/nvim/init.vim ] || ln -s ~/.vimrc ~/.config/nvim/init.vim
-    [ -d ~/.vim ] || mkdir ~/.vim
-    [ -h ~/.local/share/nvim/site ] || ln -s ~/.vim ~/.local/share/nvim/site
+    [ -h "$HOME/.config/nvim" ] || ln -sf ~/.vim ~/.config/nvim
+    [ -h "$HOME/.local/share/nvim/site" ] || ln -sf ~/.vim ~/.local/share/nvim/site
+    [ -h "$HOME/.config/nvim/init.vim" ] || ln -sf ~/.vimrc ~/.config/nvim/init.vim
 fi

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # cd into the bundle and use relative paths
-cd "$(dirname $0)" || { echo "Unable to cd into bundle directory; exiting."; exit 1; }
+cd "$(dirname "$0")" || { echo "Unable to cd into bundle directory; exiting."; exit 1; }
 
 # literal dotfiles
 cp ~/.bashrc ./bashrc
@@ -14,7 +14,7 @@ cp ~/.profile ./profile
 cp ~/.screenrc ./screenrc
 cp ~/.tmux.conf ./tmux.conf
 cp ~/.vimrc ./vimrc
-cp -r ~/.vim ./vim
+cp -r ~/.vim/* ./vim && rm -rf vim/plugged/
 
 # useful scripts in xdg-compliant directory
 cp -r ~/.local/bin/* ./bin

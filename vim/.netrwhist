@@ -1,4 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =2
-let g:netrw_dirhist_2='/media/nfs/projects/UCSC/am214/hw1'
-let g:netrw_dirhist_1='/home/thickboy/Projects/UCSC/cse110a/asg5'
