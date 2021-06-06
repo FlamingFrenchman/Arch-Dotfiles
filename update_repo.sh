@@ -17,8 +17,8 @@ if command -v nvim >/dev/null 2>&1; then
     cp -r ~/.config/nvim/* ./vim/
     rm -rf vim/plugged vim/autoload
 else
-    cp ~/.vimrc ./vimrc
     cp -r ~/.vim/* ./vim/ && rm -rf vim/plugged vim/autoload
+    cp ~/.vimrc ./vim/init.vim
 fi
 
 # useful scripts in xdg-compliant directory
