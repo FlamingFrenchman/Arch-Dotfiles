@@ -13,10 +13,86 @@ fi
 export VISUAL=$EDITOR
 export SUDO_EDITOR=$EDITOR
 
+### most of this is just trying to make $HOME less cluttered ###
+
+# xdg directories
+XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CONFIG_HOME
+XDG_CACHE_HOME="$HOME/.cache"
+export XDG_CACHE_HOME
+XDG_DATA_HOME="$HOME/.local/share"
+export XDG_DATA_HOME
+
+# rust packages
+command -v cargo >/dev/null 2>&1 && {
+    CARGO_HOME="$XDG_DATA_HOME/cargo"
+    export CARGO_HOME
+    export PATH="$PATH:$CARGO_HOME/bin"
+}
+
+# golang packages
+command -v go >/dev/null 2>&1 && {
+    GOPATH="$XDG_DATA_HOME/go"
+    export GOPATH
+    export PATH="$PATH:$GOPATH/bin"
+}
+
+# texlive/texmf
+command -v mf >/dev/null 2>&1 && {
+    TEXMFHOME="$XDG_DATA_HOME/texmf"
+    export TEXMFHOME
+    TEXMFVAR="$XDG_CACHE_HOME/texlive/texmf-var"
+    export TEXMFVAR
+    TEXMFCONFIG="$XDG_CONFIG_HOME/texlive/texmf-config"
+    export TEXMFCONFIG
+}
+
+# virtualenv
+command -v virtualenv >/dev/null 2>&1 && {
+    WORKON_HOME="$XDG_DATA_HOME/virtualenvs"
+    export WORKON_HOME
+}
+
+# docker
+command -v docker >/dev/null 2>&1 && {
+    DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
+    export DOCKER_CONFIG
+}
+
+# npm
+command -v npm >/dev/null 2>&1 && {
+    NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
+    export NPM_CONFIG_USERCONFIG
+}
+
+# wine
+command -v wine >/dev/null 2>&1 && {
+    WINEPREFIX="$XDG_DATA_HOME/wineprefixes/default"
+    export WINEPREFIX
+}
+
 # guix vars
 command -v guix >/dev/null 2>&1 && {
     export GUIX_PROFILE="$HOME/.guix-profile"
+    # shellcheck disable=SC1091
     [ -f "$GUIX_PROFILE/etc/profile" ] && . "$GUIX_PROFILE/etc/profile"
+}
+
+# CUDA
+command -v nvcc >/dev/null 2>&1 && {
+    CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
+    export CUDA_CACHE_PATH
+}
+
+# NVIDIA settings
+command -v nvidia-settings >/dev/null 2>&1 && {
+    alias nvidia-settings='nvidia-settings --config="$XDG_CONFIG_HOME/nvidia/settings"'
+}
+
+# mednafen
+command -v mednafen >/dev/null 2>&1 && {
+    MEDNAFEN_HOME="$XDG_CONFIG_HOME/mednafen"
+    export MEDNAFEN_HOME
 }
 
 # colorful less
@@ -43,6 +119,3 @@ if command -v lesspipe.sh >/dev/null 2>&1 ; then
     export LESSOPEN="|lesspipe.sh %s"
     eval "$(lesspipe.sh)"
 fi
-
-# rcon
-export MCRCON_PROMPT='> '

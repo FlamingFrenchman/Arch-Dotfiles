@@ -28,7 +28,7 @@
                 "rootPatterns": ["Cargo.toml"]
         },
         "latex": {
-            "command": "/PATH/TO/texlab",
+            "command": "texlab",
             "ignoredRootPaths": ["~"],
             "filetypes": ["tex", "bib", "plaintex", "context"]
         },

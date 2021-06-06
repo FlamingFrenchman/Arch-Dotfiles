@@ -9,20 +9,18 @@ cp ./bash_profile ~/.bash_profile
 cp ./bash_logout ~/.bash_logout
 cp ./bash_aliases ~/.bash_aliases
 cp ./inputrc ~/.inputrc
-cp ./octaverc ~/.octaverc
 cp ./profile ~/.profile
-cp ./screenrc ~/.screenrc
 cp ./tmux.conf ~/.tmux.conf
-cp ./vimrc ~/.vimrc
-cp -r ./vim ~/.vim
 
 # useful scripts in xdg compliant location
 [ -d "$HOME/.local/bin" ] || mkdir "$HOME/.local/bin"
 cp -r ./bin/* ~/.local/bin
 
-# set up symlinks for neovim
+# vim/nvim
 if command -v nvim >/dev/null 2>&1 ; then
-    [ -h "$HOME/.config/nvim" ] || ln -sf ~/.vim ~/.config/nvim
-    [ -h "$HOME/.local/share/nvim/site" ] || ln -sf ~/.vim ~/.local/share/nvim/site
-    [ -h "$HOME/.config/nvim/init.vim" ] || ln -sf ~/.vimrc ~/.config/nvim/init.vim
+    [ -d ~/.config/nvim ] || mkdir ~/.config/nvim
+    cp -r ./vim/* ~/.config/nvim/
+else 
+    cp -r ./vim ~/.vim
+    cp ./vim/init.vim ~/.vimrc
 fi
