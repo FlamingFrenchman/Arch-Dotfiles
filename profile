@@ -23,6 +23,23 @@ export XDG_CACHE_HOME
 XDG_DATA_HOME="$HOME/.local/share"
 export XDG_DATA_HOME
 
+# wget
+command -v wget >/dev/null 2>&1 && {
+    WGETRC="$XDG_CONFIG_HOME/wgetrc"
+    export WGETRC
+    alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
+}
+
+# less
+command -v less >/dev/null 2>&1 && {
+    [ -d "$XDG_CONFIG_HOME/less" ] || mkdir "$XDG_CONFIG_HOME/less"
+    LESSKEY="$XDG_CONFIG_HOME/less/lesskey"
+    export LESSKEY
+    [ -d "$XDG_CACHE_HOME/less" ] || mkdir "$XDG_CACHE_HOME/less"
+    LESSHISTFILE="$XDG_CACHE_HOME/less/history"
+    export LESSHISTFILE
+}
+
 # rust packages
 command -v cargo >/dev/null 2>&1 && {
     CARGO_HOME="$XDG_DATA_HOME/cargo"
