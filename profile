@@ -112,6 +112,11 @@ command -v mednafen >/dev/null 2>&1 && {
     export MEDNAFEN_HOME
 }
 
+# DOSBox
+command -v dosbox >/dev/null 2>&1 && {
+    alias dosbox='dosbox -conf "$XDG_CONFIG_HOME/dosbox/dosbox.conf"'
+}
+
 # colorful less
 # Note: raw escape sequences are not portable between shells
 LESS='-FRSX --mouse'                     # raw color escape sequences

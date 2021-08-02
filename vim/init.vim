@@ -11,17 +11,6 @@ else
     " Standard vim specific commands
 endif
 
-if empty(glob('$XDG_CONFIG_HOME/nvim/autoload/plug.vim'))
-    silent !curl -fLo $XDG_CONFIG_HOME/nvim/autoload/plug.vim --create-dirs
-        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source $XDG_CONFIG_HOME/nvim/init.vim
-endif
-
-" plugins
-call plug#begin('$XDG_CONFIG_HOME/nvim/plugged')
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-call plug#end()
-
 " cursor settings
 " if vi mode prefixes are not being set by readline, they will need to be set
 " manually on vim exit using autocmds
