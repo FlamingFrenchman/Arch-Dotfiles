@@ -7,11 +7,30 @@ if command -v nvim >/dev/null 2>&1 ; then
     export EDITOR=nvim
 elif command -v vim >/dev/null 2>&1 ; then
     export EDITOR=vim
-else
+elif command -v vi >/dev/null 2>&1 ; then
     export EDITOR=vi
+else
+    export EDITOR=nano
 fi
 export VISUAL=$EDITOR
 export SUDO_EDITOR=$EDITOR
+
+# qt5 in gnome/gtk environments
+QT_QPA_PLATFORMTHEME=gnome
+export QT_QPA_PLATFORMTHEME
+QT_STYLE_OVERRIDE=kvantum-dark
+export QT_STYLE_OVERRIDE
+QT_AUTO_SCREEN_SCALE_FACTOR=1
+export QT_AUTO_SCREEN_SCALE_FACTOR
+
+# hardware video acceleration
+LIBVA_DRIVER_NAME=i965
+#LIBVA_DRIVER_NAME=vdpau
+export LIBVA_DRIVER_NAME
+
+# prevent libglvnd from loading the nvidia driver on optimus laptops
+__EGL_VENDOR_LIBRARY_FILENAMES="/usr/share/glvnd/egl_vendor.d/50_mesa.json"
+export __EGL_VENDOR_LIBRARY_FILENAMES
 
 ### most of this is just trying to make $HOME less cluttered ###
 
