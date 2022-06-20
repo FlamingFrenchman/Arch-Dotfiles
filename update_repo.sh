@@ -6,11 +6,16 @@ cd "$(dirname "$0")" || { echo "Unable to cd into bundle directory; exiting."; e
 # literal dotfiles
 cp ~/.bashrc ./bashrc
 cp ~/.bash_profile ./bash_profile
-cp ~/.bash_logout ./bash_logout
+if [ -r "$HOME/.bash_logout" ]; then cp ~/.bash_logout ./bash_logout; fi
 cp ~/.bash_aliases ./bash_aliases
-cp ~/.inputrc ./inputrc
+if [ -r "$HOME/.inputrc" ]; then cp "$HOME/.inputrc" ./inputrc
+elif [ -r "$INPUTRC" ]; then cp "$INPUTRC" ./inputrc
+fi
 cp ~/.profile ./profile
-cp ~/.tmux.conf ./tmux.conf
+if [ -r "$HOME/.inputrc" ]; then cp "$HOME/.tmux.conf" ./tmux.conf
+elif [ -r "$XDG_CONFIG_HOME/tmux/tmux.conf" ]; then cp "$XDG_CONFIG_HOME/tmux/tmux.conf" ./tmux.conf
+elif [ -r "$HOME/.config/tmux/tmux.conf" ]; then cp "$HOME/.config/tmux/tmux.conf" ./tmux.conf
+fi
 
 # vim/nvim
 if command -v nvim >/dev/null 2>&1; then

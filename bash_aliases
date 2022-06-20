@@ -3,22 +3,9 @@
 #
 
 # Define a few Colors
-BLACK='\[\e[0;30m\]'
-BLUE='\[\e[0;34m\]'
-GREEN='\[\e[0;32m\]'
-CYAN='\[\e[0;36m\]'
-RED='\[\e[0;31m\]'
-PURPLE='\[\e[0;35m\]'
-BROWN='\[\e[0;33m\]'
-LIGHTGRAY='\[\e[0;37m\]'
-DARKGRAY='\[\e[1;30m\]'
-LIGHTBLUE='\[\e[1;34m\]'
-LIGHTGREEN='\[\e[1;32m\]'
-LIGHTCYAN='\[\e[1;36m\]'
-LIGHTRED='\[\e[1;31m\]'
-LIGHTPURPLE='\[\e[1;35m\]'
-YELLOW='\[\e[1;33m\]'
-WHITE='\[\e[1;37m\]'
+BOLDRED='\[\e[1;31m\]'
+BOLDWHITE='\[\e[1;37m\]'
+WHITE='\[\e[0;37m\]'
 NC='\[\e[0m\]'
 
 # Useful things
@@ -27,6 +14,7 @@ alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias diff='diff --color=auto'
+alias ip='ip --color=auto'
 alias df='df -h'
 alias du='du -h'
 alias free='free -h'
@@ -41,8 +29,8 @@ which --skip-alias nvim &>/dev/null && alias vim='nvim'
 # set the prompt
 prompt () {
     local STATUS=$(if [[ $? -gt 0 ]]; \
-                   then echo -e "$RED"; \
-                   else echo -e "$WHITE"; \
+                   then echo -e "$BOLDRED"; \
+                   else echo -e "$BOLDWHITE"; \
                    fi)
     local SSH_IP=$(echo $SSH_CLIENT | awk '{ print $1 }')
     local SSH2_IP=$(echo $SSH2_CLIENT | awk '{ print $1 }')
@@ -82,10 +70,9 @@ extract () {
 # wrote it and gave it to him
 vipath () { 
     declare TFILE=/tmp/path.$LOGNAME.$$;
-    echo $PATH | sed 's/^:/.:/;s/:$/:./' | sed 's/::/:.:/g' | tr ':' '\012' > $TFILE;
-    vim $TFILE;
-    PATH=`awk ' { if (NR>1) printf ":"
-      printf "%s",$1 }' $TFILE`;
-    rm -f $TFILE;
-    echo $PATH
+    echo "$PATH" | sed 's/^:/.:/;s/:$/:./' | sed 's/::/:.:/g' | tr ':' '\012' > "$TFILE";
+    vim "$TFILE";
+    PATH=$(awk ' { if (NR>1) printf ":" printf "%s",$1 }' "$TFILE");
+    rm -f "$TFILE";
+    echo "$PATH"
 }  

@@ -18,9 +18,17 @@ endif
 " terminal cursor
 if &term =~ "screen.*"
     " wrap in DECSCRSR when in screen/tmux
+    " insert
     let &t_SI = "\eP\e[5 q\e\\"
+    " replace
     let &t_SR = "\eP\e[3 q\e\\"
+    " normal (and anything else)
     let &t_EI = "\eP\e[1 q\e\\"
+elseif &term == "linux"
+    " insert
+    let &t_SI = "\e[?0c"
+    " normal (and anything else)
+    let &t_EI = "\e[?8c"
 else
     " insert
     let &t_SI = "\e[5 q"
@@ -122,9 +130,12 @@ if has('autocmd')
     if &term =~ "screen.*"
         " wrap cursor escape sequences in DECSCRSR for screen/tmux
         au VimEnter * silent !echo -ne "\eP\e[1 q\e\\"
-        au VimLeave * silent !echo -ne "\eP\e[3 q\e\\"
+        au VimLeave * silent !echo -ne "\eP\e[5 q\e\\"
+    elseif &term == "linux"
+        au VimEnter * silent !echo -ne "\e[?8c"
+        au VimLeave * silent !echo -ne "\e[?0c"
     else
         au VimEnter * silent !echo -ne "\e[1 q"
-        au VimLeave * silent !echo -ne "\e[3 q"
+        au VimLeave * silent !echo -ne "\e[5 q"
     endif
 endif
