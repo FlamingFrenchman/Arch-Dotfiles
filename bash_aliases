@@ -72,10 +72,10 @@ extract () {
 # From apmcd47 on ubuntuforums, and the guy that actually
 # wrote it and gave it to him
 vipath () { 
-    declare TFILE=/tmp/path.$LOGNAME.$$;
-    echo "$PATH" | sed 's/^:/.:/;s/:$/:./' | sed 's/::/:.:/g' | tr ':' '\012' > "$TFILE";
-    vim "$TFILE";
-    PATH=$(awk ' { if (NR>1) printf ":" printf "%s",$1 }' "$TFILE");
-    rm -f "$TFILE";
+    local TFILE=/tmp/path."$LOGNAME"."$$"
+    echo "$PATH" | sed 's/^:/.:/;s/:$/:./' | sed 's/::/:.:/g' | tr ':' '\012' > "$TFILE"
+    vim "$TFILE"
+    PATH=$(awk '{ if (NR>1) {printf ":%s",$1} else {printf "%s",$1} }' "$TFILE")
+    rm "$TFILE"
     echo "$PATH"
 }  
