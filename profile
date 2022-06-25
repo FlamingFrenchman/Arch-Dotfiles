@@ -1,6 +1,4 @@
-#
-# ~/.profile
-#
+# shellcheck shell=sh
 
 # editor
 if command -v nvim >/dev/null 2>&1 ; then
@@ -43,7 +41,11 @@ export INPUTRC
 # qt5 in gnome/gtk environments
 QT_QPA_PLATFORMTHEME=qt5ct
 export QT_QPA_PLATFORMTHEME
+#QT_QPA_PLATFORMTHEME=gnome
+#export QT_QPA_PLATFORMTHEME
 #QT_STYLE_OVERRIDE=adwaita-dark
+#export QT_STYLE_OVERRIDE
+#QT_STYLE_OVERRIDE=kvantum-dark
 #export QT_STYLE_OVERRIDE
 QT_AUTO_SCREEN_SCALE_FACTOR=1
 export QT_AUTO_SCREEN_SCALE_FACTOR
@@ -52,21 +54,35 @@ export QT_SCALE_FACTOR
 QT_FONT_DPI=96
 export QT_FONT_DPI
 
-if lsmod | grep amdgpu >/dev/null 2>&1 ; then
-    # hardware video acceleration
-    LIBVA_DRIVER_NAME=radeonsi
-    export LIBVA_DRIVER_NAME
-    VDPAU_DRIVER=radeonsi
-    export VDPAU_DRIVER
-elif lsmod | grep i915 >/dev/null 2>&1 ; then
-    # hardware video acceleration
+# hardware video acceleration
+if command -v optirun >/dev/null 2>&1; then
     LIBVA_DRIVER_NAME=i965
     export LIBVA_DRIVER_NAME
     VDPAU_DRIVER=va_gl
     export VDPAU_DRIVER
-    # prevent libglvnd from loading the nvidia driver on optimus laptops
+    # prevent libglvnd from loading the nvidia driver by default
     __EGL_VENDOR_LIBRARY_FILENAMES="/usr/share/glvnd/egl_vendor.d/50_mesa.json"
     export __EGL_VENDOR_LIBRARY_FILENAMES
+elif lsmod | grep nvidia >/dev/null 2>&1; then
+    LIBVA_DRIVER_NAME=nvidia
+    export LIBVA_DRIVER_NAME
+    VDPAU_DRIVER=nvidia
+    export VDPAU_DRIVER
+elif lsmod | grep nouveau >/dev/null 2>&1; then
+    LIBVA_DRIVER_NAME=nouveau
+    export LIBVA_DRIVER_NAME
+    VDPAU_DRIVER=nouveau
+    export VDPAU_DRIVER
+elif lsmod | grep amdgpu >/dev/null 2>&1; then
+    LIBVA_DRIVER_NAME=radeonsi
+    export LIBVA_DRIVER_NAME
+    VDPAU_DRIVER=radeonsi
+    export VDPAU_DRIVER
+elif lsmod | grep i915 >/dev/null 2>&1; then
+    LIBVA_DRIVER_NAME=i965
+    export LIBVA_DRIVER_NAME
+    VDPAU_DRIVER=va_gl
+    export VDPAU_DRIVER
 fi
 
 # less
@@ -81,18 +97,25 @@ export LESSHISTFILE
 LESS='-FRSX --mouse --use-color'             # raw color escape sequences
 export LESS
 if echo "$TERM" | grep '^screen.*$' >/dev/null 2>&1 ; then
+    # shellcheck disable=SC1003
     LESS_TERMCAP_mb=$(printf '\eP\e[1;31m\e\\')     # begin blink
     export LESS_TERMCAP_mb
+    # shellcheck disable=SC1003
     LESS_TERMCAP_md=$(printf '\eP\e[1;36m\e\\')     # begin bold
     export LESS_TERMCAP_md
+    # shellcheck disable=SC1003
     LESS_TERMCAP_me=$(printf '\eP\e[0m\e\\')        # reset bold/blink
     export LESS_TERMCAP_me
+    # shellcheck disable=SC1003
     LESS_TERMCAP_so=$(printf '\eP\e[01;44;33m\e\\') # begin reverse video
     export LESS_TERMCAP_so
+    # shellcheck disable=SC1003
     LESS_TERMCAP_se=$(printf '\eP\e[0m\e\\')        # reset reverse video
     export LESS_TERMCAP_se
+    # shellcheck disable=SC1003
     LESS_TERMCAP_us=$(printf '\eP\e[1;32m\e\\')     # begin underline
     export LESS_TERMCAP_us
+    # shellcheck disable=SC1003
     LESS_TERMCAP_ue=$(printf '\eP\e[0m\e\\')        # reset underline
     export LESS_TERMCAP_ue
 else 
@@ -119,6 +142,7 @@ if command -v src-hilite-lesspipe.sh >/dev/null 2>&1 ; then
 fi
 
 ### most of this is just trying to make $HOME less cluttered ###
+
 
 # wget
 command -v wget >/dev/null 2>&1 && {
