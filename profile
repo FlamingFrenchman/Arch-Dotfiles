@@ -2,249 +2,167 @@
 
 # editor
 if command -v nvim >/dev/null 2>&1 ; then
-    EDITOR=nvim
-    export EDITOR
-    VISUAL=$EDITOR
-    export VISUAL
-    SUDO_EDITOR=$EDITOR
-    export SUDO_EDITOR
+    export EDITOR=nvim
+    export VIEWER='nvim -M -R'
+    export VISUAL=$EDITOR
+    export SUDO_EDITOR=$EDITOR
 elif command -v vim >/dev/null 2>&1 ; then
-    EDITOR=vim
-    export EDITOR
-    VISUAL=$EDITOR
-    export VISUAL
-    SUDO_EDITOR=$EDITOR
-    export SUDO_EDITOR
+    export EDITOR=vim
+    export VIEWER='vim -M -R'
+    export VISUAL=$EDITOR
+    export SUDO_EDITOR=$EDITOR
 elif command -v vi >/dev/null 2>&1 ; then
-    EDITOR='vi'
-    export EDITOR
-    VISUAL=$EDITOR
-    export VISUAL
-    SUDO_EDITOR=$EDITOR
-    export SUDO_EDITOR
+    export EDITOR='vi'
+    # i don't know if view is always shipped with vi, so just to be safe
+    if ! command -v view >/dev/null 2>&1 ; then export VIEWER='vi -R' ; fi
+    export VISUAL=$EDITOR
+    export SUDO_EDITOR=$EDITOR
 fi
 
-# xdg directories
-XDG_CONFIG_HOME="$HOME/.config"
-export XDG_CONFIG_HOME
-XDG_CACHE_HOME="$HOME/.cache"
-export XDG_CACHE_HOME
-XDG_DATA_HOME="$HOME/.local/share"
-export XDG_DATA_HOME
-XDG_STATE_HOME="$HOME/.local/state"
-export XDG_STATE_HOME
-
-# readline
-INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
-export INPUTRC
-
-# qt5 in gnome/gtk environments
-QT_QPA_PLATFORMTHEME=qt5ct
-export QT_QPA_PLATFORMTHEME
-#QT_QPA_PLATFORMTHEME=gnome
-#export QT_QPA_PLATFORMTHEME
-#QT_STYLE_OVERRIDE=adwaita-dark
-#export QT_STYLE_OVERRIDE
-#QT_STYLE_OVERRIDE=kvantum-dark
-#export QT_STYLE_OVERRIDE
-QT_AUTO_SCREEN_SCALE_FACTOR=1
-export QT_AUTO_SCREEN_SCALE_FACTOR
-QT_SCALE_FACTOR=1
-export QT_SCALE_FACTOR
-QT_FONT_DPI=96
-export QT_FONT_DPI
-
-# hardware video acceleration
-if command -v optirun >/dev/null 2>&1; then
-    LIBVA_DRIVER_NAME=i965
-    export LIBVA_DRIVER_NAME
-    VDPAU_DRIVER=va_gl
-    export VDPAU_DRIVER
-    # prevent libglvnd from loading the nvidia driver by default
-    __EGL_VENDOR_LIBRARY_FILENAMES="/usr/share/glvnd/egl_vendor.d/50_mesa.json"
-    export __EGL_VENDOR_LIBRARY_FILENAMES
-elif lsmod | grep nvidia >/dev/null 2>&1; then
-    LIBVA_DRIVER_NAME=nvidia
-    export LIBVA_DRIVER_NAME
-    VDPAU_DRIVER=nvidia
-    export VDPAU_DRIVER
-elif lsmod | grep nouveau >/dev/null 2>&1; then
-    LIBVA_DRIVER_NAME=nouveau
-    export LIBVA_DRIVER_NAME
-    VDPAU_DRIVER=nouveau
-    export VDPAU_DRIVER
-elif lsmod | grep amdgpu >/dev/null 2>&1; then
-    LIBVA_DRIVER_NAME=radeonsi
-    export LIBVA_DRIVER_NAME
-    VDPAU_DRIVER=radeonsi
-    export VDPAU_DRIVER
-elif lsmod | grep i915 >/dev/null 2>&1; then
-    LIBVA_DRIVER_NAME=i965
-    export LIBVA_DRIVER_NAME
-    VDPAU_DRIVER=va_gl
-    export VDPAU_DRIVER
+# rcfile for bourne shell/posix sh
+if [ -r "$HOME"/.shrc ] ; then
+    export ENV="$HOME"/.shrc
 fi
 
 # less
-[ -d "$XDG_CONFIG_HOME/less" ] || mkdir "$XDG_CONFIG_HOME/less"
-LESSKEY="$XDG_CONFIG_HOME/less/lesskey"
-export LESSKEY
-[ -d "$XDG_STATE_HOME/less" ] || mkdir "$XDG_STATE_HOME/less"
-LESSHISTFILE="$XDG_STATE_HOME/less/history"
-export LESSHISTFILE
-
-# Note: raw escape sequences are not portable between shells
 LESS='-FRSX --mouse --use-color'             # raw color escape sequences
 export LESS
-if echo "$TERM" | grep '^screen.*$' >/dev/null 2>&1 ; then
-    # shellcheck disable=SC1003
-    LESS_TERMCAP_mb=$(printf '\eP\e[1;31m\e\\')     # begin blink
-    export LESS_TERMCAP_mb
-    # shellcheck disable=SC1003
-    LESS_TERMCAP_md=$(printf '\eP\e[1;36m\e\\')     # begin bold
-    export LESS_TERMCAP_md
-    # shellcheck disable=SC1003
-    LESS_TERMCAP_me=$(printf '\eP\e[0m\e\\')        # reset bold/blink
-    export LESS_TERMCAP_me
-    # shellcheck disable=SC1003
-    LESS_TERMCAP_so=$(printf '\eP\e[01;44;33m\e\\') # begin reverse video
-    export LESS_TERMCAP_so
-    # shellcheck disable=SC1003
-    LESS_TERMCAP_se=$(printf '\eP\e[0m\e\\')        # reset reverse video
-    export LESS_TERMCAP_se
-    # shellcheck disable=SC1003
-    LESS_TERMCAP_us=$(printf '\eP\e[1;32m\e\\')     # begin underline
-    export LESS_TERMCAP_us
-    # shellcheck disable=SC1003
-    LESS_TERMCAP_ue=$(printf '\eP\e[0m\e\\')        # reset underline
-    export LESS_TERMCAP_ue
-else 
-    LESS_TERMCAP_mb=$(printf '\e[1;31m')     # begin blink
-    export LESS_TERMCAP_mb
-    LESS_TERMCAP_md=$(printf '\e[1;36m')     # begin bold
-    export LESS_TERMCAP_md
-    LESS_TERMCAP_me=$(printf '\e[0m')        # reset bold/blink
-    export LESS_TERMCAP_me
-    LESS_TERMCAP_so=$(printf '\e[01;44;33m') # begin reverse video
-    export LESS_TERMCAP_so
-    LESS_TERMCAP_se=$(printf '\e[0m')        # reset reverse video
-    export LESS_TERMCAP_se
-    LESS_TERMCAP_us=$(printf '\e[1;32m')     # begin underline
-    export LESS_TERMCAP_us
-    LESS_TERMCAP_ue=$(printf '\e[0m')        # reset underline
-    export LESS_TERMCAP_ue
-fi
 
 # make less more friendly for non-text input files and add syntax highlighting
 # see lesspipe(1) and source-highlight(1)
 if command -v src-hilite-lesspipe.sh >/dev/null 2>&1 ; then
-    export LESSOPEN="| src-hilite-lesspipe.sh %s"
+    export LESSOPEN='| src-hilite-lesspipe.sh %s'
 fi
 
-### most of this is just trying to make $HOME less cluttered ###
+# no point in executing the rest of the file if we can't use xdg dirs
+if [ -z "$HOME" ] || ! [ -w "$HOME" ] || [ -z "$REMOVE_CLUTTER" ] ; then return ; fi
 
+GREP=$(if command -v grep >/dev/null 2>&1 ; then
+        command -v grep
+    elif command -pv grep >/dev/null 2>&1 ; then
+        command -pv grep
+    fi);
+if [ -z "$GREP" ] ; then
+    echo 'Unable to locate grep; will not attempt to unclutter'
+    return 1
+fi
+
+MKDIR=$(if command -v mkdir >/dev/null 2>&1 ; then
+        command -v mkdir
+    elif command -pv mkdir >/dev/null 2>&1 ; then
+        command -pv mkdir
+    fi);
+if [ -z "$MKDIR" ] ; then
+    echo 'Unable to locate mkdir; will not attempt to unclutter'
+    return 1
+fi
+
+# swiped from stackexchange
+# changed to use command to find grep rather than assuming a particular path
+pathmunge () {
+    if ! echo "$PATH" | "$GREP" -Eq "(^|:)$1($|:)" ; then
+           if [ "$2" = 'after' ] ; then
+              PATH="$PATH:$1"
+           else
+              PATH="$1:$PATH"
+           fi
+        fi
+}
+
+# xdg directories
+export XDG_CONFIG_HOME="$HOME"/.config
+"$MKDIR" -p "$XDG_CONFIG_HOME"
+export XDG_CACHE_HOME="$HOME"/.cache
+"$MKDIR" -p "$XDG_CACHE_HOME"
+export XDG_DATA_HOME="$HOME"/.local/share
+"$MKDIR" -p "$XDG_DATA_HOME"
+export XDG_STATE_HOME="$HOME"/.local/state
+"$MKDIR" -p "$XDG_STATE_HOME"
+
+# readline
+export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
+"$MKDIR" -p "$XDG_CONFIG_HOME"/readline
+
+# less
+export LESSKEY="$XDG_CONFIG_HOME"/less/lesskey
+"$MKDIR" -p "$XDG_CONFIG_HOME"/less
+export LESSHISTFILE="$XDG_STATE_HOME"/less/history
+"$MKDIR" -p "$XDG_STATE_HOME"/less
 
 # wget
-command -v wget >/dev/null 2>&1 && {
-    WGETRC="$XDG_CONFIG_HOME/wgetrc"
-    export WGETRC
-}
+if command -v wget >/dev/null 2>&1 ; then
+    export WGETRC="$XDG_CONFIG_HOME"/wgetrc
+fi
 
 # openssl
-command -v openssl >/dev/null 2>&1 && {
-    RANDFILE="$XDG_CACHE_HOME/rnd"
-    export RANDFILE
-}
+if command -v openssl >/dev/null 2>&1 ; then
+    export RANDFILE="$XDG_CACHE_HOME"/rnd
+fi
 
 # GnuPG
-command -v gpg >/dev/null 2>&1 && {
-    GNUPGHOME="$XDG_DATA_HOME/gnupg"
-    export GNUPGHOME
-}
+if command -v gpg >/dev/null 2>&1 ; then
+    export GNUPGHOME="$XDG_DATA_HOME"/gnupg
+fi
 
 # python
-command -v python >/dev/null 2>&1 && {
-    PYTHONSTARTUP="$XDG_CONFIG_HOME/python/startup.py"
-    export PYTHONSTARTUP
-}
+if command -v python >/dev/null 2>&1 ; then
+    export PYTHONSTARTUP="$XDG_CONFIG_HOME"/python/startup.py
+    "$MKDIR" -p "$XDG_CONFIG_HOME"/python
+fi
 
 # rust packages
-command -v cargo >/dev/null 2>&1 && {
-    CARGO_HOME="$XDG_DATA_HOME/cargo"
-    export CARGO_HOME
-    export PATH="$PATH:$CARGO_HOME/bin"
-}
+if command -v cargo >/dev/null 2>&1 ; then
+    export CARGO_HOME="$XDG_DATA_HOME"/cargo
+    pathmunge "$CARGO_HOME"/bin
+fi
 
 # golang packages
-command -v go >/dev/null 2>&1 && {
-    GOPATH="$XDG_DATA_HOME/go"
-    export GOPATH
-    export PATH="$PATH:$GOPATH/bin"
-}
+if command -v go >/dev/null 2>&1 ; then
+    export GOPATH="$XDG_DATA_HOME"/go
+    pathmunge "$GOPATH"/bin
+fi
 
-# texlive/texmf
-command -v mf >/dev/null 2>&1 && {
-    TEXMFHOME="$XDG_DATA_HOME/texmf"
-    export TEXMFHOME
-    TEXMFVAR="$XDG_CACHE_HOME/texlive/texmf-var"
-    export TEXMFVAR
-    TEXMFCONFIG="$XDG_CONFIG_HOME/texlive/texmf-config"
-    export TEXMFCONFIG
-}
-
-# virtualenv
-command -v virtualenv >/dev/null 2>&1 && {
-    WORKON_HOME="$XDG_DATA_HOME/virtualenvs"
-    export WORKON_HOME
-}
-
-# docker
-command -v docker >/dev/null 2>&1 && {
-    DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
-    export DOCKER_CONFIG
-}
+# node repl history
+if command -v node >/dev/null 2>&1 ; then
+    export NODE_REPL_HISTORY="$XDG_STATE_HOME"/node/history
+    "$MKDIR" -p "$XDG_STATE_HOME"/node
+fi
 
 # npm
-command -v npm >/dev/null 2>&1 && {
-    NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
+if command -v npm >/dev/null 2>&1 ; then
+    NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
+    "$MKDIR" -p "$XDG_CONFIG_HOME"/npm
     export NPM_CONFIG_USERCONFIG
-}
+fi
+
+# texlive/texmf
+if command -v mf >/dev/null 2>&1 ; then
+    export TEXMFHOME="$XDG_DATA_HOME"/texmf
+    export TEXMFVAR="$XDG_CACHE_HOME"/texlive/texmf-var
+    export TEXMFCONFIG="$XDG_CONFIG_HOME"/texlive/texmf-config
+fi
+
+# virtualenv
+if command -v virtualenv >/dev/null 2>&1 ; then
+    export WORKON_HOME="$XDG_DATA_HOME"/virtualenvs
+fi
+
+# docker
+if command -v docker >/dev/null 2>&1 ; then
+    export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
+fi
 
 # wine
-command -v wine >/dev/null 2>&1 && {
-    WINEPREFIX="$XDG_DATA_HOME/wineprefixes/default"
-    export WINEPREFIX
-}
-
-# guix vars
-command -v guix >/dev/null 2>&1 && {
-    export GUIX_PROFILE="$HOME/.guix-profile"
-    # shellcheck disable=SC1091
-    [ -f "$GUIX_PROFILE/etc/profile" ] && . "$GUIX_PROFILE/etc/profile"
-}
+if command -v wine >/dev/null 2>&1 ; then
+    export WINEPREFIX="$XDG_DATA_HOME"/wineprefixes/default
+    "$MKDIR" -p "$WINEPREFIX"
+fi
 
 # elinks
-command -v elinks >/dev/null 2>&1 && {
-    ELINKS_CONFDIR="$XDG_CONFIG_HOME/elinks"
-    export ELINKS_CONFDIR
-}
+if command -v elinks >/dev/null 2>&1 ; then
+    export ELINKS_CONFDIR="$XDG_CONFIG_HOME"/elinks
+fi
 
-# NVIDIA settings and CUDA
-command -v nvidia-settings >/dev/null 2>&1 && {
-    alias nvidia-settings='nvidia-settings --config="$XDG_CONFIG_HOME/nvidia/settings"'
-    CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
-    export CUDA_CACHE_PATH
-}
-
-# mednafen
-command -v mednafen >/dev/null 2>&1 && {
-    MEDNAFEN_HOME="$XDG_CONFIG_HOME/mednafen"
-    export MEDNAFEN_HOME
-}
-
-# DOSBox
-command -v dosbox >/dev/null 2>&1 && {
-    alias dosbox='dosbox -conf "$XDG_CONFIG_HOME/dosbox/dosbox.conf"'
-}
-
-return 0
+unset GREP
+unset MKDIR
+unset -f pathmunge

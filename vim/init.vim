@@ -7,39 +7,32 @@ runtime! archlinux.vim
 
 if has('nvim')
     " Neovim specific commands
+    set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+        \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+        \,sm:block-blinkwait175-blinkoff150-blinkon175
 else
     " Standard vim specific commands
+
+    " cursor settings
+    " if vi mode prefixes are not being set by readline, they will need to be set
+    " manually on vim exit using autocmds
+
+    " terminal cursor
+    if (&term =~ "tmux.*" || &term =~ "xterm.*")
+        " insert
+        let &t_SI = "\e[5 q"
+        " replace
+        let &t_SR = "\e[3 q"
+        " normal (and anything else)
+        let &t_EI = "\e[1 q"
+    elseif &term == "linux"
+        " insert
+        let &t_SI = "\e[?0;c"
+        " normal (and anything else)
+        let &t_EI = "\e[?8;c"
+    endif
 endif
 
-" cursor settings
-" if vi mode prefixes are not being set by readline, they will need to be set
-" manually on vim exit using autocmds
-
-" terminal cursor
-if &term =~ "screen.*"
-    " wrap in DECSCRSR when in screen/tmux
-    " insert
-    let &t_SI = "\eP\e[5 q\e\\"
-    " replace
-    let &t_SR = "\eP\e[3 q\e\\"
-    " normal (and anything else)
-    let &t_EI = "\eP\e[1 q\e\\"
-elseif &term == "linux"
-    " insert
-    let &t_SI = "\e[?0c"
-    " normal (and anything else)
-    let &t_EI = "\e[?8c"
-else
-    " insert
-    let &t_SI = "\e[5 q"
-    " replace
-    let &t_SR = "\e[3 q"
-    " normal (and anything else)
-    let &t_EI = "\e[1 q"
-endif
-
-" less ridiculous history (vim default is 10000)
-set history=1000
 " allow backspacing over everything in insert mode
 set bs=indent,eol,start
 " always show cursor coordinates
@@ -48,10 +41,6 @@ set ruler
 set incsearch
 " highlight matches when searching
 set hlsearch
-" enable statusline even for single files
-set laststatus=2
-" enable tabline even if there's only one tab
-set showtabline=2
 " always show last command executed
 set showcmd
 " show matching brackets when the cursor is over one
@@ -120,22 +109,18 @@ let c_minlines = 100
 let c_space_errors = 1
 let c_curly_error = 1 " can be slow on large files
 
-" pretty colors
-colorscheme slate
-
 if has('autocmd')
     " open all folds to start
     au Syntax * normal zR
 
-    if &term =~ "screen.*"
-        " wrap cursor escape sequences in DECSCRSR for screen/tmux
-        au VimEnter * silent !echo -ne "\eP\e[1 q\e\\"
-        au VimLeave * silent !echo -ne "\eP\e[5 q\e\\"
+    if (&term =~ "tmux.*" || &term =~ "xterm.*")
+        au VimEnter * silent !echo -ne "\e[1 q"
+        au VimLeave * silent !echo -ne "\e[3 q"
     elseif &term == "linux"
         au VimEnter * silent !echo -ne "\e[?8c"
         au VimLeave * silent !echo -ne "\e[?0c"
-    else
-        au VimEnter * silent !echo -ne "\e[1 q"
-        au VimLeave * silent !echo -ne "\e[5 q"
     endif
 endif
+
+" syntax highlighting in .shrc
+au BufNewFile,BufRead .shrc call dist#ft#SetFileTypeSH(getline(1))

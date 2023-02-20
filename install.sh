@@ -10,13 +10,13 @@ cd "$(dirname "$0")" || { echo "Unable to cd into bundle directory; exiting."; e
 cp ./bashrc "$HOME/.bashrc"
 cp ./bash_profile "$HOME/.bash_profile"
 #cp ./bash_logout "$HOME/.bash_logout"
-cp ./bash_aliases "$HOME/.bash_aliases"
 if [ -n "$INPUTRC" ]; then
     [ -d "$(dirname "$INPUTRC")" ] || mkdir -p "$(dirname "$INPUTRC")"
     cp ./inputrc "$INPUTRC"
 else cp ./inputrc "$HOME/.inputrc"
 fi
 cp ./profile "$HOME/.profile"
+cp ./shrc "$HOME/.shrc"
 if [ -r "$HOME/.tmux.conf" ]; then
     cp ./tmux.conf "$HOME/.tmux.conf"
 elif [ -n "$XDG_CONFIG_HOME" ]; then

@@ -4,17 +4,12 @@ cd "$(dirname "$0")" || { echo "Unable to cd into bundle directory; exiting."; e
 BUNDLE_DIR=$(pwd)
 cd "$HOME" || exit 1
 
-# only pull in shell scripts that pass shellcheck and checkbashisms
-command -v checkbashisms >/dev/null 2>&1 || {
-    echo "Unable to locate checkbashisms; exiting."
-    exit 1
-}
-checkbashisms "$HOME/.profile" || exit 1
+# only pull in shell scripts that pass shellcheck
 command -v shellcheck >/dev/null 2>&1 || {
     echo "Unable to locate shellcheck; exiting."
     exit 1
 }
-shellcheck "$HOME/.profile" "$HOME/.bash_profile" "$HOME/.bashrc" "$HOME/.bash_aliases" || exit 1
+shellcheck "$HOME/.profile" "$HOME/.shrc" "$HOME/.bash_profile" "$HOME/.bashrc" || exit 1
 
 # cd into the bundle and use relative paths
 cd "$BUNDLE_DIR" || { echo "Unable to cd into bundle directory; exiting."; exit 1; }
@@ -23,10 +18,10 @@ cd "$BUNDLE_DIR" || { echo "Unable to cd into bundle directory; exiting."; exit 
 cp "$HOME/.bashrc" ./bashrc
 cp "$HOME/.bash_profile" ./bash_profile
 #cp "$HOME/.bash_logout" ./bash_logout
-cp "$HOME/.bash_aliases" ./bash_aliases
 if [ -n "$INPUTRC" ] && [ -r "$INPUTRC" ]; then cp "$INPUTRC" ./inputrc
 else cp "$HOME/.inputrc" ./inputrc
 fi
+cp "$HOME/.shrc" ./shrc
 cp "$HOME/.profile" ./profile
 if [ -n "$XDG_CONFIG_HOME" ] && [ -r "$XDG_CONFIG_HOME/tmux/tmux.conf" ]; then
     cp "$XDG_CONFIG_HOME/tmux/tmux.conf" ./tmux.conf

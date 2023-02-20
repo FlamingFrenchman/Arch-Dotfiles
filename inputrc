@@ -1,9 +1,7 @@
-#
-# ~/.inputrc
-#
-
 # virgin mode
 set editing-mode vi
+
+$include /etc/inputrc
 
 # clear screen in vi mode
 "\C-l": clear-screen
@@ -12,29 +10,32 @@ set editing-mode vi
 set mark-symlinked-directories on
 
 # Color files by types
-set colored-stats On
+set colored-stats on
 # display common prefix in completion menu before cycling through options
-set menu-complete-display-prefix On
+set menu-complete-display-prefix on
 # Color the common prefix
-set colored-completion-prefix On
+set colored-completion-prefix on
 
 # stop ^C from echoing after Ctrl+C is pressed
 set echo-control-characters off
 
-# use the mode prompt to indicate whether or not you're in vi insert mode. the
-# \1 and \2 characters are required by readline to insert non-printable escape
-# chars
+# use the mode prompt to indicate whether or not you're in vi insert mode
 set show-mode-in-prompt on
 $if term=linux
-    set vi-ins-mode-string "\1\e[?0c\2"
-    set vi-cmd-mode-string "\1\e[?8c\2"
+set vi-ins-mode-string "\1\e[?0c\2"
+set vi-cmd-mode-string "\1\e[?8c\2"
 $else
-$if term=screen
-    set vi-ins-mode-string "\1\eP\e[5 q\e\\\2"
-    set vi-cmd-mode-string "\1\eP\e[1 q\e\\\2"
+$if term=xterm
+set vi-ins-mode-string "\1\e[3 q\2"
+set vi-cmd-mode-string "\1\e[1 q\2"
 $else
-    set vi-ins-mode-string "\1\e[5 q\2"
-    set vi-cmd-mode-string "\1\e[1 q\2"
+$if term=tmux
+set vi-ins-mode-string "\1\e[3 q\2"
+set vi-cmd-mode-string "\1\e[1 q\2"
+$else
+set vi-ins-mode-string "(INS)"
+set vi-cmd-mode-string "(CMD)"
+$endif
 $endif
 $endif
 
