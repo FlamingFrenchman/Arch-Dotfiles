@@ -1,11 +1,11 @@
 # shellcheck shell=bash
+# shellcheck disable=SC1090
 
 # if not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
 # source posix sh stuff
 if [[ -n "$ENV" ]] && [[ -r "$ENV" ]]; then
-# shellcheck disable=SC1090
     source "$ENV";
 fi
 

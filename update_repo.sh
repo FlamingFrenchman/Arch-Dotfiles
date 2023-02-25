@@ -1,43 +1,43 @@
 #!/bin/sh
 
-cd "$(dirname "$0")" || { echo "Unable to cd into bundle directory; exiting."; exit 1; }
-BUNDLE_DIR=$(pwd)
-cd "$HOME" || exit 1
-
-# only pull in shell scripts that pass shellcheck
-command -v shellcheck >/dev/null 2>&1 || {
-    echo "Unable to locate shellcheck; exiting."
-    exit 1
-}
-shellcheck "$HOME/.profile" "$HOME/.shrc" "$HOME/.bash_profile" "$HOME/.bashrc" || exit 1
-
 # cd into the bundle and use relative paths
-cd "$BUNDLE_DIR" || { echo "Unable to cd into bundle directory; exiting."; exit 1; }
+cd "$(dirname "$0")" || { echo 'Unable to cd into bundle directory; exiting.'; exit 1; }
+[ -z "$HOME" ] && { echo "\$HOME is unset; exiting."; exit 1; }
+[ -r "$HOME" ] || { echo "Unable to read files in \$HOME; exiting."; exit 1; }
 
-# literal dotfiles
-cp "$HOME/.bashrc" ./bashrc
-cp "$HOME/.bash_profile" ./bash_profile
-#cp "$HOME/.bash_logout" ./bash_logout
-if [ -n "$INPUTRC" ] && [ -r "$INPUTRC" ]; then cp "$INPUTRC" ./inputrc
-else cp "$HOME/.inputrc" ./inputrc
-fi
-cp "$HOME/.shrc" ./shrc
-cp "$HOME/.profile" ./profile
-if [ -n "$XDG_CONFIG_HOME" ] && [ -r "$XDG_CONFIG_HOME/tmux/tmux.conf" ]; then
-    cp "$XDG_CONFIG_HOME/tmux/tmux.conf" ./tmux.conf
-elif [ -r "$HOME/.config/tmux/tmux.conf" ]; then
-    cp "$HOME/.config/tmux/tmux.conf" ./tmux.conf
-elif [ -r "$HOME/.tmux.conf" ]; then cp "$HOME/.tmux.conf" ./tmux.conf
+cp "$HOME"/.shrc ./shrc
+cp "$HOME"/.profile ./profile
+
+if [ -f "$HOME"/.bashrc ]; then
+    cp "$HOME"/.bashrc ./bashrc
+    cp "$HOME"/.bash_profile ./bash_profile
+    #cp "$HOME/.bash_logout" ./bash_logout
 fi
 
-# useful scripts in xdg-compliant directory
-cp -r "$HOME"/.local/bin/* ./bin/
+config_dir=${XDG_CONFIG_HOME:-$HOME/.config}
 
-# vim/nvim
-if command -v nvim >/dev/null 2>&1; then
-    cp -r "$HOME"/.config/nvim/* ./vim/
-    rm -rf vim/plugged vim/autoload
-else
-    cp -r "$HOME"/.vim/* ./vim/ && rm -rf vim/plugged vim/autoload
-    cp "$HOME"/.vimrc ./vim/init.vim
+if [ -f "$config_dir"/readline/inputrc ]; then
+    cp "$config_dir"/readline/inputrc ./
+elif [ -f "$HOME"/.inputrc ]; then
+    cp "$HOME"/.inputrc ./inputrc
+fi
+
+if [ -f "$config_dir"/tmux/tmux.conf ]; then
+    cp "$config_dir"/tmux/tmux.conf ./
+elif [ -f "$HOME"/.tmux.conf ]; then
+    cp "$HOME"/.tmux.conf ./tmux.conf
+fi
+
+if [ -d "$HOME"/.local/bin ]; then
+    cp -r "$HOME"/.local/bin/. ./bin/
+elif [ -d "$HOME"/.bin ]; then
+    cp -r "$HOME"/.bin/. ./bin/
+fi
+
+if [ -d "$config_dir"/nvim ]; then
+    cp -r "$config_dir"/nvim/. ./vim/
+    if [ -e ./vim/pack ]; then rm ./vim/pack; fi
+elif [ -d "$HOME"/.vim ]; then
+    cp -r "$HOME"/.vim/. ./vim/
+    rm -rf ./vim/pack
 fi

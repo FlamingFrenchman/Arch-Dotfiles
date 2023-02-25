@@ -1,41 +1,77 @@
 #!/bin/sh
 
 # cd into the bundle and use relative paths
-cd "$(dirname "$0")" || { echo "Unable to cd into bundle directory; exiting."; exit 1; }
+cd "$(dirname "$0")" || { echo 'Unable to cd into bundle directory; exiting.'; exit 1; }
+[ -z "$HOME" ] && { echo "\$HOME is unset; exiting."; exit 1; }
+[ -w "$HOME" ] || { echo "\$HOME is not writeable; exiting."; exit 1; }
 
-# source variables in case this is a fresh install
-. ./profile
+cp ./profile "$HOME"/.profile
+cp ./shrc "$HOME"/.shrc
 
-# literal dotfiles
-cp ./bashrc "$HOME/.bashrc"
-cp ./bash_profile "$HOME/.bash_profile"
-#cp ./bash_logout "$HOME/.bash_logout"
-if [ -n "$INPUTRC" ]; then
-    [ -d "$(dirname "$INPUTRC")" ] || mkdir -p "$(dirname "$INPUTRC")"
-    cp ./inputrc "$INPUTRC"
-else cp ./inputrc "$HOME/.inputrc"
+if command -v bash >/dev/null 2>&1 ; then
+    cp ./bashrc "$HOME"/.bashrc
+    cp ./bash_profile "$HOME"/.bash_profile
+    #cp ./bash_logout "$HOME"/.bash_logout
 fi
-cp ./profile "$HOME/.profile"
-cp ./shrc "$HOME/.shrc"
-if [ -r "$HOME/.tmux.conf" ]; then
-    cp ./tmux.conf "$HOME/.tmux.conf"
-elif [ -n "$XDG_CONFIG_HOME" ]; then
-    [ -d "$XDG_CONFIG_HOME/tmux" ] || mkdir "$XDG_CONFIG_HOME/tmux"
-    cp ./tmux.conf "$XDG_CONFIG_HOME/tmux/tmux.conf"
+
+config_dir=${XDG_CONFIG_HOME:-$HOME/.config}
+data_dir=${XDG_DATA_HOME:-$HOME/.local/share}
+
+if [ -z "$REMOVE_CLUTTER" ]; then
+    cp ./inputrc "$HOME"/.inputrc
+    cp ./tmux.conf "$HOME"/.tmux.conf
 else
-    [ -d "$HOME/.config/tmux" ] || mkdir "$HOME/.config/tmux"
-    cp ./tmux.conf "$HOME/.config/tmux/tmux.conf"
+    mkdir -p "$config_dir"/.config/readline
+    cp ./inputrc "$config_dir"/.config/readline/
+    mkdir -p "$config_dir"/.config/tmux
+    cp ./tmux.conf "$config_dir"/.config/tmux/
 fi
 
-# useful scripts in xdg compliant location
-[ -d "$HOME/.local/bin" ] || mkdir "$HOME/.local/bin"
-cp -r ./bin/* "$HOME/.local/bin/"
+if [ -d "$HOME"/.local ]; then
+    mkdir -p "$HOME"/.local/bin
+    cp -r ./bin/. "$HOME"/.local/bin/
+else
+    mkdir -p "$HOME"/.bin
+    cp -r ./bin/. "$HOME"/.bin/
+fi
 
-# vim/nvim
 if command -v nvim >/dev/null 2>&1 ; then
-    [ -d ~/.config/nvim ] || mkdir ~/.config/nvim
-    cp -r ./vim/* ~/.config/nvim/
-else 
-    cp -r ./vim ~/.vim
-    cp ./vim/init.vim ~/.vimrc
+    mkdir -p "$config_dir"/nvim
+    cp -r ./vim/. "$config_dir"/nvim/
+    mkdir -p "$data_dir"/nvim/site/pack/plugins/start
+    (
+    cd "$data_dir"/nvim/site/pack/plugins/start || exit 1
+    for plugin_url in 'https://github.com/ntpeters/vim-better-whitespace.git' \
+        'https://github.com/tpope/vim-surround.git' \
+        'https://github.com/neoclide/coc.nvim.git' \
+        'https://github.com/maxbrunsfeld/vim-emacs-bindings.git' \
+        'https://github.com/mbbill/undotree.git' \
+        'https://github.com/nvim-treesitter/nvim-treesitter.git'; do
+        plugin_dir=$(basename -s .git "$plugin_url")
+        if [ -d "$plugin_dir" ]; then (cd "$plugin_dir" || exit 1; git pull)
+        else git clone "$plugin_url"; fi
+    done
+    )
+    if command -v vim >/dev/null 2>&1 && [ -z "$REMOVE_CLUTTER" ]; then
+	ln -sfT "$config_dir"/nvim "$HOME"/.vim
+	ln -sf "$config_dir"/nvim/init.vim "$HOME"/.vimrc
+        ln -sfT "$data_dir"/nvim/site/pack "$config_dir"/nvim/pack
+    fi
+elif command -v vim>/dev/null 2>&1; then
+    mkdir -p "$HOME"/.vim/pack/plugins/start
+    cp -r ./vim/. "$HOME"/.vim/
+    (
+    cd "$HOME"/.vim/pack/plugins/start || exit 1
+    for plugin_url in 'https://github.com/ntpeters/vim-better-whitespace.git' \
+        'https://github.com/tpope/vim-surround.git' \
+        'https://github.com/neoclide/coc.nvim.git' \
+        'https://github.com/maxbrunsfeld/vim-emacs-bindings.git' \
+        'https://github.com/mbbill/undotree.git' \
+        'https://github.com/nvim-treesitter/nvim-treesitter.git'; do
+        plugin_dir=$(basename -s .git "$plugin_url")
+        if [ -d "$plugin_dir" ]; then (cd "$plugin_dir" || exit 1; git pull)
+        else git clone "$plugin_url"; fi
+    done
+    )
+    ln -sf "$HOME"/.vim/init.vim "$HOME"/.vimrc
 fi

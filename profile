@@ -25,7 +25,7 @@ if [ -r "$HOME"/.shrc ] ; then
 fi
 
 # less
-LESS='-FRSX --mouse --use-color'             # raw color escape sequences
+LESS='-FRSX --mouse --use-color' # raw color escape sequences
 export LESS
 
 # make less more friendly for non-text input files and add syntax highlighting
@@ -41,9 +41,9 @@ GREP=$(if command -v grep >/dev/null 2>&1 ; then
         command -v grep
     elif command -pv grep >/dev/null 2>&1 ; then
         command -pv grep
-    fi);
+    fi)
 if [ -z "$GREP" ] ; then
-    echo 'Unable to locate grep; will not attempt to unclutter'
+    echo 'Unable to locate grep; will not attempt to unclutter.'
     return 1
 fi
 
@@ -51,9 +51,9 @@ MKDIR=$(if command -v mkdir >/dev/null 2>&1 ; then
         command -v mkdir
     elif command -pv mkdir >/dev/null 2>&1 ; then
         command -pv mkdir
-    fi);
+    fi)
 if [ -z "$MKDIR" ] ; then
-    echo 'Unable to locate mkdir; will not attempt to unclutter'
+    echo 'Unable to locate mkdir; will not attempt to unclutter.'
     return 1
 fi
 
@@ -70,18 +70,20 @@ pathmunge () {
 }
 
 # xdg directories
-export XDG_CONFIG_HOME="$HOME"/.config
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 "$MKDIR" -p "$XDG_CONFIG_HOME"
-export XDG_CACHE_HOME="$HOME"/.cache
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 "$MKDIR" -p "$XDG_CACHE_HOME"
-export XDG_DATA_HOME="$HOME"/.local/share
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 "$MKDIR" -p "$XDG_DATA_HOME"
-export XDG_STATE_HOME="$HOME"/.local/state
+export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 "$MKDIR" -p "$XDG_STATE_HOME"
 
 # readline
-export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
-"$MKDIR" -p "$XDG_CONFIG_HOME"/readline
+if [ -f "$XDG_CONFIG_HOME"/readline/inputrc ] \
+    && [ -r "$XDG_CONFIG_HOME"/readline/inputrc ] ; then
+    export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
+fi
 
 # less
 export LESSKEY="$XDG_CONFIG_HOME"/less/lesskey
@@ -163,6 +165,5 @@ if command -v elinks >/dev/null 2>&1 ; then
     export ELINKS_CONFDIR="$XDG_CONFIG_HOME"/elinks
 fi
 
-unset GREP
-unset MKDIR
+unset -v GREP MKDIR
 unset -f pathmunge

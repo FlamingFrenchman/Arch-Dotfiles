@@ -1,4 +1,5 @@
 # shellcheck shell=bash
+# shellcheck disable=SC1091
 
 if [[ -r "$HOME/.profile" ]]; then source "$HOME/.profile"; fi
 
