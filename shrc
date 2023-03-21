@@ -1,19 +1,24 @@
 # shellcheck shell=sh
 
 # editor
-if [ -n "$EDITOR" ] ; then alias edit='$EDITOR'; fi
-if [ -n "$VIEWER" ] ; then alias view='$VIEWER'; fi
+if [ -n "$EDITOR" ]; then alias edit='$EDITOR'; fi
+if [ -n "$VIEWER" ]; then alias view='$VIEWER'; fi
 
 # spare myself some braincells
-if command -v pinfo >/dev/null 2>&1 ; then
-    alias info='pinfo'
-elif command -v info >/dev/null 2>&1 ; then
-    alias info='info --vi-keys'
+if command -v pinfo >/dev/null 2>&1; then
+	alias info='pinfo'
+elif command -v info >/dev/null 2>&1; then
+	alias info='info --vi-keys'
 fi
 
 # sloccount can't be configured with envvars so we do it here instead
-if [ -n "$XDG_CACHE_HOME" ] && command -v sloccount >/dev/null 2>&1 ; then
-    alias sloccount='sloccount --datadir "$XDG_CACHE_HOME/sloccount"'
+if [ -n "$XDG_CACHE_HOME" ] && command -v sloccount >/dev/null 2>&1; then
+	alias sloccount='sloccount --datadir "$XDG_CACHE_HOME"/sloccount'
+fi
+
+# same as above
+if [ -n "$XDG_CONFIG_HOME" ] && command -v yarn >/dev/null 2>&1; then
+	alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME"/yarn/config'
 fi
 
 # color and conveniences
@@ -26,39 +31,39 @@ alias df='df -h'
 alias du='du -h'
 alias free='free -h'
 if command -v ip >/dev/null 2>&1; then
-    alias ip='ip --color=auto'
+	alias ip='ip --color=auto'
 fi
 
-# Extract things. Thanks to urukrama, ubuntuforums.org	
+# Extract things. Thanks to urukrama, ubuntuforums.org
 # I use unrar instead of rar
-extract () {
-     if [ -f "$1" ] ; then
-         case $1 in
-             *.tar.bz2)   tar xjf "$1"    ;;
-             *.tar.gz)    tar xzf "$1"    ;;
-             *.bz2)       bunzip2 "$1"    ;;
-             *.rar)       unrar x "$1"    ;;
-             *.gz)        gunzip "$1"     ;;
-             *.tar)       tar xf "$1"     ;;
-             *.tbz2)      tar xjf "$1"    ;;
-             *.tgz)       tar xzf "$1"    ;;
-             *.zip)       unzip "$1"      ;;
-             *.Z)         uncompress "$1" ;;
-             *.7z)        7z x "$1"       ;;
-             *)           echo "'$1' cannot be extracted via extract()" ;;
-         esac
-     else
-         echo "'$1' is not a valid file"
-     fi
+extract() {
+	if [ -f "$1" ]; then
+		case $1 in
+		*.tar.bz2) tar xjf "$1" ;;
+		*.tar.gz) tar xzf "$1" ;;
+		*.bz2) bunzip2 "$1" ;;
+		*.rar) unrar x "$1" ;;
+		*.gz) gunzip "$1" ;;
+		*.tar) tar xf "$1" ;;
+		*.tbz2) tar xjf "$1" ;;
+		*.tgz) tar xzf "$1" ;;
+		*.zip) unzip "$1" ;;
+		*.Z) uncompress "$1" ;;
+		*.7z) 7z x "$1" ;;
+		*) echo "'$1' cannot be extracted via extract()" ;;
+		esac
+	else
+		echo "'$1' is not a valid file"
+	fi
 }
 
 # A PATH environment variable editor
 # From apmcd47 on ubuntuforums, and the guy that actually
 # wrote it and gave it to him
-pathedit () {
-    echo "$PATH" | sed 's/^:/.:/;s/:$/:./' | sed 's/::/:.:/g' | tr ':' '\012' > "/tmp/path.$LOGNAME.$$"
-    $EDITOR "/tmp/path.$LOGNAME.$$"
-    PATH=$(awk '{ if (NR>1) {printf ":%s",$1} else {printf "%s",$1} }' "/tmp/path.$LOGNAME.$$")
-    rm "/tmp/path.$LOGNAME.$$"
-    echo "$PATH"
-}  
+pathedit() {
+	echo "$PATH" | sed 's/^:/.:/;s/:$/:./' | sed 's/::/:.:/g' | tr ':' '\012' >"/tmp/path.$LOGNAME.$$"
+	$EDITOR "/tmp/path.$LOGNAME.$$"
+	PATH=$(awk '{ if (NR>1) {printf ":%s",$1} else {printf "%s",$1} }' "/tmp/path.$LOGNAME.$$")
+	rm "/tmp/path.$LOGNAME.$$"
+	echo "$PATH"
+}

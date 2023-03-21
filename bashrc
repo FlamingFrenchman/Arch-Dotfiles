@@ -6,7 +6,7 @@
 
 # source posix sh stuff
 if [[ -n "$ENV" ]] && [[ -r "$ENV" ]]; then
-    source "$ENV";
+	source "$ENV"
 fi
 
 # define a few colors
@@ -20,26 +20,28 @@ BLACK='\[\e[0;90m\]'
 NC='\[\e[0m\]'
 
 # set the prompt
-prompt () {
-    local LAST_STATUS=$?
-    local STATUS_COLOR
-    local PROMPT_COLOR
-    STATUS_COLOR=$(if [[ $LAST_STATUS -gt 0 ]]; \
-                   then echo -e "$BOLDRED"; \
-                   elif [[ $LIGHT_BG -gt 0 ]]; \
-                   then echo -e "$BOLDBLACK"; \
-                   else echo -e "$BOLDWHITE"; \
-                   fi)
-    PROMPT_COLOR=$(if [[ $LIGHT_BG -gt 0 ]]; \
-                   then echo -e "$BLACK"; \
-                   else echo -e "$WHITE"; \
-                   fi)
-    if [[ -n $SSH_TTY ]]; then
-        local USER_AND_HOST="$NC\u$PROMPT_COLOR@$NC\h "
-    fi
-    PS1="$USER_AND_HOST$STATUS_COLOR\$ $NC"
-    PS2="$PROMPT_COLOR>$NC "
-    PS4="$NC+ "
+prompt() {
+	local LAST_STATUS=$?
+	local STATUS_COLOR
+	local PROMPT_COLOR
+	STATUS_COLOR=$(if [[ $LAST_STATUS -gt 0 ]]; then
+		echo -e "$BOLDRED"
+	elif [[ $LIGHT_BG -gt 0 ]]; then
+		echo -e "$BOLDBLACK"
+	else
+		echo -e "$BOLDWHITE"
+	fi)
+	PROMPT_COLOR=$(if [[ $LIGHT_BG -gt 0 ]]; then
+		echo -e "$BLACK"
+	else
+		echo -e "$WHITE"
+	fi)
+	if [[ -n $SSH_TTY ]]; then
+		local USER_AND_HOST="$NC\u$PROMPT_COLOR@$NC\h "
+	fi
+	PS1="$USER_AND_HOST$STATUS_COLOR\$ $NC"
+	PS2="$PROMPT_COLOR>$NC "
+	PS4="$NC+ "
 }
 
 PROMPT_COMMAND=prompt
