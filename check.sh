@@ -1,3 +1,4 @@
 #!/bin/sh
-shellcheck profile shrc bash_profile bashrc install.sh update-repo.sh
+shellcheck profile shrc bash_profile bashrc install.sh update-repo.sh \
+    setup-gnome-keybindings.sh
 pycodestyle startup.py
