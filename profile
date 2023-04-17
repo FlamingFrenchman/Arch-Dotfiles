@@ -34,6 +34,8 @@ if command -v src-hilite-lesspipe.sh >/dev/null 2>&1; then
 	export LESSOPEN='| src-hilite-lesspipe.sh %s'
 fi
 
+# TODO: use cut/sed/awk to trim alias instead rather than calling unalias
+if alias grep >/dev/null 2>&1; then unalias grep; fi
 grep=$(if command -v grep >/dev/null 2>&1; then
 	command -v grep
 elif command -pv grep >/dev/null 2>&1; then
@@ -69,6 +71,8 @@ if [ -z "$HOME" ] || ! [ -w "$HOME" ] || [ -z "$REMOVE_CLUTTER" ]; then
 	return
 fi
 
+# TODO: use cut/sed/awk to trim alias instead rather than calling unalias
+if alias mkdir >/dev/null 2>&1; then unalias mkdir; fi
 mkdir=$(if command -v mkdir >/dev/null 2>&1; then
 	command -v mkdir
 elif command -pv mkdir >/dev/null 2>&1; then

@@ -123,4 +123,5 @@ if has('autocmd')
 endif
 
 " syntax highlighting in .shrc
-au BufNewFile,BufRead .shrc call dist#ft#SetFileTypeSH(getline(1))
+au BufNewFile,BufRead .shrc set filetype=sh
+
