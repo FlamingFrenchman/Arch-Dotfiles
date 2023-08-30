@@ -1,15 +1,29 @@
-" archlinux.vim is probably located in /usr/share/vim/vimfiles/
-" This line should not be removed as it ensures that various options are
-" properly set to work with the Vim-related packages.
+" Distributions will often ship a runtime file in /usr/share/vim/vimfiles/ or,
+" in the case of nvim, /usr/share/nvim/. This file is (I think) meant to
+" ensure that vim sees plugins installed via the package manager, though I
+" imagine there are other reasons. Debian, Fedora and Archlinux call the file
+" something different but you can just source all of them since files that do
+" not exist are ignored.
+"
+" On Archlinux, the runtime file adds the vim directories to neovim's runtime
+" path, so packages which ship with vimfiles only need to put them in one
+" location.
+
+" Archlinux
 runtime! archlinux.vim
-" If not present or unpleasant, there's also
-" /usr/share/vim/vimXX/vimrc_example.vim
+" Debian
+runtime! debian.vim
+" Fedora
+runtime! sysinit.vim
 
 if has('nvim')
     " Neovim specific commands
     set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
-        \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
-        \,sm:block-blinkwait175-blinkoff150-blinkon175
+        \,a:blinkwait0-blinkoff600-blinkon600-Cursor/lCursor
+        \,sm:block-blinkwait0-blinkoff600-blinkon600
+
+    " put backup file in state home with swap and undo files
+    set backupdir=$XDG_STATE_HOME/nvim/backup//
 else
     " Standard vim specific commands
 
@@ -31,7 +45,40 @@ else
         " normal (and anything else)
         let &t_EI = "\e[?8;c"
     endif
+
+    " put backup, undo, and swap files in one place
+    set backupdir=$HOME/.vim/backup//
+    set undodir=$HOME/.vim/undo//
+    set directory=$HOME/.vim/swap//
 endif
+
+" Copied from /usr/share/vim/vimXX/vimrc_example.vim
+
+if has("vms")
+  set nobackup		" do not keep a backup file, use versions instead
+else
+  set backup		" keep a backup file (restore to previous version)
+  if has('persistent_undo')
+    set undofile	" keep an undo file (undo changes after closing)
+  endif
+endif
+
+if &t_Co > 2 || has("gui_running")
+  " Switch on highlighting the last used search pattern.
+  set hlsearch
+endif
+
+" Add optional packages.
+"
+" The matchit plugin makes the % command work better, but it is not backwards
+" compatible.
+" The ! means the package won't be loaded right away but when plugins are
+" loaded during initialization.
+if has('syntax') && has('eval')
+  packadd! matchit
+endif
+
+" End /usr/share/vim/vimXX/vimrc_example.vim
 
 " allow backspacing over everything in insert mode
 set bs=indent,eol,start
@@ -39,8 +86,6 @@ set bs=indent,eol,start
 set ruler
 " show matches as you are typing the search expression
 set incsearch
-" highlight matches when searching
-set hlsearch
 " always show last command executed
 set showcmd
 " show matching brackets when the cursor is over one

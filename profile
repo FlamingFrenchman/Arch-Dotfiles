@@ -64,6 +64,18 @@ elif [ -d "$HOME"/.bin ]; then
 	pathmunge "$HOME"/.bin
 fi
 
+# source systemd environment variables; remote sessions seem to not inherit
+# environment variables generated for the systemd user instance. taken from here:
+# https://unix.stackexchange.com/questions/79064/how-to-export-variables-from-a-file
+if [ -d "${XDG_CONFIG_HOME:-$HOME/.config}"/environment.d/ ]; then
+	set -a
+	for environment in "${XDG_CONFIG_HOME:-$HOME/.config}"/environment.d/*.conf; do
+		# shellcheck disable=SC1090
+		[ -r "$environment" ] && . "$environment"
+	done
+	set +a
+fi
+
 # no point in executing the rest of the file if we can't use xdg dirs
 if [ -z "$HOME" ] || ! [ -w "$HOME" ] || [ -z "$REMOVE_CLUTTER" ]; then
 	unset -v grep
@@ -96,10 +108,20 @@ export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 "$mkdir" -p "$XDG_STATE_HOME"
 
 # readline
-if [ -f "$XDG_CONFIG_HOME"/readline/inputrc ] &&
-	[ -r "$XDG_CONFIG_HOME"/readline/inputrc ]; then
+if [ -r "$XDG_CONFIG_HOME"/readline/inputrc ]; then
 	export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
 fi
+#case "${REALTERM:-$TERM}" in
+#  xterm*) if [ -r "$XDG_CONFIG_HOME"/readline/inputrc-xterm ]; then
+#      export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc-xterm
+#  fi ;;
+#  linux*) if [ -r "$XDG_CONFIG_HOME"/readline/inputrc-vconsole ]; then
+#      export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc-vconsole
+#  fi ;;
+#  *) if [ -r "$XDG_CONFIG_HOME"/readline/inputrc ]; then
+#      export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
+#  fi ;;
+#esac
 
 # less
 export LESSKEY="$XDG_CONFIG_HOME"/less/lesskey

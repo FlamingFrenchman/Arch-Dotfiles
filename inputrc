@@ -1,31 +1,43 @@
-# virgin mode
-set editing-mode vi
-
 $include /etc/inputrc
 
-# clear screen in vi mode
-"\C-l": clear-screen
+# virgin mode
+set editing-mode vi
+Control-l: clear-screen
+Control-p: previous-history
+Control-n: next-history
+set keymap vi-insert
+Control-b: backward-char
+Control-f: forward-char
+Control-e: end-of-line
+Control-a: beginning-of-line
 
-# tab complete slash on symlinked directories
+set completion-ignore-case on
+# when completing, replace common prefixes longer than 3 characters with ...
+set completion-prefix-display-length 3
+# show multiple completions immediately instead of ringing the bell first
+set show-all-if-ambiguous on
+# as above, but do so even when a partial completion cannot be performed
+set show-all-if-unmodified on
+# append filetype information to completions
+set visible-stats on
+# applend slash on symlinked directories when completing
 set mark-symlinked-directories on
-
 # Color files by types
 set colored-stats on
 # display common prefix in completion menu before cycling through options
 set menu-complete-display-prefix on
 # Color the common prefix
 set colored-completion-prefix on
-
 # stop ^C from echoing after Ctrl+C is pressed
 set echo-control-characters off
 
 # use the mode prompt to indicate whether or not you're in vi insert mode
 set show-mode-in-prompt on
-$if term=linux
-set vi-ins-mode-string "\1\e[?0c\2"
-set vi-cmd-mode-string "\1\e[?8c\2"
-$else
 $if term=xterm
+set vi-ins-mode-string "\1\e[3 q\2"
+set vi-cmd-mode-string "\1\e[1 q\2"
+$else
+$if term=st
 set vi-ins-mode-string "\1\e[3 q\2"
 set vi-cmd-mode-string "\1\e[1 q\2"
 $else
@@ -33,8 +45,13 @@ $if term=tmux
 set vi-ins-mode-string "\1\e[3 q\2"
 set vi-cmd-mode-string "\1\e[1 q\2"
 $else
+$if term=linux
+set vi-ins-mode-string "\1\e[?0c\2"
+set vi-cmd-mode-string "\1\e[?8c\2"
+$else
 set vi-ins-mode-string "(INS)"
 set vi-cmd-mode-string "(CMD)"
+$endif
 $endif
 $endif
 $endif
