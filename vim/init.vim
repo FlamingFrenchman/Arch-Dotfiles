@@ -22,11 +22,15 @@ if has('nvim')
         \,a:blinkwait0-blinkoff600-blinkon600-Cursor/lCursor
         \,sm:block-blinkwait0-blinkoff600-blinkon600
 
-    " put backup file in state home with swap and undo files
+    " put backup, swap and undo files in state home
     if empty($XDG_STATE_HOME)
         set backupdir=$HOME/.local/state/nvim/backup//
+        set undodir=$HOME/.local/state/nvim/backup//
+        set directory=$HOME/.local/state/nvim/swap//
     else
         set backupdir=$XDG_STATE_HOME/nvim/backup//
+        set undodir=$XDG_STATE_HOME/nvim/backup//
+        set directory=$XDG_STATE_HOME/nvim/swap//
     endif
 else
     " Standard vim specific commands
