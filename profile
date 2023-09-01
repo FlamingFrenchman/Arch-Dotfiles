@@ -77,7 +77,7 @@ if [ -d "${XDG_CONFIG_HOME:-$HOME/.config}"/environment.d/ ]; then
 fi
 
 # no point in executing the rest of the file if we can't use xdg dirs
-if [ -z "$HOME" ] || ! [ -w "$HOME" ] || [ -z "$REMOVE_CLUTTER" ]; then
+if [ -z "$HOME" ] || ! [ -w "$HOME" ] || [ -z "${REMOVE_CLUTTER+x}" ]; then
 	unset -v grep
 	unset -f pathmunge
 	return

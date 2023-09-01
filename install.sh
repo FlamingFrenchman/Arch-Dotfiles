@@ -30,7 +30,7 @@ config_dir=${XDG_CONFIG_HOME:-$HOME/.config}
 data_dir=${XDG_DATA_HOME:-$HOME/.local/share}
 state_dir=${XDG_STATE_HOME:-$HOME/.local/state}
 
-if [ -z "$REMOVE_CLUTTER" ]; then
+if [ -z "${REMOVE_CLUTTER+x}" ]; then
 	cp ./inputrc "$HOME"/.inputrc
 	if command -v tmux >/dev/null 2>&1; then
 		cp ./tmux.conf "$HOME"/.tmux.conf
@@ -84,19 +84,19 @@ if command -v nvim >/dev/null 2>&1; then
 				)
 			else git clone "$plugin_url"; fi
 		done
-		# clone/update release version of coc, and only if nvim is installed
+                # clone/update release version of coc, and only if nvim and node are installed
 		if [ -d 'coc.nvim' ]; then
 			(
 				cd 'coc.nvim' || exit 1
 				git pull
 			)
-		else
+                elif command -v node >/dev/null 2>&1; then
 			git clone --branch release \
 				https://github.com/neoclide/coc.nvim.git \
 				--depth=1
 		fi
 	)
-	if command -v vim >/dev/null 2>&1 && [ -z "$REMOVE_CLUTTER" ]; then
+	if command -v vim >/dev/null 2>&1 && [ -z "${REMOVE_CLUTTER+x}" ]; then
 		ln -sfT "$config_dir"/nvim "$HOME"/.vim
 		ln -sf "$config_dir"/nvim/init.vim "$HOME"/.vimrc
 		ln -sfT "$data_dir"/nvim/site/pack "$config_dir"/nvim/pack
