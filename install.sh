@@ -63,19 +63,42 @@ else
 	mkdir -p "$HOME"/.bin
 fi
 
-plugin_urls='https://github.com/ntpeters/vim-better-whitespace.git\nhttps://github.com/tpope/vim-surround.git\nhttps://github.com/maxbrunsfeld/vim-emacs-bindings.git\nhttps://github.com/mbbill/undotree.git\nhttps://github.com/nvim-treesitter/nvim-treesitter.git\n'
-
 if command -v nvim >/dev/null 2>&1; then
 	mkdir -p "$config_dir"/nvim
 	cp -r ./vim/. "$config_dir"/nvim/
-	mkdir -p "$data_dir"/nvim/site/pack/plugins/start
+	mkdir -p "$data_dir"/nvim/site/pack/
 	# make directories for undo, swap, and backup files
 	mkdir -p "$state_dir"/nvim/undo "$state_dir"/nvim/backup "$state_dir"/nvim/swap
 	# set permissions separately in case the directories already existed
 	chmod 0700 "$state_dir"/nvim/undo "$state_dir"/nvim/backup "$state_dir"/nvim/swap
+
+	# install/update lsp packages
 	(
+		mkdir -p "$data_dir"/nvim/site/pack/lsp/start
+		cd "$data_dir"/nvim/site/pack/lsp/start || exit 1
+		while read -r lsp_url; do
+			lsp_dir=$(basename -s .git "$lsp_url")
+			if [ -d "$lsp_dir" ]; then
+				(
+					cd "$lsp_dir" || exit 1
+					git pull
+				)
+			else git clone "$lsp_url"; fi
+		done <<EOF
+https://github.com/hrsh7th/cmp-nvim-lsp.git
+https://github.com/saadparwaiz1/cmp_luasnip.git
+https://github.com/VonHeikemen/lsp-zero.nvim.git
+https://github.com/L3MON4D3/LuaSnip.git
+https://github.com/Bilal2453/luvit-meta.git
+https://github.com/hrsh7th/nvim-cmp.git
+https://github.com/neovim/nvim-lspconfig.git
+EOF
+	)
+	# install plugins
+	(
+		mkdir -p "$data_dir"/nvim/site/pack/plugins/start
 		cd "$data_dir"/nvim/site/pack/plugins/start || exit 1
-		printf '%s' $plugin_urls | while read -r plugin_url; do
+		while read -r plugin_url; do
 			plugin_dir=$(basename -s .git "$plugin_url")
 			if [ -d "$plugin_dir" ]; then
 				(
@@ -83,45 +106,31 @@ if command -v nvim >/dev/null 2>&1; then
 					git pull
 				)
 			else git clone "$plugin_url"; fi
-		done
-                # clone/update release version of coc, and only if nvim and node are installed
-		if [ -d 'coc.nvim' ]; then
-			(
-				cd 'coc.nvim' || exit 1
-				git pull
-			)
-                elif command -v node >/dev/null 2>&1; then
-			git clone --branch release \
-				https://github.com/neoclide/coc.nvim.git \
-				--depth=1
-		fi
+		done <<EOF
+https://github.com/lukas-reineke/indent-blankline.nvim.git
+https://github.com/echasnovski/mini.nvim.git
+https://github.com/kylechui/nvim-surround.git
+https://github.com/mbbill/undotree.git
+https://github.com/tpope/vim-sleuth.git
+EOF
 	)
-	if command -v vim >/dev/null 2>&1 && [ -z "${REMOVE_CLUTTER+x}" ]; then
-		ln -sfT "$config_dir"/nvim "$HOME"/.vim
-		ln -sf "$config_dir"/nvim/init.vim "$HOME"/.vimrc
-		ln -sfT "$data_dir"/nvim/site/pack "$config_dir"/nvim/pack
-		ln -sfT "$state_dir"/nvim/undo "$HOME"/.vim/undo
-		ln -sfT "$state_dir"/nvim/swap "$HOME"/.vim/swap
-		ln -sfT "$state_dir"/nvim/backup "$HOME"/.vim/backup
-	fi
-elif command -v vim >/dev/null 2>&1; then
-	mkdir -p "$HOME"/.vim/pack/plugins/start
-	# make directories for undo, swap, and backup files
-	mkdir -p "$HOME"/.vim/undo "$HOME"/.vim/backup "$HOME"/.vim/swap
-	# set permissions separately in case the directories already existed
-	chmod 0700 "$HOME"/.vim/undo "$HOME"/.vim/backup "$HOME"/.vim/swap
-	cp -r ./vim/. "$HOME"/.vim/
+	# install treesitter
 	(
-		cd "$HOME"/.vim/pack/plugins/start || exit 1
-		printf '%s' $plugin_urls | while read -r plugin_url; do
-			plugin_dir=$(basename -s .git "$plugin_url")
-			if [ -d "$plugin_dir" ]; then
+		mkdir -p "$data_dir"/nvim/site/pack/treesitter/start
+		cd "$data_dir"/nvim/site/pack/treesitter/start || exit 1
+		while read -r tsit_url; do
+			tsit_dir=$(basename -s .git "$tsit_url")
+			if [ -d "$tsit_dir" ]; then
 				(
-					cd "$plugin_dir" || exit 1
+					cd "$tsit_dir" || exit 1
 					git pull
 				)
-			else git clone "$plugin_url"; fi
-		done
+			else git clone --branch=main "$tsit_url"; fi
+		done <<EOF
+https://github.com/nvim-treesitter/nvim-treesitter.git
+https://github.com/nvim-treesitter/nvim-treesitter-textobjects.git
+EOF
 	)
-	ln -sf "$HOME"/.vim/init.vim "$HOME"/.vimrc
+else
+	echo "Unable to locate neovim executable; skipping package installation."
 fi
